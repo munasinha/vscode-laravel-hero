@@ -153,7 +153,7 @@ If your PHP executable is in a non-standard location:
 
 \`\`\`bash
 # Clone repository
-git clone https://github.com/yourusername/laravel-hero.git
+git clone https://github.com/munasinha/vscode-laraval-hero.git
 cd laravel-hero
 
 # Install dependencies
@@ -230,7 +230,7 @@ We welcome contributions from the community! Whether it's bug fixes, new feature
 1. **Fork the repository** on GitHub
 2. **Clone your fork:**
    \`\`\`bash
-   git clone https://github.com/yourusername/laravel-hero.git
+   git clone https://github.com/munasinha/vscode-laraval-hero.git
    cd laravel-hero
    \`\`\`
 3. **Create a feature branch:**
@@ -396,8 +396,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📧 Support
 
-- **Found a bug?** [Open an issue](https://github.com/yourusername/laravel-hero/issues)
-- **Have a feature request?** [Start a discussion](https://github.com/yourusername/laravel-hero/discussions)
+- **Found a bug?** [Open an issue](https://github.com/munasinha/vscode-laraval-hero.git/issues)
+- **Have a feature request?** [Start a discussion](https://github.com/munasinha/vscode-laraval-hero.git/discussions)
 - **Want to contribute?** See [Contributing](#contributing) section
 
 ---
