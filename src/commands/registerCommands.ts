@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { MigrationPanel } from '../webviews/MigrationPanel';
+import { MigrationPanel } from '../webviews/migration-panel';
 import { LoggerService } from '../services/LoggerService';
 
 /**

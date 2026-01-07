@@ -1,7 +1,6 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { LoggerService } from './LoggerService';
+import * as vscode from 'vscode';
 
 /**
  * Handles workspace context and Laravel project detection.

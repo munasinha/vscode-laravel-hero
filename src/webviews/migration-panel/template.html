@@ -1,0 +1,24 @@
+<h1>Laravel Migrations</h1>
+<div id="error-container"></div>
+
+<div class="actions">
+	<button id="refresh-btn" class="primary-button">↻ Refresh</button>
+	<button id="run-all-btn" class="primary-button">Run All</button>
+	<button id="run-all-forced-btn" class="secondary-button">Force Run All</button>
+	<button id="create-migration-btn" class="secondary-button">+ Create Migration</button>
+</div>
+
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Migration Name</th>
+			<th>Status</th>
+			<th>Batch</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody id="migration-list">
+		<tr><td colspan="5" class="loading"><span class="spinner"></span> Loading migrations...</td></tr>
+	</tbody>
+</table>

@@ -1,0 +1,107 @@
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	border: 1px solid var(--vscode-editorGroup-border);
+}
+
+th, td {
+	text-align: left;
+	padding: 8px 12px;
+	border-bottom: 1px solid var(--vscode-editorGroup-border);
+}
+
+th {
+	font-weight: 600;
+	background-color: var(--vscode-editor-inactiveSelectionBackground);
+	position: sticky;
+	top: 0;
+}
+
+code {
+	background-color: var(--vscode-textCodeBlock-background);
+	color: var(--vscode-textCodeBlock-foreground);
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-family: var(--vscode-editor-font-family);
+	font-size: 0.9em;
+}
+
+.status-ran {
+	color: var(--vscode-testing-iconPassed);
+	font-weight: 600;
+}
+
+.status-pending {
+	color: var(--vscode-testing-iconQueued);
+	font-weight: 600;
+}
+
+.actions {
+	margin-bottom: 15px;
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.primary-button {
+	background-color: var(--vscode-button-background);
+	color: var(--vscode-button-foreground);
+	border: none;
+	padding: 8px 16px;
+	cursor: pointer;
+	border-radius: 3px;
+	font-weight: 500;
+}
+
+.primary-button:hover:not(:disabled) {
+	background-color: var(--vscode-button-hoverBackground);
+}
+
+.primary-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.secondary-button {
+	background-color: var(--vscode-button-secondaryBackground);
+	color: var(--vscode-button-secondaryForeground);
+	border: none;
+	padding: 8px 16px;
+	cursor: pointer;
+	border-radius: 3px;
+	font-weight: 500;
+}
+
+.secondary-button:hover:not(:disabled) {
+	background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+.inline-button {
+	background-color: var(--vscode-button-background);
+	color: var(--vscode-button-foreground);
+	border: none;
+	padding: 4px 10px;
+	cursor: pointer;
+	border-radius: 2px;
+	font-size: 0.85em;
+	margin-right: 4px;
+}
+
+.inline-button:hover:not(:disabled) {
+	background-color: var(--vscode-button-hoverBackground);
+}
+
+.inline-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.inline-button.secondary {
+	background-color: var(--vscode-button-secondaryBackground);
+	color: var(--vscode-button-secondaryForeground);
+}
+
+.inline-button.secondary:hover:not(:disabled) {
+	background-color: var(--vscode-button-secondaryHoverBackground);
+}

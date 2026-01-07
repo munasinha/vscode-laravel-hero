@@ -1,7 +1,7 @@
-import * as cp from 'child_process';
-import * as vscode from 'vscode';
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
+import * as vscode from 'vscode';
+import * as cp from 'child_process';
 import { LoggerService } from './LoggerService';
 import { WorkspaceService } from './WorkspaceService';
 
