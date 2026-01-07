@@ -4,406 +4,165 @@
 
 ![Laravel Hero Icon](https://raw.githubusercontent.com/munasinha/vscode-laravel-hero/refs/heads/master/media/logo.png)
 
-**A powerful VS Code extension for Laravel developers**
+**Supercharge Your Laravel Development Workflow in VS Code**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.107.0%2B-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9%2B-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen)](#contributing)
+[![GitHub](https://img.shields.io/badge/GitHub-munasinha-black?logo=github)](https://github.com/munasinha/vscode-laravel-hero)
 
 </div>
 
 ---
 
-## 📋 Overview
+## What is Laravel Hero?
 
-**Laravel Hero** is a VS Code extension that brings powerful Laravel development tools directly into your editor. Manage database migrations, view routes, manage packages, and more—all without leaving VS Code.
+**Laravel Hero** is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal—manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
 
-Built with production-quality code following [VS Code UX Guidelines](https://code.visualstudio.com/api/ux-guidelines/overview) and TypeScript best practices.
-
-### Phase 1: Migrations (Complete ✅)
-Full migration management with database status tracking, execution, and creation.
-
-### Phase 2: Routes (Planned)
-View all application routes, test endpoints, and manage route groups.
-
-### Phase 3: Packages (Planned)
-Manage Composer packages, view documentation, and handle dependencies.
+Currently focused on **database migrations** with plans for routes and package management in upcoming releases.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### **Migrations Management** (Phase 1 ✅)
-- 📊 **View all migrations** in an organized table
-- ✓ **Track status** (Migrated / Pending) with real-time sync
-- ▶️ **Run migrations** one-by-one or all at once
-- ⚡ **Force run** migrations to re-execute already-run migrations
-- ➕ **Create new migrations** via intuitive input dialog
-- 🔄 **Auto-refresh** after running or creating migrations
-- 📴 **Offline support** - shows disk files even if Artisan fails
-- 🚨 **Smart error handling** with helpful messages
+### 🗄️ **Database Migrations Management**
+- **View all migrations** in a clean, organized interface
+- **Track status** at a glance—see which migrations are pending and which have been applied
+- **Run migrations** with a single click—no terminal needed
+- **Create new migrations** instantly through an intuitive dialog
+- **Force re-run migrations** for development and testing
+- **Auto-refresh** after every operation
+- **Offline mode**—still see your migrations even if Laravel commands are unavailable
 
-### **Developer Experience**
-- 🎨 **Native VS Code UI** - modals, input dialogs, notifications
-- 📝 **Unified logging** - View all operations in "Laravel Hero" output channel
-- ⚙️ **Configurable PHP path** - Support for custom PHP executables
-- 🔒 **Secure webviews** - Content Security Policy compliant
-- 🏗️ **Clean architecture** - Easy to extend with new features
-
----
-
-## 📦 Installation
-
-### From VS Code Marketplace
-1. Open VS Code
-2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
-3. Search for "Laravel Hero"
-4. Click Install
-
-### Manual Installation
-```bash
-# Clone the repository
-git clone https://github.com/munasinha/vscode-laravel-hero.git
-cd laravel-hero
-
-# Install dependencies
-npm install
-
-# Package the extension
-npm run package
-
-# Install the .vsix file
-# Open VS Code → Extensions → ... menu → Install from VSIX
-```
+### 🎯 **Built for Developers**
+- **Native VS Code UI**—feels like part of the editor, not a plugin
+- **Detailed logging**—see exactly what's happening in the "Laravel Hero" output panel
+- **Custom PHP paths**—support for any PHP installation
+- **Smart error handling**—helpful messages when things go wrong
+- **Production-ready code**—built with TypeScript, tested, and following VS Code best practices
 
 ---
 
-## 🚀 Usage
+## 🚀 Getting Started
 
-### Opening Laravel Hero
-1. **Click the Laravel Hero icon** in the Activity Bar (left sidebar)
-2. **View the feature menu:**
-   - 🗄️ Migrations - Manage database migrations
-   - 🌐 Routes - View and test routes (Phase 2)
-   - 📦 Packages - Manage packages (Phase 3)
+### Installation (30 seconds)
+1. Open **Extensions** in VS Code (`Cmd+Shift+X` on Mac, `Ctrl+Shift+X` on Windows)
+2. Search for **"Laravel Hero"**
+3. Click **Install**
+4. Click the Laravel Hero icon in the Activity Bar (left sidebar)
+5. Select **Migrations** to get started
 
-### Managing Migrations
+### Requirements
+- **VS Code** 1.107.0 or later
+- **Laravel project** with `artisan` binary
+- **PHP** 7.4+ installed
+- **Composer** (usually already in Laravel projects)
 
-#### View Migrations
-- Click **"Migrations"** in the sidebar
-- Webview panel opens showing all migrations
-- Status shows: ✓ Migrated or ○ Pending
+---
 
-#### Run a Migration
-1. Click **"Run"** button on a pending migration
-2. Confirm in the dialog
-3. Watch the execution in the output panel
-4. Table refreshes automatically
+## 💡 How to Use
 
-#### Run All Migrations
-1. Click **"Run All"** button at the top
-2. Confirm in the dialog
-3. All pending migrations execute in sequence
-4. Status updates automatically
+### View Your Migrations
+1. Click the **Laravel Hero icon** in the Activity Bar
+2. Select **Migrations**
+3. Your webview panel opens showing all database migrations
+4. Green checkmarks mean **migrated**, circles mean **pending**
 
-#### Force Run
-- Click **"Force Run"** to re-execute migrations
-- Useful for development and debugging
-- Works for individual or all migrations
+### Run a Migration
+- Click **"Run"** on any pending migration → Confirm → Done! ✓
 
-#### Create New Migration
-1. Click **"+ Create Migration"** button
-2. Enter migration name (e.g., `create_users_table`)
-3. Press Enter or click Create
-4. New migration appears in the table (Pending status)
+### Run All Pending Migrations
+- Click **"Run All"** at the top → Confirm → Watch them execute in sequence
 
-### Configuration
+### Create a New Migration
+1. Click **"+ Create Migration"**
+2. Type your migration name (e.g., `create_users_table`)
+3. Press Enter
+4. Your new migration appears instantly (Pending status)
 
-#### Set Custom PHP Path
-If your PHP executable is in a non-standard location:
+### Force Re-run a Migration
+- Click **"⚡ Force Run"** on any migration
+- Perfect for development and debugging
+- Works on already-migrated migrations
 
-1. Open VS Code Settings (Cmd+, / Ctrl+,)
-2. Search for "Laravel Hero"
+### See What's Happening
+1. Open VS Code's **Output panel** (`Cmd+Shift+U`)
+2. Select **"Laravel Hero"** from the dropdown
+3. Watch real-time logs of all operations
+
+---
+
+## ⚙️ Configuration
+
+### Using a Custom PHP Path?
+Some setups have PHP in non-standard locations. Configure it:
+
+1. Open **Settings** (`Cmd+,` on Mac, `Ctrl+,` on Windows)
+2. Search for **"laravel hero"**
 3. Set `laravelHero.phpCommand` to your PHP path:
-   \`\`\`
-   /opt/homebrew/bin/php
-   /usr/bin/php
-   /path/to/custom/php
-   \`\`\`
+   - Examples: `/opt/homebrew/bin/php`, `/usr/bin/php`, `C:\php\php.exe`
 
-#### View Logs
-- Open Output panel (Cmd+Shift+U / Ctrl+Shift+U)
-- Select "Laravel Hero" from the dropdown
-- See detailed logs of all operations
-
----
-
-## 🛠️ Development
-
-### Prerequisites
-- Node.js 16+ and npm
-- TypeScript 5.9+
-- VS Code 1.107.0+
-- A Laravel project with PHP and Composer
-
-### Setup
-
-```bash
-# Clone repository
-git clone https://github.com/munasinha/vscode-laravel-hero.git
-cd laravel-hero
-
-# Install dependencies
-npm install
-
-# Start development mode (watch & compile)
-npm run watch
-```
-
-### Project Structure
-
-```
-src/
-├── extension.ts                    # Activation entry point
-├── commands/
-│   └── registerCommands.ts         # All command registrations
-├── providers/
-│   └── LaravelHeroSidebar.ts       # TreeDataProvider for sidebar
-├── webviews/
-│   ├── MigrationPanel.ts           # Migrations webview implementation
-│   └── lib/
-│       └── webviewUtils.ts         # Shared webview utilities
-├── services/
-│   ├── ArtisanService.ts           # Laravel artisan execution
-│   ├── LoggerService.ts            # Unified logging
-│   └── WorkspaceService.ts         # Workspace validation & context
-└── utils/
-    └── getNonce.ts                 # Security utilities
-```
-
-### Build & Test
-
-```bash
-# Compile TypeScript to JavaScript
-npm run compile
-
-# Watch mode (auto-compile on changes)
-npm run watch
-
-# Package for distribution
-npm run package
-
-# Run linter
-npm run lint
-```
-
-### Debug the Extension
-
-1. **Open the project in VS Code**
-2. **Press F5** to launch Extension Development Host
-3. **A new VS Code window opens** with your extension loaded
-4. **Set breakpoints** in `src/` files
-5. **Check the Debug Console** for output
-6. **Reload** (Cmd+R / Ctrl+R) to see code changes
-
-### Testing
-
-```bash
-# Run tests
-npm run test
-
-# Watch mode for tests
-npm run watch-tests
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Whether it's bug fixes, new features, or documentation improvements.
-
-### Getting Started
-
-1. **Fork the repository** on GitHub
-2. **Clone your fork:**
-   \`\`\`bash
-   git clone https://github.com/munasinha/vscode-laravel-hero.git
-   cd laravel-hero
-   \`\`\`
-3. **Create a feature branch:**
-   \`\`\`bash
-   git checkout -b feature/amazing-feature
-   \`\`\`
-4. **Make your changes** following our code style
-
-### Code Style Guidelines
-
-- **TypeScript**: Use strict mode, proper typing
-- **Naming**: camelCase for variables/functions, PascalCase for classes
-- **Comments**: JSDoc for public APIs, inline comments for complex logic
-- **Error Handling**: Always provide user-friendly error messages
-- **Logging**: Use `LoggerService` for debugging visibility
-
-### Commit Messages
-
-Follow conventional commits:
-```
-feat: add routes panel
-fix: handle missing artisan gracefully
-docs: update installation guide
-refactor: improve error handling
-test: add migration service tests
-```
-
-### Pull Request Process
-
-1. **Update README.md** if adding new features
-2. **Test thoroughly** - Run `npm run compile` and `npm run lint`
-3. **Describe changes** - Clear PR description with before/after
-4. **Link issues** - Reference related issues or features
-5. **Wait for review** - Project maintainers will review and test
-
-### Adding New Features (e.g., Routes Panel)
-
-#### 1. Create Service
-```typescript
-// src/services/RoutesService.ts
-export class RoutesService {
-  async getRoutes(): Promise<RouteInfo[]> {
-    // Implementation
-  }
-}
-```
-
-#### 2. Create Webview
-```typescript
-// src/webviews/RoutesPanel.ts
-export class RoutesPanel {
-  static createOrShow(extensionUri: vscode.Uri) {
-    // Implementation similar to MigrationPanel
-  }
-}
-```
-
-#### 3. Register Command
-```typescript
-// In src/commands/registerCommands.ts
-vscode.commands.registerCommand('laravel-hero.open-routes', () => {
-  RoutesPanel.createOrShow(context.extensionUri);
-});
-```
-
-#### 4. Update Sidebar
-The sidebar already returns Routes menu item - just add the handler!
-
-### Architecture Patterns
-
-- **Service Layer**: Business logic in `services/`
-- **Provider Pattern**: TreeDataProvider for sidebar
-- **Message Passing**: Webview ↔ Extension via postMessage
-- **Singleton Pattern**: Panel instances (single active panel)
-- **Error Handling**: Always provide user feedback, never silent failures
+That's it! Laravel Hero will now use your custom PHP installation.
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Migrations don't load
-- ✅ Ensure Laravel project has `database/migrations` folder
-- ✅ Run `composer install` in your Laravel root
-- ✅ Check PHP is available: `php -v`
-- ✅ Set correct PHP path in settings if needed
-
-### "No data provider" error in sidebar
-- ✅ Reload VS Code window (Cmd+R / Ctrl+R)
-- ✅ Check Output panel for error details
-- ✅ Ensure workspace folder is open
-
-### Artisan commands timeout
-- ✅ Check Laravel project permissions
-- ✅ Verify no long-running migrations
-- ✅ Check network if using remote workspace
-
-### "PHP not found" error
-- ✅ Install PHP if missing
-- ✅ Or set `laravelHero.phpCommand` to correct path
-
-### View logs for debugging
-```
-Output Panel (Cmd+Shift+U) → Select "Laravel Hero"
-```
+| Problem | Solution |
+|---------|----------|
+| **Migrations won't load** | Ensure your Laravel project has `database/migrations` folder and run `composer install` |
+| **"PHP not found" error** | Install PHP or set `laravelHero.phpCommand` in settings to your PHP path |
+| **No sidebar icon appearing** | Reload VS Code (`Cmd+R`) and make sure a folder is open |
+| **Artisan commands timing out** | Check your Laravel project permissions and network (if remote) |
+| **Need more details?** | Check the Laravel Hero output channel (`Cmd+Shift+U`) for detailed logs |
 
 ---
 
-## 📊 Architecture Overview
+## 🎯 What's Coming Next?
 
-```
-┌─────────────────────────────────────────┐
-│        VS Code Extension Host           │
-│  ┌──────────────────────────────────┐   │
-│  │     Extension (extension.ts)     │   │
-│  │  • Initialize services           │   │
-│  │  • Register providers & commands │   │
-│  └──────────────────────────────────┘   │
-└─────────────────────────────────────────┘
-         ↓          ↓          ↓
-┌─────────────┐ ┌──────────────┐ ┌──────────────┐
-│  Commands   │ │   Sidebar    │ │   Webviews   │
-│  Registry   │ │  TreeView    │ │   Panels     │
-└─────────────┘ └──────────────┘ └──────────────┘
-         ↓          ↓          ↓
-┌─────────────────────────────────────────┐
-│            Service Layer                │
-│  • ArtisanService                       │
-│  • WorkspaceService                     │
-│  • LoggerService                        │
-└─────────────────────────────────────────┘
-         ↓
-┌─────────────────────────────────────────┐
-│       Laravel Project (Filesystem)       │
-│  • database/migrations                  │
-│  • artisan binary                       │
-│  • composer.json                        │
-└─────────────────────────────────────────┘
-```
+### Phase 2: Routes Management (Planned)
+- View all application routes
+- Search and filter routes
+- Test endpoints directly from the editor
+- Manage route groups
+
+### Phase 3: Package Management (Planned)
+- Browse installed Composer packages
+- View package documentation
+- Update packages safely
+- Manage dependencies
+
+---
+
+## 🤝 Want to Help?
+
+We're open source and love contributions! Whether it's bug reports, feature suggestions, or code contributions—we welcome all help.
+
+### Quick Links
+- **Found a bug?** [Report it on GitHub](https://github.com/munasinha/vscode-laravel-hero/issues)
+- **Have an idea?** [Start a discussion](https://github.com/munasinha/vscode-laravel-hero/discussions)
+- **Want to code?** Check [CONTRIBUTING.md](https://github.com/munasinha/vscode-laravel-hero/blob/master/CONTRIBUTING.md) for the full guide
 
 ---
 
 ## 📝 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+MIT License - See [LICENSE](LICENSE) for details. Free to use, modify, and distribute.
 
 ---
 
-## 🙏 Acknowledgments
+## ❤️ Made for Laravel Developers
 
-- Built following [VS Code Extension Best Practices](https://code.visualstudio.com/api)
-- Inspired by Laravel community tools
-- Thanks to all contributors and users
+Laravel Hero was built with a passion for Laravel development and a commitment to making your workflow seamless and enjoyable.
+
+**If you find this extension useful, please give it a ⭐ on [GitHub](https://github.com/munasinha/vscode-laravel-hero)**
 
 ---
 
-## 🔗 Links
-
-- [VS Code Extension API](https://code.visualstudio.com/api)
+### More Resources
 - [Laravel Documentation](https://laravel.com/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [VS Code Extension API](https://code.visualstudio.com/api)
+- [GitHub Repository](https://github.com/munasinha/vscode-laravel-hero)
 
 ---
 
-## 📧 Support
-
-- **Found a bug?** [Open an issue](https://github.com/munasinha/vscode-laravel-hero.git/issues)
-- **Have a feature request?** [Start a discussion](https://github.com/munasinha/vscode-laravel-hero.git/discussions)
-- **Want to contribute?** See [Contributing](#contributing) section
-
----
-
-<div align="center">
-
-**Made with ❤️ for Laravel developers**
-
-⭐ If you find this extension useful, please give it a star on GitHub!
-
-</div>
+**Questions?** Open an issue or start a discussion on GitHub. We're here to help!
