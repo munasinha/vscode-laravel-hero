@@ -1,105 +1,109 @@
 {
-  "name": "laraval-hero",
-  "icon": "media/logo.png",
-  "displayName": "Laraval Hero",
-  "publisher": "navod-rashmika",
-  "description": "Laravel Hero is a VS Code extension that brings powerful Laravel development tools directly into your editor. Manage database migrations, view routes, manage packages, and more. All without leaving VS Code.",
-  "version": "0.1.0",
-  "engines": {
-    "vscode": "^1.107.0"
-  },
-  "license": "MIT",
-  "categories": [
-    "Other"
-  ],
-  "keywords": [
-    "laravel",
-    "php"
-  ],
-  "activationEvents": [],
-  "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "laraval-hero.openView",
-        "title": "Laravel Hero: Toggle Sidebar",
-        "category": "Laravel Hero"
-      },
-      {
-        "command": "laraval-hero.open-migrations",
-        "title": "Open Migrations",
-        "category": "Laravel Hero",
-        "icon": "$(database)"
-      },
-      {
-        "command": "laraval-hero.open-routes",
-        "title": "Open Routes",
-        "category": "Laravel Hero",
-        "icon": "$(git-branch)"
-      },
-      {
-        "command": "laraval-hero.open-packages",
-        "title": "Open Packages",
-        "category": "Laravel Hero",
-        "icon": "$(package)"
-      },
-      {
-        "command": "laraval-hero.showOutput",
-        "title": "Show Output",
-        "category": "Laravel Hero"
-      }
-    ],
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "laravelHeroContainer",
-          "title": "Laravel Hero",
-          "icon": "media/icon.svg"
-        }
-      ]
-    },
-    "views": {
-      "laravelHeroContainer": [
-        {
-          "id": "laraval-hero.main-panel",
-          "name": "Laravel Hero",
-          "icon": "media/icon.svg"
-        }
-      ]
-    }
-  },
-  "configuration": {
-    "title": "Laravel Hero",
-    "properties": {
-      "laravelHero.phpCommand": {
-        "type": "string",
-        "default": "php",
-        "description": "Path to the PHP executable (e.g. /usr/bin/php, /opt/homebrew/bin/php). Default is 'php'."
-      }
-    }
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.107.0",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "22.x",
-    "typescript-eslint": "^8.48.1",
-    "eslint": "^9.39.1",
-    "typescript": "^5.9.3",
-    "ts-loader": "^9.5.4",
-    "webpack": "^5.103.0",
-    "webpack-cli": "^6.0.1",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
-  }
+	"name": "laraval-hero",
+	"icon": "media/logo.png",
+	"displayName": "Laraval Hero",
+	"publisher": "navod-rashmika",
+	"description": "Laravel Hero is a VS Code extension that brings powerful Laravel development tools directly into your editor. Manage database migrations, view routes, manage packages, and more. All without leaving VS Code.",
+	"version": "0.1.0",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/munasinha/vscode-laraval-hero.git"
+	},
+	"engines": {
+		"vscode": "^1.107.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"laravel",
+		"php"
+	],
+	"activationEvents": [],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "laraval-hero.openView",
+				"title": "Laravel Hero: Toggle Sidebar",
+				"category": "Laravel Hero"
+			},
+			{
+				"command": "laraval-hero.open-migrations",
+				"title": "Open Migrations",
+				"category": "Laravel Hero",
+				"icon": "$(database)"
+			},
+			{
+				"command": "laraval-hero.open-routes",
+				"title": "Open Routes",
+				"category": "Laravel Hero",
+				"icon": "$(git-branch)"
+			},
+			{
+				"command": "laraval-hero.open-packages",
+				"title": "Open Packages",
+				"category": "Laravel Hero",
+				"icon": "$(package)"
+			},
+			{
+				"command": "laraval-hero.showOutput",
+				"title": "Show Output",
+				"category": "Laravel Hero"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "laravelHeroContainer",
+					"title": "Laravel Hero",
+					"icon": "media/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"laravelHeroContainer": [
+				{
+					"id": "laraval-hero.main-panel",
+					"name": "Laravel Hero",
+					"icon": "media/icon.svg"
+				}
+			]
+		}
+	},
+	"configuration": {
+		"title": "Laravel Hero",
+		"properties": {
+			"laravelHero.phpCommand": {
+				"type": "string",
+				"default": "php",
+				"description": "Path to the PHP executable (e.g. /usr/bin/php, /opt/homebrew/bin/php). Default is 'php'."
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.107.0",
+		"@types/mocha": "^10.0.10",
+		"@types/node": "22.x",
+		"typescript-eslint": "^8.48.1",
+		"eslint": "^9.39.1",
+		"typescript": "^5.9.3",
+		"ts-loader": "^9.5.4",
+		"webpack": "^5.103.0",
+		"webpack-cli": "^6.0.1",
+		"@vscode/test-cli": "^0.0.12",
+		"@vscode/test-electron": "^2.5.2"
+	}
 }
