@@ -5,8 +5,8 @@ import { WebviewUtils } from '../lib/webviewUtils';
 import { LoggerService } from '../../services/LoggerService';
 import { ArtisanService } from '../../services/ArtisanService';
 
-
 export class MigrationPanel {
+
 	public static currentPanel: MigrationPanel | undefined;
 
 	private readonly _panel: vscode.WebviewPanel;
@@ -15,6 +15,7 @@ export class MigrationPanel {
 	private _disposables: vscode.Disposable[] = [];
 
 	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
+		
 		this._panel = panel;
 		this._extensionUri = extensionUri;
 		this._artisan = new ArtisanService();
