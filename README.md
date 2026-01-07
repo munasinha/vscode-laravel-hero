@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Laravel Hero Icon](media/icon.svg)
+![Laravel Hero Icon](media/logo.png)
 
 **A powerful VS Code extension for Laravel developers**
 
@@ -10,8 +10,6 @@
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.107.0%2B-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9%2B-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen)](#contributing)
-
-[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Development](#development) • [Contributing](#contributing)
 
 </div>
 
@@ -66,7 +64,7 @@ Manage Composer packages, view documentation, and handle dependencies.
 ### Manual Installation
 \`\`\`bash
 # Clone the repository
-git clone https://github.com/yourusername/laravel-hero.git
+git clone https://github.com/munasinha/vscode-laraval-hero.git
 cd laravel-hero
 
 # Install dependencies
