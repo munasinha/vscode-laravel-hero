@@ -1,26 +1,44 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { LaravelHeroSidebar } from './providers/LaravelHeroSidebar';
+import { registerCommands } from './commands/registerCommands';
+import { LoggerService } from './services/LoggerService';
+import { WorkspaceService } from './services/WorkspaceService';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	LoggerService.initialize();
+	LoggerService.info('=== Laravel Hero Extension Activating ===');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "laraval-hero" is now active!');
+	try {
+		// Register the sidebar TreeDataProvider
+		LoggerService.info('Registering sidebar TreeDataProvider...');
+		const sidebar = new LaravelHeroSidebar();
+		context.subscriptions.push(
+			vscode.window.registerTreeDataProvider('laraval-hero.main-panel', sidebar)
+		);
+		LoggerService.info('✓ Sidebar registered successfully');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('laraval-hero.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Laraval Hero!');
-	});
+		// Register all commands
+		registerCommands(context);
 
-	context.subscriptions.push(disposable);
+		// Check workspace on activation
+		try {
+			if (WorkspaceService.isLaravelProject()) {
+				LoggerService.info('✓ Laravel project detected');
+				vscode.window.showInformationMessage('Laravel Hero: Ready!');
+			} else {
+				LoggerService.warn('No Laravel project detected in workspace');
+			}
+		} catch (err) {
+			LoggerService.warn('Could not verify Laravel project', err);
+		}
+
+		LoggerService.info('=== Laravel Hero Extension Activated ===');
+	} catch (error) {
+		LoggerService.error('Failed to activate extension', error);
+		vscode.window.showErrorMessage(`Laravel Hero activation failed: ${error}`);
+	}
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	LoggerService.info('Laravel Hero Extension Deactivating');
+}

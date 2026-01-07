@@ -14,10 +14,62 @@
   "contributes": {
     "commands": [
       {
-        "command": "laraval-hero.helloWorld",
-        "title": "Hello World"
+        "command": "laraval-hero.openView",
+        "title": "Laravel Hero: Toggle Sidebar",
+        "category": "Laravel Hero"
+      },
+      {
+        "command": "laraval-hero.open-migrations",
+        "title": "Open Migrations",
+        "category": "Laravel Hero",
+        "icon": "$(database)"
+      },
+      {
+        "command": "laraval-hero.open-routes",
+        "title": "Open Routes",
+        "category": "Laravel Hero",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "laraval-hero.open-packages",
+        "title": "Open Packages",
+        "category": "Laravel Hero",
+        "icon": "$(package)"
+      },
+      {
+        "command": "laraval-hero.showOutput",
+        "title": "Show Output",
+        "category": "Laravel Hero"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "laravelHeroContainer",
+          "title": "Laravel Hero",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "laravelHeroContainer": [
+        {
+          "id": "laraval-hero.main-panel",
+          "name": "Laravel Hero",
+          "icon": "media/icon.svg"
+        }
+      ]
+    }
+  },
+  "configuration": {
+    "title": "Laravel Hero",
+    "properties": {
+      "laravelHero.phpCommand": {
+        "type": "string",
+        "default": "php",
+        "description": "Path to the PHP executable (e.g. /usr/bin/php, /opt/homebrew/bin/php). Default is 'php'."
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
