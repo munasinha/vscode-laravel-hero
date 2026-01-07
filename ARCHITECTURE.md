@@ -38,11 +38,11 @@ src/
 │
 ├── commands/
 │   └── registerCommands.ts               # All extension commands registration
-│       ├── laraval-hero.openView
-│       ├── laraval-hero.open-migrations
-│       ├── laraval-hero.open-routes
-│       ├── laraval-hero.open-packages
-│       └── laraval-hero.showOutput
+│       ├── laravel-hero.openView
+│       ├── laravel-hero.open-migrations
+│       ├── laravel-hero.open-routes
+│       ├── laravel-hero.open-packages
+│       └── laravel-hero.showOutput
 │
 ├── providers/
 │   └── LaravelHeroSidebar.ts             # TreeDataProvider for sidebar menu
@@ -129,23 +129,23 @@ activate()
 
 **All commands:**
 ```
-laraval-hero.openView
+laravel-hero.openView
   → Execute: vscode.commands.executeCommand('workbench.view.extension.laravelHeroContainer')
   → Effect: Focus sidebar panel
 
-laraval-hero.open-migrations
+laravel-hero.open-migrations
   → Execute: MigrationPanel.createOrShow()
   → Effect: Open webview panel for migrations
 
-laraval-hero.open-routes
+laravel-hero.open-routes
   → Execute: Show placeholder message
   → Effect: Ready for Phase 2 implementation
 
-laraval-hero.open-packages
+laravel-hero.open-packages
   → Execute: Show placeholder message
   → Effect: Ready for Phase 2 implementation
 
-laraval-hero.showOutput
+laravel-hero.showOutput
   → Execute: LoggerService.show()
   → Effect: Display Laravel Hero output channel
 ```
@@ -184,10 +184,10 @@ Packages (icon: package) → open-packages command
 To add a new menu item, just add it to the array in `getChildren()`:
 ```typescript
 const items = [
-  new SidebarItem('Migrations', 'laraval-hero.open-migrations'),
-  new SidebarItem('Routes', 'laraval-hero.open-routes'),
-  new SidebarItem('Packages', 'laraval-hero.open-packages'),
-  new SidebarItem('Seeders', 'laraval-hero.open-seeders'), // Add here
+  new SidebarItem('Migrations', 'laravel-hero.open-migrations'),
+  new SidebarItem('Routes', 'laravel-hero.open-routes'),
+  new SidebarItem('Packages', 'laravel-hero.open-packages'),
+  new SidebarItem('Seeders', 'laravel-hero.open-seeders'), // Add here
 ];
 ```
 
@@ -448,7 +448,7 @@ LaravelHeroSidebar.getChildren() runs
   ↓
 User clicks item
   ↓
-Command 'laraval-hero.open-migrations' executes
+Command 'laravel-hero.open-migrations' executes
   ↓
 MigrationPanel.createOrShow() runs
   ├─ Create WebviewPanel
@@ -643,7 +643,7 @@ export class SeedersPanel {
 3. **Register Command** (update `commands/registerCommands.ts`):
 ```typescript
 context.subscriptions.push(
-  vscode.commands.registerCommand('laraval-hero.open-seeders', () => {
+  vscode.commands.registerCommand('laravel-hero.open-seeders', () => {
     SeedersPanel.createOrShow(context.extensionUri);
   })
 );
@@ -652,10 +652,10 @@ context.subscriptions.push(
 4. **Update Sidebar** (update `providers/LaravelHeroSidebar.ts`):
 ```typescript
 const items = [
-  new SidebarItem('Migrations', 'laraval-hero.open-migrations'),
-  new SidebarItem('Routes', 'laraval-hero.open-routes'),
-  new SidebarItem('Packages', 'laraval-hero.open-packages'),
-  new SidebarItem('Seeders', 'laraval-hero.open-seeders'), // Add here
+  new SidebarItem('Migrations', 'laravel-hero.open-migrations'),
+  new SidebarItem('Routes', 'laravel-hero.open-routes'),
+  new SidebarItem('Packages', 'laravel-hero.open-packages'),
+  new SidebarItem('Seeders', 'laravel-hero.open-seeders'), // Add here
 ];
 ```
 

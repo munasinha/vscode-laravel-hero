@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Laravel Hero Icon](https://raw.githubusercontent.com/munasinha/vscode-laraval-hero/refs/heads/master/media/logo.png)
+![Laravel Hero Icon](https://raw.githubusercontent.com/munasinha/vscode-laravel-hero/refs/heads/master/media/logo.png)
 
 **A powerful VS Code extension for Laravel developers**
 
@@ -64,7 +64,7 @@ Manage Composer packages, view documentation, and handle dependencies.
 ### Manual Installation
 ```bash
 # Clone the repository
-git clone https://github.com/munasinha/vscode-laraval-hero.git
+git clone https://github.com/munasinha/vscode-laravel-hero.git
 cd laravel-hero
 
 # Install dependencies
@@ -151,7 +151,7 @@ If your PHP executable is in a non-standard location:
 
 ```bash
 # Clone repository
-git clone https://github.com/munasinha/vscode-laraval-hero.git
+git clone https://github.com/munasinha/vscode-laravel-hero.git
 cd laravel-hero
 
 # Install dependencies
@@ -228,7 +228,7 @@ We welcome contributions from the community! Whether it's bug fixes, new feature
 1. **Fork the repository** on GitHub
 2. **Clone your fork:**
    \`\`\`bash
-   git clone https://github.com/munasinha/vscode-laraval-hero.git
+   git clone https://github.com/munasinha/vscode-laravel-hero.git
    cd laravel-hero
    \`\`\`
 3. **Create a feature branch:**
@@ -289,7 +289,7 @@ export class RoutesPanel {
 #### 3. Register Command
 ```typescript
 // In src/commands/registerCommands.ts
-vscode.commands.registerCommand('laraval-hero.open-routes', () => {
+vscode.commands.registerCommand('laravel-hero.open-routes', () => {
   RoutesPanel.createOrShow(context.extensionUri);
 });
 ```
@@ -394,8 +394,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📧 Support
 
-- **Found a bug?** [Open an issue](https://github.com/munasinha/vscode-laraval-hero.git/issues)
-- **Have a feature request?** [Start a discussion](https://github.com/munasinha/vscode-laraval-hero.git/discussions)
+- **Found a bug?** [Open an issue](https://github.com/munasinha/vscode-laravel-hero.git/issues)
+- **Have a feature request?** [Start a discussion](https://github.com/munasinha/vscode-laravel-hero.git/discussions)
 - **Want to contribute?** See [Contributing](#contributing) section
 
 ---

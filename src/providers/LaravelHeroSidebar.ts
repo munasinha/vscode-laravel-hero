@@ -19,9 +19,9 @@ export class SidebarItem extends vscode.TreeItem {
 
 	private getIcon(): vscode.ThemeIcon {
 		const icons: { [key: string]: string } = {
-			'laraval-hero.open-migrations': 'database',
-			'laraval-hero.open-routes': 'git-branch',
-			'laraval-hero.open-packages': 'package'
+			'laravel-hero.open-migrations': 'database',
+			'laravel-hero.open-routes': 'git-branch',
+			'laravel-hero.open-packages': 'package'
 		};
 		return new vscode.ThemeIcon(icons[this.commandId] || 'symbol-constant');
 	}
@@ -48,9 +48,9 @@ export class LaravelHeroSidebar implements vscode.TreeDataProvider<SidebarItem> 
 	getChildren(_element?: SidebarItem): Thenable<SidebarItem[]> {
 		// Root level items - these are the main features
 		const items = [
-			new SidebarItem('Migrations', 'laraval-hero.open-migrations', 'Manage database migrations'),
-			new SidebarItem('Routes', 'laraval-hero.open-routes', 'View and test API routes'),
-			new SidebarItem('Packages', 'laraval-hero.open-packages', 'Manage Laravel packages')
+			new SidebarItem('Migrations', 'laravel-hero.open-migrations', 'Manage database migrations'),
+			new SidebarItem('Routes', 'laravel-hero.open-routes', 'View and test API routes'),
+			new SidebarItem('Packages', 'laravel-hero.open-packages', 'Manage Laravel packages')
 		];
 
 		return Promise.resolve(items);

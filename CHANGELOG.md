@@ -106,13 +106,13 @@ This is the first public release (v0.1.0). No migration needed.
 
 ## Feedback & Support
 
-- **Issues**: [GitHub Issues](https://github.com/munasinha/vscode-laraval-hero/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/munasinha/vscode-laraval-hero/discussions)
+- **Issues**: [GitHub Issues](https://github.com/munasinha/vscode-laravel-hero/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/munasinha/vscode-laravel-hero/discussions)
 - **Security**: Please email security concerns to [your-email@example.com]
 
 ---
 
 [Keep a Changelog]: https://keepachangelog.com/
 [Semantic Versioning]: https://semver.org/
-[Unreleased]: https://github.com/munasinha/vscode-laraval-hero/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/munasinha/vscode-laraval-hero/releases/tag/v0.1.0
+[Unreleased]: https://github.com/munasinha/vscode-laravel-hero/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/munasinha/vscode-laravel-hero/releases/tag/v0.1.0

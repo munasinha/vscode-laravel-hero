@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 		LoggerService.info('Registering sidebar TreeDataProvider...');
 		const sidebar = new LaravelHeroSidebar();
 		context.subscriptions.push(
-			vscode.window.registerTreeDataProvider('laraval-hero.main-panel', sidebar)
+			vscode.window.registerTreeDataProvider('laravel-hero.main-panel', sidebar)
 		);
 		LoggerService.info('✓ Sidebar registered successfully');
 

@@ -38,7 +38,7 @@ Thank you for your interest in contributing to Laravel Hero! We welcome contribu
 
 ```bash
 # Clone the repository
-git clone https://github.com/munasinha/vscode-laraval-hero.git
+git clone https://github.com/munasinha/vscode-laravel-hero.git
 cd laravel-hero
 
 # Install dependencies
@@ -122,7 +122,7 @@ export class RoutesPanel {
 3. **Register the command** (update `src/commands/registerCommands.ts`):
 ```typescript
 context.subscriptions.push(
-  vscode.commands.registerCommand('laraval-hero.open-routes', () => {
+  vscode.commands.registerCommand('laravel-hero.open-routes', () => {
     LoggerService.info('open-routes command triggered');
     RoutesPanel.createOrShow(context.extensionUri);
   })
