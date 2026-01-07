@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Laravel Hero Icon](media/logo.png)
+![Laravel Hero Icon](https://raw.githubusercontent.com/munasinha/vscode-laraval-hero/refs/heads/master/media/logo.png)
 
 **A powerful VS Code extension for Laravel developers**
 
