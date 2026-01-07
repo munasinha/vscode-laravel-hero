@@ -163,7 +163,7 @@ npm run watch
 
 ### Project Structure
 
-\`\`\`
+```
 src/
 ├── extension.ts                    # Activation entry point
 ├── commands/
@@ -180,7 +180,7 @@ src/
 │   └── WorkspaceService.ts         # Workspace validation & context
 └── utils/
     └── getNonce.ts                 # Security utilities
-\`\`\`
+```
 
 ### Build & Test
 
@@ -338,7 +338,7 @@ Output Panel (Cmd+Shift+U) → Select "Laravel Hero"
 
 ## 📊 Architecture Overview
 
-\`\`\`
+```
 ┌─────────────────────────────────────────┐
 │        VS Code Extension Host           │
 │  ┌──────────────────────────────────┐   │
