@@ -62,7 +62,7 @@ Manage Composer packages, view documentation, and handle dependencies.
 4. Click Install
 
 ### Manual Installation
-\`\`\`bash
+```bash
 # Clone the repository
 git clone https://github.com/munasinha/vscode-laraval-hero.git
 cd laravel-hero
@@ -75,7 +75,7 @@ npm run package
 
 # Install the .vsix file
 # Open VS Code → Extensions → ... menu → Install from VSIX
-\`\`\`
+```
 
 ---
 
@@ -149,7 +149,7 @@ If your PHP executable is in a non-standard location:
 
 ### Setup
 
-\`\`\`bash
+```bash
 # Clone repository
 git clone https://github.com/munasinha/vscode-laraval-hero.git
 cd laravel-hero
@@ -159,7 +159,7 @@ npm install
 
 # Start development mode (watch & compile)
 npm run watch
-\`\`\`
+```
 
 ### Project Structure
 
@@ -184,7 +184,7 @@ src/
 
 ### Build & Test
 
-\`\`\`bash
+```bash
 # Compile TypeScript to JavaScript
 npm run compile
 
@@ -196,7 +196,7 @@ npm run package
 
 # Run linter
 npm run lint
-\`\`\`
+```
 
 ### Debug the Extension
 
@@ -209,13 +209,13 @@ npm run lint
 
 ### Testing
 
-\`\`\`bash
+```bash
 # Run tests
 npm run test
 
 # Watch mode for tests
 npm run watch-tests
-\`\`\`
+```
 
 ---
 
@@ -248,13 +248,13 @@ We welcome contributions from the community! Whether it's bug fixes, new feature
 ### Commit Messages
 
 Follow conventional commits:
-\`\`\`
+```
 feat: add routes panel
 fix: handle missing artisan gracefully
 docs: update installation guide
 refactor: improve error handling
 test: add migration service tests
-\`\`\`
+```
 
 ### Pull Request Process
 
@@ -267,32 +267,32 @@ test: add migration service tests
 ### Adding New Features (e.g., Routes Panel)
 
 #### 1. Create Service
-\`\`\`typescript
+```typescript
 // src/services/RoutesService.ts
 export class RoutesService {
   async getRoutes(): Promise<RouteInfo[]> {
     // Implementation
   }
 }
-\`\`\`
+```
 
 #### 2. Create Webview
-\`\`\`typescript
+```typescript
 // src/webviews/RoutesPanel.ts
 export class RoutesPanel {
   static createOrShow(extensionUri: vscode.Uri) {
     // Implementation similar to MigrationPanel
   }
 }
-\`\`\`
+```
 
 #### 3. Register Command
-\`\`\`typescript
+```typescript
 // In src/commands/registerCommands.ts
 vscode.commands.registerCommand('laraval-hero.open-routes', () => {
   RoutesPanel.createOrShow(context.extensionUri);
 });
-\`\`\`
+```
 
 #### 4. Update Sidebar
 The sidebar already returns Routes menu item - just add the handler!
@@ -330,9 +330,9 @@ The sidebar already returns Routes menu item - just add the handler!
 - ✅ Or set `laravelHero.phpCommand` to correct path
 
 ### View logs for debugging
-\`\`\`
+```
 Output Panel (Cmd+Shift+U) → Select "Laravel Hero"
-\`\`\`
+```
 
 ---
 
@@ -366,7 +366,7 @@ Output Panel (Cmd+Shift+U) → Select "Laravel Hero"
 │  • artisan binary                       │
 │  • composer.json                        │
 └─────────────────────────────────────────┘
-\`\`\`
+```
 
 ---
 
