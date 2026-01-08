@@ -178,7 +178,7 @@ function renderTable(items) {
 		if (migrations.length === 0) {
 			list.innerHTML = `
 				<tr>
-					<td colspan="5" class="empty-state">
+					<td colspan="6" class="empty-state">
 						<span class="empty-state-icon">📂</span>
 						<strong>No migrations found</strong>
 						<p>Start by creating your first migration</p>
@@ -188,7 +188,7 @@ function renderTable(items) {
 		} else {
 			list.innerHTML = `
 				<tr>
-					<td colspan="5" class="no-results">
+					<td colspan="6" class="no-results">
 						No migrations match your search
 					</td>
 				</tr>
@@ -207,6 +207,9 @@ function renderTable(items) {
 			<td><span class="${m.ran ? 'status-ran' : 'status-pending'}">${m.ran ? '✓ Migrated' : '○ Pending'}</span></td>
 			<td>${m.batch || '-'}</td>
 			<td>
+				<button class="inline-button file-button" data-action="open-file" data-migration="${m.name}" title="Open migration file">📄 Open</button>
+			</td>
+			<td>
 				<button class="inline-button" ${isRanAttr} data-action="run" data-migration="${m.name}">Run</button>
 				<button class="inline-button secondary" data-action="force-run" data-migration="${m.name}">Force</button>
 			</td>
@@ -215,6 +218,7 @@ function renderTable(items) {
 		// Add event listeners to buttons
 		const runBtn = tr.querySelector('[data-action="run"]');
 		const forceBtn = tr.querySelector('[data-action="force-run"]');
+		const fileBtn = tr.querySelector('[data-action="open-file"]');
 		
 		runBtn.addEventListener('click', (e) => {
 			e.preventDefault();
@@ -226,6 +230,12 @@ function renderTable(items) {
 			e.preventDefault();
 			const migName = e.target.getAttribute('data-migration');
 			vscode.postMessage({ command: 'request-confirm', action: 'force-run-migration', migration: migName, message: `Force run migration '${migName}'? This will re-run it even if already executed.` });
+		});
+		
+		fileBtn.addEventListener('click', (e) => {
+			e.preventDefault();
+			const migName = e.target.getAttribute('data-migration');
+			vscode.postMessage({ command: 'open-migration-file', migration: migName });
 		});
 		
 		list.appendChild(tr);

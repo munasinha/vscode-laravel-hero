@@ -119,6 +119,15 @@ code {
 	background-color: var(--vscode-button-secondaryHoverBackground);
 }
 
+.inline-button.file-button {
+	background-color: var(--vscode-button-background);
+	color: var(--vscode-button-foreground);
+}
+
+.inline-button.file-button:hover:not(:disabled) {
+	background-color: var(--vscode-button-hoverBackground);
+}
+
 /* Search Container */
 .search-container {
 	display: flex;

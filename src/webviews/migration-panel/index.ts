@@ -129,6 +129,10 @@ export class MigrationPanel {
 					await this._createMigration(message.name);
 					break;
 
+				case 'open-migration-file':
+					await this._openMigrationFile(message.migration);
+					break;
+
 				default:
 					LoggerService.warn(`Unknown command from webview: ${message.command}`);
 			}
@@ -340,5 +344,46 @@ export class MigrationPanel {
 			scriptContent,
 			additionalStyles
 		);
+	}
+
+	/**
+	 * Open a migration file in the editor.
+	 */
+	private async _openMigrationFile(migrationName: string): Promise<void> {
+		try {
+			LoggerService.info(`Opening migration file: ${migrationName}`);
+
+			// Get the workspace folder
+			const workspaceFolders = vscode.workspace.workspaceFolders;
+			if (!workspaceFolders || workspaceFolders.length === 0) {
+				vscode.window.showErrorMessage('No workspace folder is open');
+				return;
+			}
+
+			const workspaceRoot = workspaceFolders[0].uri;
+
+			// Construct the migration file path
+			// Migrations are typically in database/migrations/
+			const migrationPath = vscode.Uri.joinPath(workspaceRoot, 'database', 'migrations', `${migrationName}.php`);
+
+			// Check if file exists
+			try {
+				await vscode.workspace.fs.stat(migrationPath);
+			} catch (err) {
+				LoggerService.error(`Migration file not found: ${migrationPath.fsPath}`);
+				vscode.window.showErrorMessage(`Migration file not found: database/migrations/${migrationName}.php`);
+				return;
+			}
+
+			// Open the file in the editor
+			const document = await vscode.workspace.openTextDocument(migrationPath);
+			await vscode.window.showTextDocument(document);
+
+			LoggerService.info(`Successfully opened migration file: ${migrationName}`);
+		} catch (err) {
+			const errorMsg = err instanceof Error ? err.message : String(err);
+			LoggerService.error(`Failed to open migration file: ${migrationName}`, err);
+			vscode.window.showErrorMessage(`Failed to open migration file: ${errorMsg}`);
+		}
 	}
 }
