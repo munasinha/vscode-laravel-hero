@@ -2,7 +2,11 @@
 
 <div align="center">
 
-![Laravel Hero Icon](https://raw.githubusercontent.com/munasinha/vscode-laravel-hero/refs/heads/master/media/logo.png)
+  <img style="height:200px; width:200px" src="https://raw.githubusercontent.com/munasinha/vscode-laravel-hero/refs/heads/master/media/logo.png">
+
+</div>
+
+<div align="center">
 
 **Supercharge Your Laravel Development Workflow in VS Code**
 
@@ -16,7 +20,7 @@
 
 ## What is Laravel Hero?
 
-**Laravel Hero** is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal—manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
+[Laravel Hero](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero) is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
 
 Currently focused on **database migrations** with plans for routes and package management in upcoming releases.
 
@@ -26,19 +30,19 @@ Currently focused on **database migrations** with plans for routes and package m
 
 ### 🗄️ **Database Migrations Management**
 - **View all migrations** in a clean, organized interface
-- **Track status** at a glance—see which migrations are pending and which have been applied
-- **Run migrations** with a single click—no terminal needed
+- **Track status** at a glance see which migrations are pending and which have been applied
+- **Run migrations** with a single click no terminal needed
 - **Create new migrations** instantly through an intuitive dialog
 - **Force re-run migrations** for development and testing
 - **Auto-refresh** after every operation
-- **Offline mode**—still see your migrations even if Laravel commands are unavailable
+- **Offline mode** still see your migrations even if Laravel commands are unavailable
 
 ### 🎯 **Built for Developers**
-- **Native VS Code UI**—feels like part of the editor, not a plugin
-- **Detailed logging**—see exactly what's happening in the "Laravel Hero" output panel
-- **Custom PHP paths**—support for any PHP installation
-- **Smart error handling**—helpful messages when things go wrong
-- **Production-ready code**—built with TypeScript, tested, and following VS Code best practices
+- **Native VS Code UI** — feels like part of the editor, not a plugin
+- **Detailed logging** — see exactly what's happening in the "Laravel Hero" output panel
+- **Custom PHP paths** — support for any PHP installation
+- **Smart error handling** — helpful messages when things go wrong
+- **Production-ready code** — built with TypeScript, tested, and following VS Code best practices
 
 ---
 
@@ -67,6 +71,12 @@ Currently focused on **database migrations** with plans for routes and package m
 3. Your webview panel opens showing all database migrations
 4. Green checkmarks mean **migrated**, circles mean **pending**
 
+<div align="center" style="margin-top:30px; margin-bottom:30px;">
+
+  <img style="height:500px; width:auto" src="media/overview/laravel-heo-migration.png">
+
+</div>
+
 ### Run a Migration
 - Click **"Run"** on any pending migration → Confirm → Done! ✓
 
@@ -83,11 +93,6 @@ Currently focused on **database migrations** with plans for routes and package m
 - Click **"⚡ Force Run"** on any migration
 - Perfect for development and debugging
 - Works on already-migrated migrations
-
-### See What's Happening
-1. Open VS Code's **Output panel** (`Cmd+Shift+U`)
-2. Select **"Laravel Hero"** from the dropdown
-3. Watch real-time logs of all operations
 
 ---
 
