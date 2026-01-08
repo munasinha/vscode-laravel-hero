@@ -1,9 +1,13 @@
 const vscode = acquireVsCodeApi();
 let migrations = [];
+let filteredMigrations = [];
+let currentSort = { column: 'index', direction: 'asc' };
 
 // DOM Elements
 const list = document.getElementById('migration-list');
 const errorContainer = document.getElementById('error-container');
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
 const refreshBtn = document.getElementById('refresh-btn');
 const runAllBtn = document.getElementById('run-all-btn');
 const runAllForcedBtn = document.getElementById('run-all-forced-btn');
@@ -26,6 +30,100 @@ createBtn.addEventListener('click', () => {
 	vscode.postMessage({ command: 'show-create-dialog' });
 });
 
+// Search functionality
+searchInput.addEventListener('input', (e) => {
+	const searchTerm = e.target.value.toLowerCase();
+	filterAndRender(searchTerm);
+});
+
+// Column sorting
+document.querySelectorAll('th.sortable').forEach(header => {
+	header.addEventListener('click', () => {
+		const column = header.getAttribute('data-sort');
+		toggleSort(column);
+		filterAndRender(searchInput.value.toLowerCase());
+	});
+});
+
+function toggleSort(column) {
+	if (currentSort.column === column) {
+		currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+	} else {
+		currentSort.column = column;
+		currentSort.direction = 'asc';
+	}
+	updateSortIndicators();
+}
+
+function updateSortIndicators() {
+	document.querySelectorAll('th.sortable').forEach(header => {
+		header.classList.remove('sort-asc', 'sort-desc');
+		if (header.getAttribute('data-sort') === currentSort.column) {
+			header.classList.add(`sort-${currentSort.direction}`);
+		}
+	});
+}
+
+function filterAndRender(searchTerm) {
+	// Filter migrations based on search term
+	if (searchTerm.trim() === '') {
+		filteredMigrations = [...migrations];
+	} else {
+		filteredMigrations = migrations.filter(m => 
+			m.name.toLowerCase().includes(searchTerm) ||
+			(m.batch && m.batch.toString().includes(searchTerm)) ||
+			(m.ran ? 'migrated' : 'pending').includes(searchTerm)
+		);
+	}
+
+	// Sort filtered migrations
+	sortMigrations();
+
+	// Render table
+	renderTable(filteredMigrations);
+
+	// Update search results count
+	updateSearchResults();
+}
+
+function sortMigrations() {
+	const compareFunction = (a, b) => {
+		let valueA, valueB;
+
+		switch (currentSort.column) {
+			case 'name':
+				valueA = a.name.toLowerCase();
+				valueB = b.name.toLowerCase();
+				break;
+			case 'status':
+				valueA = a.ran ? 1 : 0;
+				valueB = b.ran ? 1 : 0;
+				break;
+			case 'batch':
+				valueA = a.batch || 0;
+				valueB = b.batch || 0;
+				break;
+			case 'index':
+			default:
+				return 0; // Keep original order for index
+		}
+
+		if (valueA < valueB) return currentSort.direction === 'asc' ? -1 : 1;
+		if (valueA > valueB) return currentSort.direction === 'asc' ? 1 : -1;
+		return 0;
+	};
+
+	filteredMigrations.sort(compareFunction);
+}
+
+function updateSearchResults() {
+	if (searchInput.value.trim() === '') {
+		searchResults.textContent = '';
+	} else {
+		searchResults.textContent = `${filteredMigrations.length} of ${migrations.length} results`;
+	}
+}
+
 // Handle messages from extension
 window.addEventListener('message', event => {
 	const message = event.data;
@@ -33,11 +131,13 @@ window.addEventListener('message', event => {
 	switch (message.command) {
 		case 'migrations-loaded':
 			migrations = message.data || [];
+			filteredMigrations = [...migrations];
 			errorContainer.innerHTML = '';
 			if (message.error) {
 				showWarning(message.error);
 			}
-			renderTable(migrations);
+			searchInput.value = '';
+			filterAndRender('');
 			break;
 
 		case 'migration-running':
@@ -73,14 +173,32 @@ function showWarning(msg) {
 
 function renderTable(items) {
 	list.innerHTML = '';
+
 	if (!items || items.length === 0) {
-		list.innerHTML = '<tr><td colspan="5">No migrations found.</td></tr>';
+		if (migrations.length === 0) {
+			list.innerHTML = `
+				<tr>
+					<td colspan="5" class="empty-state">
+						<span class="empty-state-icon">📂</span>
+						<strong>No migrations found</strong>
+						<p>Start by creating your first migration</p>
+					</td>
+				</tr>
+			`;
+		} else {
+			list.innerHTML = `
+				<tr>
+					<td colspan="5" class="no-results">
+						No migrations match your search
+					</td>
+				</tr>
+			`;
+		}
 		return;
 	}
 
 	items.forEach((m, index) => {
 		const tr = document.createElement('tr');
-		const isRan = m.ran ? 'disabled' : '';
 		const isRanAttr = m.ran ? 'disabled' : '';
 		
 		tr.innerHTML = `

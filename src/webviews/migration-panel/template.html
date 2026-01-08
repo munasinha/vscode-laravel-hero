@@ -14,17 +14,30 @@
 
 <div id="error-container"></div>
 
+<div class="search-container">
+	<input 
+		id="search-input" 
+		type="text" 
+		class="search-input" 
+		placeholder="🔍 Search migrations..."
+	>
+	<span id="search-results" class="search-results"></span>
+</div>
+
 <table>
 	<thead>
 		<tr>
-			<th>#</th>
-			<th>Migration Name</th>
-			<th>Status</th>
-			<th>Batch</th>
+			<th class="sortable" data-sort="index">#</th>
+			<th class="sortable" data-sort="name">Migration Name</th>
+			<th class="sortable" data-sort="status">Status</th>
+			<th class="sortable" data-sort="batch">Batch</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody id="migration-list">
-		<tr><td colspan="5" class="loading"><span class="spinner"></span> Loading migrations...</td></tr>
+		<tr><td colspan="5" class="loading-row">
+			<div class="spinner"></div>
+			<span>Loading migrations...</span>
+		</td></tr>
 	</tbody>
 </table>
