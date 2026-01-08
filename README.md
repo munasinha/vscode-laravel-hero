@@ -83,7 +83,7 @@ Currently focused on **database migrations** with plans for routes and package m
 
 <div align="center" style="margin-top:30px; margin-bottom:30px;">
 
-  <img style="height:500px; width:auto" src="media/overview/laravel-heo-migration.png">
+  <img style="height:500px; width:auto" src="media/overview/release-0.1.2.png">
 
 </div>
 
