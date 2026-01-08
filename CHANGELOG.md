@@ -10,11 +10,105 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Coming Soon
 - **Routes Feature** - View and test Laravel API routes
 - **Packages Feature** - Manage Laravel package installations
-- **Advanced Filtering** - Filter migrations by status, batch, or date range
 - **Database Info** - View database configuration and connection status
-- **Migration Rollback** - Rollback to specific batches or migrations
 - **Artisan Command Runner** - Execute custom artisan commands from UI
-- **Dark Mode Improvements** - Enhanced theming for better visibility
+
+---
+
+## [0.1.2] - 2026-01-08
+
+### Added - Phase 1 Enhancements: Advanced Migrations Management
+
+#### Advanced Datatable Features
+- **Real-time Search** - Filter migrations by name, status, or batch number
+  - Search input with visual feedback
+  - Case-insensitive filtering across all columns
+  - Dynamic result count display
+
+- **Column Sorting** - Click any column header to sort
+  - Visual indicators (↑↓) show current sort state
+  - Click again to reverse sort order
+  - Original index number persists (doesn't change with sort)
+
+- **File Navigation** - Quick access to migration source code
+  - New "File" column with 📄 Open button
+  - Opens migration file directly in VS Code editor
+  - Validates file exists before opening
+
+#### Migration Rollback Support
+- **Rollback All Migrations** - Modal dialog for controlled rollback
+  - Input field to specify number of steps to rollback
+  - Default 0 or empty = rollback all migrations
+  - User confirmation before execution
+  - Clear success/error messages
+
+- **Individual Migration Rollback** - Per-migration action
+  - Rollback button for each migration (⟲)
+  - Button disabled for unmigrated migrations
+  - Confirmation dialog before rollback
+  - Auto-refresh after completion
+
+#### UI/UX Improvements
+- **Improved Layout** - Single-row button layout with flex container
+  - Better spacing and organization
+  - Responsive button group
+  - Color-coded buttons (primary, secondary, danger)
+
+- **Modal Dialog** - Custom VS Code themed modal
+  - Matches VS Code color scheme
+  - Smooth show/hide animations
+  - Keyboard-friendly (Escape to close)
+  - Proper focus management
+
+- **Visual Enhancements**
+  - Danger buttons in red (error foreground color)
+  - Loading spinner with animation
+  - Empty state messaging
+  - Error container for operation feedback
+
+#### Backend Improvements
+- **ArtisanService Expansion**
+  - New `rollbackMigration(name)` method
+  - New `rollbackAllMigrations(steps)` method
+  - Proper error handling and logging
+
+- **MigrationPanel Enhancements**
+  - New `_rollbackMigration()` method
+  - New `_rollbackAllMigrations()` method
+  - Improved `_handleConfirmRequest()` with rollback cases
+  - Message-based communication for rollback operations
+
+### Fixed Issues
+- Fixed button ordering in header (now: Create, Refresh, Run All, Force Run All, Rollback All)
+- Fixed sort indicator not showing on initial load
+- Fixed migration index changing when sorted (now uses original index)
+- Improved error messages for rollback failures
+
+### Technical Details
+- **Extension Size**: 56.4 KiB (compiled)
+- **Compilation Time**: ~2.8 seconds
+- **Lines of Code Added**: ~500+ lines
+  - Template: +50 lines (modal + search)
+  - Styles: +120 lines (modal + datatable)
+  - JavaScript: +150 lines (search, sort, rollback logic)
+  - TypeScript: +180 lines (rollback methods in both MigrationPanel and ArtisanService)
+
+### Performance Notes
+- Search filtering is debounced for smooth UX
+- Sort operations maintain O(n log n) complexity
+- Modal operations don't block extension UI
+- Rollback commands execute asynchronously
+
+---
+
+
+## [0.1.1] - 2026-01-07
+
+### Added Proper Overview for the README.md File
+
+### Core Changes
+
+- This release Only Contains the README.md file updates.
 
 ---
 

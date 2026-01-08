@@ -147,6 +147,100 @@ context.subscriptions.push(
 - Extension handles confirmations and modals
 - Type-safe message handling with switch statements
 
+#### Search & Sort Pattern
+- Client-side filtering for performance
+- Preserve original data, work with copies
+- Use visual indicators for state (↑↓ arrows)
+
+#### Modal Dialog Pattern
+- Show/hide modals via CSS class toggle
+- Always provide cancel/escape option
+- Handle focus management for accessibility
+
+---
+
+## Current Architecture - Advanced Features
+
+### Migration Panel Structure (v0.1.1+)
+
+The migration panel is now organized as a **folder-based webview** with separated concerns:
+
+```
+src/webviews/migration-panel/
+├── index.ts              # TypeScript controller (391 lines)
+├── template.html         # Webview structure (74 lines)
+├── styles.css            # Webview styling (200+ lines)
+├── script.js             # Client-side logic (300+ lines)
+└── README.md             # Feature documentation
+```
+
+**Key Improvements:**
+- **Separation of Concerns**: HTML, CSS, JS, TS each in separate files
+- **Scalability**: Easy to add new features without bloating files
+- **Maintainability**: Related assets grouped together
+- **Reusability**: CSS and JS can be optimized/minified
+
+### Recent Features (v0.1.1)
+
+#### Search Implementation
+```javascript
+// In script.js
+searchMigrations(query: string): void
+  ├─ Filter migrations array
+  ├─ Show/hide rows in DOM
+  └─ Update result counter
+```
+
+Features:
+- Real-time filtering as user types
+- Case-insensitive matching
+- Searches: name, status, batch number
+- Visual feedback with result count
+
+#### Sorting Implementation
+```javascript
+// In script.js
+sortMigrations(column: string): void
+  ├─ Clone migrations array
+  ├─ Sort by column value
+  ├─ Reverse if clicking same column
+  └─ Re-render with visual indicator
+```
+
+Key Points:
+- Original index persists (doesn't change with sort)
+- Visual indicators (↑↓) show sort state
+- Supports: Index, Name, Status, Batch
+- Click column to sort, click again to reverse
+
+#### File Navigation
+```typescript
+// In index.ts
+_openMigrationFile(migrationName: string): Promise<void>
+  ├─ Validate workspace exists
+  ├─ Construct file path
+  ├─ Check file exists
+  ├─ Open in editor
+  └─ Log operation
+```
+
+#### Rollback Feature
+```typescript
+// In index.ts - Two modes:
+
+1. Rollback All (with modal):
+   _rollbackAllMigrations(steps: number | null): Promise<void>
+     ├─ Show confirmation dialog
+     ├─ Execute php artisan migrate:rollback [--step=N]
+     └─ Refresh list
+
+2. Rollback Individual:
+   _rollbackMigration(name: string): Promise<void>
+     ├─ Show confirmation dialog
+     ├─ Execute php artisan migrate:rollback --path=...
+     └─ Refresh list
+```
+
 ---
 
 ## Coding Standards
