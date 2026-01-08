@@ -1,3 +1,13 @@
+.header-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	width: 500px;
+}
+
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -38,10 +48,13 @@ code {
 }
 
 .actions {
+	flex: 1 0 0;
+	margin-top: 15px;
 	margin-bottom: 15px;
 	display: flex;
 	gap: 8px;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
+	align-items: center;
 }
 
 .primary-button {
