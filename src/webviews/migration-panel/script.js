@@ -11,7 +11,15 @@ const searchResults = document.getElementById('search-results');
 const refreshBtn = document.getElementById('refresh-btn');
 const runAllBtn = document.getElementById('run-all-btn');
 const runAllForcedBtn = document.getElementById('run-all-forced-btn');
+const rollbackAllBtn = document.getElementById('rollback-all-btn');
 const createBtn = document.getElementById('create-migration-btn');
+
+// Modal Elements
+const rollbackModal = document.getElementById('rollback-modal');
+const rollbackStepsInput = document.getElementById('rollback-steps');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalCancelBtn = document.getElementById('modal-cancel-btn');
+const modalRollbackBtn = document.getElementById('modal-rollback-btn');
 
 // Event Listeners
 refreshBtn.addEventListener('click', () => {
@@ -26,8 +34,34 @@ runAllForcedBtn.addEventListener('click', () => {
 	vscode.postMessage({ command: 'request-confirm', action: 'force-run-all', message: 'Force run all migrations? This will re-run already executed migrations.' });
 });
 
+rollbackAllBtn.addEventListener('click', () => {
+	rollbackStepsInput.value = '';
+	showRollbackModal();
+});
+
 createBtn.addEventListener('click', () => {
 	vscode.postMessage({ command: 'show-create-dialog' });
+});
+
+// Modal Event Listeners
+modalCloseBtn.addEventListener('click', closeRollbackModal);
+modalCancelBtn.addEventListener('click', closeRollbackModal);
+
+rollbackModal.addEventListener('click', (e) => {
+	if (e.target === rollbackModal) {
+		closeRollbackModal();
+	}
+});
+
+modalRollbackBtn.addEventListener('click', () => {
+	const steps = rollbackStepsInput.value.trim();
+	const stepsValue = steps === '' || steps === '0' ? null : parseInt(steps);
+	closeRollbackModal();
+	vscode.postMessage({ 
+		command: 'rollback-all', 
+		steps: stepsValue,
+		message: stepsValue === null ? 'Rollback all migrations?' : `Rollback ${stepsValue} step(s)?`
+	});
 });
 
 // Search functionality
@@ -35,8 +69,6 @@ searchInput.addEventListener('input', (e) => {
 	const searchTerm = e.target.value.toLowerCase();
 	filterAndRender(searchTerm);
 });
-
-// Column sorting
 document.querySelectorAll('th.sortable').forEach(header => {
 	header.addEventListener('click', () => {
 		const column = header.getAttribute('data-sort');
@@ -126,6 +158,16 @@ function updateSearchResults() {
 	}
 }
 
+// Modal Functions
+function showRollbackModal() {
+	rollbackModal.classList.remove('hidden');
+	rollbackStepsInput.focus();
+}
+
+function closeRollbackModal() {
+	rollbackModal.classList.add('hidden');
+}
+
 // Handle messages from extension
 window.addEventListener('message', event => {
 	const message = event.data;
@@ -206,6 +248,7 @@ function renderTable(items) {
 	items.forEach((m, index) => {
 		const tr = document.createElement('tr');
 		const isRanAttr = m.ran ? 'disabled' : '';
+		const isNotRanAttr = !m.ran ? 'disabled' : '';
 		
 		tr.innerHTML = `
 			<td>${m._originalIndex}</td>
@@ -218,6 +261,7 @@ function renderTable(items) {
 			<td>
 				<button class="inline-button" ${isRanAttr} data-action="run" data-migration="${m.name}">Run</button>
 				<button class="inline-button secondary" data-action="force-run" data-migration="${m.name}">Force</button>
+				<button class="inline-button rollback" ${isNotRanAttr} data-action="rollback" data-migration="${m.name}">Rollback</button>
 			</td>
 		`;
 		
@@ -225,6 +269,7 @@ function renderTable(items) {
 		const runBtn = tr.querySelector('[data-action="run"]');
 		const forceBtn = tr.querySelector('[data-action="force-run"]');
 		const fileBtn = tr.querySelector('[data-action="open-file"]');
+		const rollbackBtn = tr.querySelector('[data-action="rollback"]');
 		
 		runBtn.addEventListener('click', (e) => {
 			e.preventDefault();
@@ -242,6 +287,12 @@ function renderTable(items) {
 			e.preventDefault();
 			const migName = e.target.getAttribute('data-migration');
 			vscode.postMessage({ command: 'open-migration-file', migration: migName });
+		});
+		
+		rollbackBtn.addEventListener('click', (e) => {
+			e.preventDefault();
+			const migName = e.target.getAttribute('data-migration');
+			vscode.postMessage({ command: 'request-confirm', action: 'rollback-migration', migration: migName, message: `Rollback migration '${migName}'?` });
 		});
 		
 		list.appendChild(tr);

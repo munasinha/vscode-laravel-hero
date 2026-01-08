@@ -8,11 +8,40 @@
 		<button id="refresh-btn" class="primary-button">↻ Refresh</button>
 		<button id="run-all-btn" class="primary-button">Run All</button>
 		<button id="run-all-forced-btn" class="secondary-button">Force Run All</button>
+		<button id="rollback-all-btn" class="danger-button">⟲ Rollback All</button>
 		<button id="create-migration-btn" class="secondary-button">+ Create Migration</button>
 	</div>
 </div>
 
 <div id="error-container"></div>
+
+<div id="rollback-modal" class="modal hidden">
+	<div class="modal-overlay"></div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<h2>Rollback Migrations</h2>
+			<button id="modal-close-btn" class="modal-close">✕</button>
+		</div>
+		<div class="modal-body">
+			<p>How many steps do you want to rollback?</p>
+			<div class="modal-input-group">
+				<label for="rollback-steps">Steps:</label>
+				<input 
+					id="rollback-steps" 
+					type="number" 
+					min="1" 
+					value="1" 
+					class="modal-input"
+				>
+				<span class="modal-hint">Leave empty or 0 to rollback all migrations</span>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button id="modal-cancel-btn" class="secondary-button">Cancel</button>
+			<button id="modal-rollback-btn" class="danger-button">Rollback</button>
+		</div>
+	</div>
+</div>
 
 <div class="search-container">
 	<input 

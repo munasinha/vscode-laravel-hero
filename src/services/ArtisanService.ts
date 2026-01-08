@@ -274,6 +274,67 @@ export class ArtisanService {
 	}
 
 	/**
+	 * Rollback a specific migration.
+	 */
+	public async rollbackMigration(migrationName: string): Promise<void> {
+		const root = WorkspaceService.getWorkspaceRoot();
+
+		// Find the actual file to get the correct path
+		const files = await this.getMigrationFiles();
+		const found = files.find(f => f.name === migrationName);
+
+		if (!found) {
+			throw new Error(`Migration file not found: ${migrationName}`);
+		}
+
+		const relativePath = path.join('database', 'migrations', migrationName + '.php');
+		const command = `php artisan migrate:rollback --path=${relativePath}`;
+
+		LoggerService.info(`Rolling back migration: ${migrationName}`);
+
+		return new Promise((resolve, reject) => {
+			cp.exec(command, { cwd: root }, (err, stdout, stderr) => {
+				if (err) {
+					LoggerService.error(`Migration rollback failed: ${migrationName}`, stderr);
+					reject(new Error(stderr || err.message));
+				} else {
+					LoggerService.info(`Migration rolled back: ${migrationName}`);
+					resolve();
+				}
+			});
+		});
+	}
+
+	/**
+	 * Rollback all migrations or a specific number of steps/batches.
+	 * @param steps - Number of steps/batches to rollback, or null to rollback all
+	 */
+	public async rollbackAllMigrations(steps: number | null = null): Promise<void> {
+		const stepsLabel = steps === null ? 'all' : `${steps} step(s)`;
+		let command = 'php artisan migrate:rollback';
+
+		if (steps !== null && steps > 0) {
+			command += ` --step=${steps}`;
+		}
+
+		LoggerService.info(`Rolling back ${stepsLabel} migrations`);
+
+		const root = WorkspaceService.getWorkspaceRoot();
+
+		return new Promise((resolve, reject) => {
+			cp.exec(command, { cwd: root }, (err, stdout, stderr) => {
+				if (err) {
+					LoggerService.error(`Rollback all failed`, stderr);
+					reject(new Error(stderr || err.message));
+				} else {
+					LoggerService.info(`Rolled back ${stepsLabel} migrations`);
+					resolve();
+				}
+			});
+		});
+	}
+
+	/**
 	 * Dispose of terminal resources.
 	 */
 	public dispose(): void {
