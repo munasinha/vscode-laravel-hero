@@ -256,12 +256,12 @@ function renderTable(items) {
 			<td><span class="${m.ran ? 'status-ran' : 'status-pending'}">${m.ran ? '✓ Migrated' : '○ Pending'}</span></td>
 			<td>${m.batch || '-'}</td>
 			<td>
-				<button class="inline-button file-button" data-action="open-file" data-migration="${m.name}" title="Open migration file">📄 Open</button>
+				<button class="inline-button secondary" data-action="open-file" data-migration="${m.name}"> Open </button>
 			</td>
 			<td>
-				<button class="inline-button" ${isRanAttr} data-action="run" data-migration="${m.name}">Run</button>
-				<button class="inline-button secondary" data-action="force-run" data-migration="${m.name}">Force</button>
-				<button class="inline-button rollback" ${isNotRanAttr} data-action="rollback" data-migration="${m.name}">Rollback</button>
+				<button class="inline-button migration-action-button" ${isRanAttr} data-action="run" data-migration="${m.name}"> Run </button>
+				<button class="inline-button migration-action-button secondary" data-action="force-run" data-migration="${m.name}"> Force </button>
+				<button class="inline-button migration-action-button rollback" ${isNotRanAttr} data-action="rollback" data-migration="${m.name}"> Rollback </button>
 			</td>
 		`;
 		

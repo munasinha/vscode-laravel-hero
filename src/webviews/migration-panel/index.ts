@@ -326,6 +326,20 @@ export class MigrationPanel {
 			LoggerService.error('Failed to read template.html:', err instanceof Error ? err.message : String(err));
 			bodyContent = '<h1>Error loading template</h1>';
 		}
+		const iconMap: Record<string, string> = {
+			'icon-plus': 'plus.svg',
+			'icon-refresh': 'arrow-path.svg',
+			'icon-play': 'play.svg',
+			'icon-rocket': 'rocket-launch.svg',
+			'icon-backward': 'backward.svg'
+		};
+
+		for (const [token, fileName] of Object.entries(iconMap)) {
+			const iconUri = webview.asWebviewUri(
+				vscode.Uri.joinPath(this._extensionUri, 'media', 'icons', fileName)
+			);
+			bodyContent = bodyContent.replaceAll(`{{${token}}}`, iconUri.toString());
+		}
 
 		// Read stylesheet
 		const cssFile = path.join(templatePath, 'styles.css');
