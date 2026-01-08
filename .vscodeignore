@@ -12,3 +12,8 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/.vscode-test.*
+# Keep dist files (needed for packaged extension)
+# dist/** is NOT ignored by default
+# but we exclude unneeded files:
+dist/**/*.ts
+dist/**/*.map

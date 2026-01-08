@@ -311,7 +311,9 @@ export class MigrationPanel {
 	 * Generate HTML for webview using external files.
 	 */
 	private _getHtmlForWebview(webview: vscode.Webview): string {
-		const panelDir = vscode.Uri.joinPath(this._extensionUri, 'src', 'webviews', 'migration-panel');
+		// Path to webview assets - in production, they're in dist/webviews
+		// In development, they're in src/webviews
+		const panelDir = vscode.Uri.joinPath(this._extensionUri, 'dist', 'webviews', 'migration-panel');
 		
 		// Read template HTML
 		const templatePath = panelDir.fsPath;
