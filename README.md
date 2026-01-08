@@ -81,10 +81,8 @@ Currently focused on **database migrations** with plans for routes and package m
 3. Your webview panel opens showing all database migrations
 4. Green checkmarks mean **migrated**, circles mean **pending**
 
-<div align="center" style="margin-top:30px; margin-bottom:30px;">
-
-  <img style="height:500px; width:auto" src="media/overview/release-0.1.2.png">
-
+<div align="center" style="margin-top:30px;margin-bottom:30px;">
+  <img style="height:500px;width:auto" src="media/overview/release-0.1.2.png">
 </div>
 
 ### Run a Migration
