@@ -36,7 +36,17 @@ Currently focused on **database migrations** with plans for routes and package m
 - **Force re-run migrations** for development and testing
 - **Auto-refresh** after every operation
 - **Offline mode** still see your migrations even if Laravel commands are unavailable
+### 📊 **Advanced Datatable**
+- **Search migrations** in real-time across names, statuses, and batches
+- **Sort all columns** with visual up/down indicators
+- **View original index** that persists even when sorted
+- **Quick file access** with one-click navigation to migration source code
 
+### ⟲ **Rollback Migrations**
+- **Rollback all migrations** instantly with optional step control
+- **Individual rollback** for specific migrations with confirmation
+- **Smart button states** — rollback disabled for unmigrated migrations
+- **Batch control** — specify how many steps to rollback (0 or empty = all)
 ### 🎯 **Built for Developers**
 - **Native VS Code UI** — feels like part of the editor, not a plugin
 - **Detailed logging** — see exactly what's happening in the "Laravel Hero" output panel
@@ -73,7 +83,7 @@ Currently focused on **database migrations** with plans for routes and package m
 
 <div align="center" style="margin-top:30px; margin-bottom:30px;">
 
-  <img style="height:500px; width:auto" src="media/overview/laravel-heo-migration.png">
+  <img style="height:500px; width:auto" src="media/overview/release-0.1.2.png">
 
 </div>
 
@@ -90,9 +100,25 @@ Currently focused on **database migrations** with plans for routes and package m
 4. Your new migration appears instantly (Pending status)
 
 ### Force Re-run a Migration
-- Click **"⚡ Force Run"** on any migration
+- Click **\"Force Run All\"** on any migration
 - Perfect for development and debugging
 - Works on already-migrated migrations
+
+### Search & Sort Migrations
+- Use the **🔍 search bar** to filter migrations by name, status, or batch
+- Click any **column header** to sort (click again to reverse)
+- Visual indicators show which column is currently sorted
+
+### Open Migration Files
+- Click the **📄 Open** button in the File column
+- Opens the migration source code directly in your editor
+- No need to hunt through the database/migrations folder
+
+### Rollback Migrations
+- Click **\"⟲ Rollback All\"** to open the rollback modal
+- Specify how many steps to rollback (0 or empty = rollback all)
+- Individual migrations show **⟲ Rollback** button (enabled only for migrated ones)
+- Confirm and watch the rollback execute
 
 ---
 

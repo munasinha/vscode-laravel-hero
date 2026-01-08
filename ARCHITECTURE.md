@@ -52,15 +52,73 @@ src/
 │       └── refresh()            → Refresh tree
 │
 ├── webviews/
-│   ├── MigrationPanel.ts                 # Webview for migrations
-│   │   ├── createOrShow()       → Static factory method
-│   │   ├── _loadMigrations()    → Load data from service
-│   │   ├── _handleWebviewMessage()  → Message dispatcher
-│   │   ├── _handleConfirmRequest()  → Confirmation handler
-│   │   ├── _runMigration()      → Single migration execution
-│   │   ├── _runAllMigrations()  → Batch execution
-│   │   ├── _createMigration()   → Create new migration
-│   │   └── _getHtmlForWebview() → HTML/CSS/JS template
+│   ├── migration-panel/                  # Migrations UI webview (folder structure)
+│   │   ├── index.ts                      # Webview controller and message handler
+│   │   │   ├── createOrShow()            → Static factory method
+│   │   │   ├── _loadMigrations()         → Load data from service
+│   │   │   ├── _handleWebviewMessage()   → Message dispatcher for all UI actions
+│   │   │   ├── _handleConfirmRequest()   → Confirmation dialog handler (run/rollback)
+│   │   │   ├── _runMigration()           → Single migration execution
+│   │   │   ├── _runAllMigrations()       → Batch execution
+│   │   │   ├── _rollbackMigration()      → Single migration rollback
+│   │   │   ├── _rollbackAllMigrations()  → Batch rollback with step control
+│   │   │   ├── _createMigration()        → Create new migration file
+│   │   │   ├── _openMigrationFile()      → Open migration in editor
+│   │   │   └── _getHtmlForWebview()      → Assemble and return webview HTML
+│   │   │
+│   │   ├── template.html                 # Webview UI structure (HTML)
+│   │   │   ├── Header (buttons)          → Run All, Force Run All, Rollback All, Create
+│   │   │   ├── Rollback Modal            → Dialog for step input
+│   │   │   ├── Search Bar                → Real-time migration filtering
+│   │   │   ├── Data Table                → 6 columns with sorting capability
+│   │   │   │   ├── # (index)
+│   │   │   │   ├── Migration Name
+│   │   │   │   ├── Status (Ran/Pending)
+│   │   │   │   ├── Batch Number
+│   │   │   │   ├── File (with Open button)
+│   │   │   │   └── Actions (Run/Rollback buttons)
+│   │   │   └── Error Container            → Operation error display
+│   │   │
+│   │   ├── styles.css                    # Webview styling (CSS)
+│   │   │   ├── Base styles               → Typography, colors, layout
+│   │   │   ├── Button styles             → Primary, secondary, danger buttons
+│   │   │   ├── Modal styles              → Dialog box with overlay
+│   │   │   ├── Table styles              → Responsive data table layout
+│   │   │   ├── Search styles             → Input field and results
+│   │   │   ├── Loading animation         → Spinner CSS keyframes
+│   │   │   └── VS Code theme variables   → Integration with editor theme
+│   │   │
+│   │   ├── script.js                     # Webview interactivity (JavaScript)
+│   │   │   ├── DOM element references    → Cache all DOM query selectors
+│   │   │   ├── Search functionality
+│   │   │   │   ├── searchMigrations()    → Real-time filtering
+│   │   │   │   ├── Search input listener → On keyup event
+│   │   │   │   └── Result counter update
+│   │   │   │
+│   │   │   ├── Sorting functionality
+│   │   │   │   ├── sortMigrations()      → Column sort with state tracking
+│   │   │   │   ├── Column header click   → Toggle sort direction
+│   │   │   │   └── Visual indicator (↑↓) → Show sort direction
+│   │   │   │
+│   │   │   ├── Rollback functionality
+│   │   │   │   ├── showRollbackModal()   → Display modal dialog
+│   │   │   │   ├── closeRollbackModal()  → Hide modal dialog
+│   │   │   │   ├── Rollback All button   → Click to open modal
+│   │   │   │   ├── Modal confirm button  → Send rollback-all command
+│   │   │   │   └── Individual rollback   → Send rollback-migration command
+│   │   │   │
+│   │   │   ├── Table rendering
+│   │   │   │   ├── renderTable()         → Build table from migration data
+│   │   │   │   ├── Run button per row    → Send 'request-confirm' message
+│   │   │   │   ├── Rollback button       → Enabled only for migrated migrations
+│   │   │   │   ├── File Open button      → Navigate to migration file
+│   │   │   │   └── Action buttons state  → Disable based on migration status
+│   │   │   │
+│   │   │   └── Message posting
+│   │   │       ├── vscode.postMessage()  → Send commands to extension
+│   │   │       └── Message types         → run, rollback, create, open-file
+│   │   │
+│   │   └── README.md                     # Documentation for this webview module
 │   │
 │   └── lib/
 │       └── webviewUtils.ts               # Shared webview utilities
@@ -71,14 +129,17 @@ src/
 │
 ├── services/
 │   ├── ArtisanService.ts                 # Laravel artisan command execution
-│   │   ├── execSync()           → Execute command and capture output
-│   │   ├── getMigrations()      → Get list with status
-│   │   ├── getMigrationFiles()  → Read from disk
-│   │   ├── parseMigrationTable() → Parse artisan output
-│   │   ├── runMigration()       → Execute single migration
-│   │   ├── runAllMigrations()   → Execute all pending
-│   │   ├── createMigration()    → Create new migration
-│   │   └── dispose()            → Cleanup resources
+│   │   ├── execSync()                    → Execute command and capture output
+│   │   ├── getOrCreateTerminal()         → Terminal lifecycle management
+│   │   ├── getMigrations()               → Get list with status (files + artisan)
+│   │   ├── getMigrationFiles()           → Read migration files from disk
+│   │   ├── parseMigrationTable()         → Parse artisan status output
+│   │   ├── runMigration()                → Execute: php artisan migrate --path=...
+│   │   ├── runAllMigrations()            → Execute: php artisan migrate [--force]
+│   │   ├── rollbackMigration()           → Execute: php artisan migrate:rollback --path=...
+│   │   ├── rollbackAllMigrations()       → Execute: php artisan migrate:rollback [--step=N]
+│   │   ├── createMigration()             → Execute: php artisan make:migration {name}
+│   │   └── dispose()                     → Cleanup resources and terminals
 │   │
 │   ├── WorkspaceService.ts               # Workspace context management
 │   │   ├── getWorkspaceRoot()   → Get current workspace path
@@ -286,6 +347,222 @@ Open workspace folder?
 - Centralized logging
 - Output channel management
 - Debug information
+
+---
+
+## Advanced Features Architecture
+
+### 1. Search & Filter System (Client-side)
+
+**Implementation:**
+```javascript
+searchMigrations(query: string): void
+  ├─ Loop through all migrations
+  ├─ Check if query matches: name | status | batch
+  ├─ Case-insensitive comparison
+  ├─ Show/hide rows based on match
+  └─ Update result counter
+```
+
+**Performance Optimization:**
+- Filters happen on existing DOM (no re-render)
+- O(n) complexity (fast even with 100+ migrations)
+- Shows/hides rows instead of removing them
+- Result counter provides feedback
+
+### 2. Column Sorting System (Client-side)
+
+**Implementation:**
+```javascript
+sortMigrations(column: string): void
+  ├─ Get current sort state (direction, column)
+  ├─ Extract sort value from each migration
+  │  ├─ Index:  original position (preserved during sort)
+  │  ├─ Name:   string value
+  │  ├─ Status: convert to boolean (Ran=true, Pending=false)
+  │  └─ Batch:  numeric value
+  ├─ Sort array based on column and direction
+  ├─ Reverse direction if clicking same column
+  ├─ Re-render table with sorted data
+  └─ Update visual indicator (↑ ↓)
+```
+
+**Key Design Decisions:**
+- Preserve original index: Use `_originalIndex` property set during load
+- Doesn't modify original data: Creates new sorted array
+- Visual indicator: Unicode arrows (↑ ↓) show sort state
+- Toggle direction: Click same column to reverse
+
+### 3. Migration Rollback System (Two-tier)
+
+#### Modal Dialog Flow
+```
+User clicks "Rollback All"
+  ↓ JavaScript
+showRollbackModal()
+  ├─ Remove 'hidden' class from modal
+  └─ Focus input field
+  
+User enters steps (or leaves empty)
+  ↓ User clicks "Rollback" button
+Modal confirm handler
+  ├─ Get input value
+  ├─ Parse steps (null if empty/0)
+  ├─ Close modal
+  └─ Send 'rollback-all' command to extension
+
+Extension Handler (_handleConfirmRequest)
+  ├─ Show confirmation dialog (if not already shown)
+  ├─ If confirmed:
+  │  └─ Call _rollbackAllMigrations(steps)
+  └─ Refresh migrations list
+```
+
+#### Rollback Methods
+
+**_rollbackAllMigrations(steps: number | null)**
+```typescript
+├─ Send 'all-migrations-rolling-back' message
+├─ Call artisan.rollbackAllMigrations(steps)
+│  ├─ If steps === null
+│  │  └─ Execute: php artisan migrate:rollback
+│  └─ If steps > 0
+│     └─ Execute: php artisan migrate:rollback --step={steps}
+├─ Show success message
+├─ Load fresh migration list
+└─ Send 'rollback-error' if failure
+```
+
+**_rollbackMigration(name: string)**
+```typescript
+├─ Send 'migration-rolling-back' message
+├─ Call artisan.rollbackMigration(name)
+│  └─ Execute: php artisan migrate:rollback --path=database/migrations/{name}.php
+├─ Show success message
+├─ Load fresh migration list
+└─ Send 'rollback-error' if failure
+```
+
+### 4. File Navigation System
+
+**Flow:**
+```
+User clicks 📄 Open button
+  ↓
+JavaScript sends 'request-confirm' with action: 'open-file'
+  ↓
+Extension _handleConfirmRequest()
+  ├─ Call _openMigrationFile(migrationName)
+  │  ├─ Get workspace root
+  │  ├─ Construct path: database/migrations/{name}.php
+  │  ├─ Verify file exists
+  │  ├─ Open with vscode.workspace.openTextDocument()
+  │  └─ Show in active editor
+  └─ Log operation
+```
+
+**Error Handling:**
+- No workspace open → Show error message
+- File not found → Show helpful path message
+- File open failure → Show error details
+
+---
+
+## Webview Asset Architecture
+
+### HTML Structure (template.html)
+```
+Header Container
+  ├─ Title (h1: Laravel Migrations)
+  └─ Action Buttons
+      ├─ Create Migration
+      ├─ Refresh
+      ├─ Run All
+      ├─ Force Run All
+      └─ Rollback All
+
+Rollback Modal (hidden by default)
+  ├─ Modal Header (with close button)
+  ├─ Modal Body
+  │  ├─ Label & Input field
+  │  └─ Helper text
+  └─ Modal Footer (Cancel & Rollback buttons)
+
+Error Container (empty until error)
+
+Search Container
+  ├─ Search input (🔍 icon)
+  └─ Result counter
+
+Data Table
+  ├─ Headers (sortable: #, Name, Status, Batch, File, Actions)
+  └─ Body (populated by JavaScript)
+```
+
+### CSS Organization (styles.css)
+```
+Base Styles
+  ├─ Reset & typography
+  ├─ Color variables (from VS Code theme)
+  └─ Layout grid
+
+Component Styles
+  ├─ Button variations (primary, secondary, danger)
+  ├─ Modal dialog styles
+  ├─ Table structure & cells
+  ├─ Search input field
+  └─ Loading spinner animation
+
+Interactive States
+  ├─ Hover effects
+  ├─ Focus states
+  ├─ Disabled buttons
+  └─ Hidden class
+
+Theme Integration
+  ├─ var(--vscode-foreground)
+  ├─ var(--vscode-errorForeground)
+  ├─ var(--vscode-editor-background)
+  └─ Other VS Code variables
+```
+
+### JavaScript Organization (script.js)
+```
+DOM References (cached at top)
+  ├─ All button elements
+  ├─ Table & search elements
+  ├─ Modal elements
+  └─ Container elements
+
+Initialization
+  ├─ Event listeners (buttons, input)
+  ├─ Modal controls
+  └─ Initial table render
+
+Search Logic
+  ├─ searchMigrations()
+  ├─ Input keyup listener
+  └─ Result count update
+
+Sort Logic
+  ├─ sortMigrations()
+  ├─ Column header listeners
+  └─ Visual indicators
+
+Rollback Logic
+  ├─ Modal show/hide
+  ├─ Rollback button handlers
+  └─ Individual row rollback
+
+Table Rendering
+  ├─ renderTable()
+  ├─ Row generation
+  ├─ Button generation (with conditional disabled states)
+  └─ Event attachers
+
+Message Posting
+  └─ vscode.postMessage() calls for all user actions
+```
 
 **Output:**
 - **VS Code Output Channel**: User-facing messages

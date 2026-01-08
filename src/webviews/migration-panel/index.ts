@@ -129,8 +129,13 @@ export class MigrationPanel {
 					await this._createMigration(message.name);
 					break;
 
-				default:
-					LoggerService.warn(`Unknown command from webview: ${message.command}`);
+				case 'open-migration-file':
+					await this._openMigrationFile(message.migration);
+					break;
+
+			case 'rollback-all':
+				await this._rollbackAllMigrations(message.steps);
+				break;
 			}
 		} catch (err) {
 			LoggerService.error(`Error handling webview message: ${message.command}`, err);
@@ -172,6 +177,14 @@ export class MigrationPanel {
 
 			case 'force-run-all':
 				await this._runAllMigrations(true);
+				break;
+
+			case 'rollback-migration':
+				await this._rollbackMigration(message.migration);
+				break;
+
+			case 'rollback-all':
+				await this._rollbackAllMigrations(message.steps);
 				break;
 		}
 	}
@@ -340,5 +353,111 @@ export class MigrationPanel {
 			scriptContent,
 			additionalStyles
 		);
+	}
+
+	/**
+	 * Open a migration file in the editor.
+	 */
+	private async _openMigrationFile(migrationName: string): Promise<void> {
+		try {
+			LoggerService.info(`Opening migration file: ${migrationName}`);
+
+			// Get the workspace folder
+			const workspaceFolders = vscode.workspace.workspaceFolders;
+			if (!workspaceFolders || workspaceFolders.length === 0) {
+				vscode.window.showErrorMessage('No workspace folder is open');
+				return;
+			}
+
+			const workspaceRoot = workspaceFolders[0].uri;
+
+			// Construct the migration file path
+			// Migrations are typically in database/migrations/
+			const migrationPath = vscode.Uri.joinPath(workspaceRoot, 'database', 'migrations', `${migrationName}.php`);
+
+			// Check if file exists
+			try {
+				await vscode.workspace.fs.stat(migrationPath);
+			} catch (err) {
+				LoggerService.error(`Migration file not found: ${migrationPath.fsPath}`);
+				vscode.window.showErrorMessage(`Migration file not found: database/migrations/${migrationName}.php`);
+				return;
+			}
+
+			// Open the file in the editor
+			const document = await vscode.workspace.openTextDocument(migrationPath);
+			await vscode.window.showTextDocument(document);
+
+			LoggerService.info(`Successfully opened migration file: ${migrationName}`);
+		} catch (err) {
+			const errorMsg = err instanceof Error ? err.message : String(err);
+			LoggerService.error(`Failed to open migration file: ${migrationName}`, err);
+			vscode.window.showErrorMessage(`Failed to open migration file: ${errorMsg}`);
+		}
+	}
+
+	/**
+	 * Rollback a specific migration.
+	 */
+	private async _rollbackMigration(name: string): Promise<void> {
+		LoggerService.info(`Rolling back migration: ${name}`);
+
+		try {
+			this._panel.webview.postMessage({
+				command: 'migration-rolling-back',
+				name
+			});
+
+			await this._artisan.rollbackMigration(name);
+
+			vscode.window.showInformationMessage(`✓ Migration '${name}' rolled back successfully`);
+
+			// Refresh the list
+			await this._loadMigrations();
+		} catch (err) {
+			const errorMsg = err instanceof Error ? err.message : String(err);
+			LoggerService.error(`Failed to rollback migration: ${name}`, err);
+			vscode.window.showErrorMessage(`Failed to rollback migration: ${errorMsg}`);
+
+			this._panel.webview.postMessage({
+				command: 'rollback-error',
+				error: errorMsg
+			});
+		}
+	}
+
+	/**
+	 * Rollback all migrations or a specific number of steps.
+	 * @param steps - Number of steps to rollback, or null to rollback all
+	 */
+	private async _rollbackAllMigrations(steps: number | null): Promise<void> {
+		const stepsLabel = steps === null ? 'all' : `${steps} step(s)`;
+		LoggerService.info(`Rolling back ${stepsLabel} migrations`);
+
+		try {
+			this._panel.webview.postMessage({
+				command: 'all-migrations-rolling-back'
+			});
+
+			await this._artisan.rollbackAllMigrations(steps);
+
+			const message = steps === null 
+				? '✓ All migrations rolled back successfully'
+				: `✓ ${steps} step(s) rolled back successfully`;
+
+			vscode.window.showInformationMessage(message);
+
+			// Refresh the list
+			await this._loadMigrations();
+		} catch (err) {
+			const errorMsg = err instanceof Error ? err.message : String(err);
+			LoggerService.error(`Failed to rollback migrations`, err);
+			vscode.window.showErrorMessage(`Failed to rollback migrations: ${errorMsg}`);
+
+			this._panel.webview.postMessage({
+				command: 'rollback-error',
+				error: errorMsg
+			});
+		}
 	}
 }
