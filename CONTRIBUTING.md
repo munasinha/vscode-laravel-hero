@@ -161,24 +161,53 @@ context.subscriptions.push(
 
 ## Current Architecture - Advanced Features
 
+### Project Structure (simplified)
+
+```
+src/
+├── extension.ts
+├── commands/registerCommands.ts
+├── providers/LaravelHeroSidebar.ts
+├── webviews/
+│   ├── migration-panel/   # HTML/CSS/JS + TS controller
+│   └── routes-panel/      # HTML/CSS/JS + TS controller
+├── services/
+│   ├── ArtisanService.ts  # migrations + routes (route:list) helpers
+│   ├── WorkspaceService.ts
+│   └── LoggerService.ts
+└── utils/getNonce.ts
+```
+
 ### Migration Panel Structure (v0.1.1+)
 
-The migration panel is now organized as a **folder-based webview** with separated concerns:
+Foldered webview with `index.ts`, `template.html`, `styles.css`, `script.js` mirroring the separation of concerns pattern also used by routes.
 
+### Routes Panel Structure (v0.2.0+)
+
+Mirrors the migration panel:
 ```
-src/webviews/migration-panel/
-├── index.ts              # TypeScript controller (391 lines)
-├── template.html         # Webview structure (74 lines)
-├── styles.css            # Webview styling (200+ lines)
-├── script.js             # Client-side logic (300+ lines)
-└── README.md             # Feature documentation
+src/webviews/routes-panel/
+├── index.ts      # Loads routes, handles clipboard
+├── template.html # Header + responsive table
+├── styles.css    # VS Code-themed, responsive wrapping
+└── script.js     # Search, sort, middleware toggle, copy URL
 ```
 
-**Key Improvements:**
-- **Separation of Concerns**: HTML, CSS, JS, TS each in separate files
-- **Scalability**: Easy to add new features without bloating files
-- **Maintainability**: Related assets grouped together
-- **Reusability**: CSS and JS can be optimized/minified
+**Routes behaviors**
+- Loads routes via `ArtisanService.getRoutes()` (JSON first, table fallback)
+- Normalizes methods (splits GET|HEAD and concatenated tokens)
+- Middleware chips show class name; click to expand full namespace
+- Copy URL posts `copy-text` to the extension clipboard handler
+- Responsive table with horizontal scroll on narrow widths and wrapping for middleware/URLs
+
+### Recent Features (v0.2.0)
+
+#### Routes Viewer
+- Full routes table with method, URI, name, permissions, middleware, full URL
+- Client-side search and sort across all columns
+- Copy full URL from the table
+- Middleware chips toggle between short class and full namespace
+- Responsive table for long strings
 
 ### Recent Features (v0.1.1)
 

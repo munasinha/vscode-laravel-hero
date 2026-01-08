@@ -22,11 +22,18 @@
 
 [Laravel Hero](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero) is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
 
-Currently focused on **database migrations** with plans for routes and package management in upcoming releases.
+Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view all registered routes with search, sort, middleware/permission visibility, and copyable full URLs. Packages coming next.
 
 ---
 
 ## ✨ Key Features
+
+### 🌐 **Routes Viewer (New)**
+- **List all routes** with methods, URI, name, middleware, permissions, and full URL
+- **Search and sort** across all columns
+- **Middleware chips** show class name by default; click to expand full namespace
+- **Copy URL** quickly from the table
+- **Responsive table** with wrapping for long middleware/URLs
 
 ### 🗄️ **Database Migrations Management**
 - **View all migrations** in a clean, organized interface
@@ -63,7 +70,7 @@ Currently focused on **database migrations** with plans for routes and package m
 2. Search for **"Laravel Hero"**
 3. Click **Install**
 4. Click the Laravel Hero icon in the Activity Bar (left sidebar)
-5. Select **Migrations** to get started
+5. Select **Migrations** or **Routes** to get started
 
 ### Requirements
 - **VS Code** 1.107.0 or later
@@ -118,6 +125,14 @@ Currently focused on **database migrations** with plans for routes and package m
 - Individual migrations show **⟲ Rollback** button (enabled only for migrated ones)
 - Confirm and watch the rollback execute
 
+### View Your Routes
+1. Click the **Laravel Hero icon** in the Activity Bar
+2. Select **Routes**
+3. Browse all routes with methods, name, middleware, permissions, and full URL
+4. **Search** and **sort** any column; long middleware and URLs wrap gracefully
+5. Click a middleware chip to expand its full namespace
+6. Use **Copy URL** to send the route URL to your clipboard
+
 ---
 
 ## ⚙️ Configuration
@@ -148,11 +163,10 @@ That's it! Laravel Hero will now use your custom PHP installation.
 
 ## 🎯 What's Coming Next?
 
-### Phase 2: Routes Management (Planned)
-- View all application routes
-- Search and filter routes
-- Test endpoints directly from the editor
-- Manage route groups
+### Phase 2: Routes Management (Shipped)
+- View all application routes with methods, names, middleware, permissions
+- Search/sort, responsive table, copy full URLs, and toggle middleware namespaces
+- More route testing tools coming soon
 
 ### Phase 3: Package Management (Planned)
 - Browse installed Composer packages
