@@ -8,10 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Coming Soon
-- **Routes Feature** - View and test Laravel API routes
 - **Packages Feature** - Manage Laravel package installations
 - **Database Info** - View database configuration and connection status
 - **Artisan Command Runner** - Execute custom artisan commands from UI
+
+---
+
+## [0.2.0] - 2026-01-08
+
+### Added - Phase 2: Routes Viewer
+- New **Routes** panel in the Activity Bar → Routes sidebar item → full webview
+- Fetches routes via `php artisan route:list` (JSON first, text fallback)
+- Normalizes methods (splits GET|HEAD and concatenated tokens)
+- Shows URI, name, methods, middleware, permissions, full URL
+- Middleware chips show class name by default; click to expand full namespace
+- Copy URL action posts to VS Code clipboard
+- Responsive table layout with search/sort across all columns and wrapping for long middleware/URLs
+
+### Fixed / Polished
+- Improved method parsing for routes with combined tokens
+- Clipboard handler now guards empty URLs and uses currentTarget attribute
+- Middleware chips wrap and toggle correctly without breaking table layout
 
 ---
 

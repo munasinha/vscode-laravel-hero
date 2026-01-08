@@ -1,0 +1,54 @@
+<main class="page">
+  <div class="header-card">
+    <div class="header-container">
+      <div class="title">
+        <h1>Laravel Routes</h1>
+        <p>Browse every registered route with methods, middleware, and permissions.</p>
+      </div>
+
+      <div class="actions">
+        <button id="refresh-btn" class="primary-button migration-header-button">
+          <img src="{{icon-refresh}}" alt="Refresh">
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="error-container" class="alert-stack"></div>
+
+  <div class="search-container">
+    <input
+      id="search-input"
+      type="text"
+      class="search-input"
+      placeholder="🔍 Search routes by URI, method, name, middleware..."
+    />
+    <span id="search-results" class="search-results"></span>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th class="sortable" data-sort="index">#</th>
+          <th class="sortable" data-sort="method">Method</th>
+          <th class="sortable" data-sort="uri">URI</th>
+          <th class="sortable" data-sort="name">Name</th>
+          <th class="sortable" data-sort="permissions">Permissions</th>
+          <th class="sortable" data-sort="middleware">Middleware</th>
+          <th class="sortable" data-sort="url">Full URL</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="route-list">
+        <tr>
+          <td colspan="8" class="loading-row">
+            <div class="spinner"></div>
+            <span>Loading routes...</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

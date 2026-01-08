@@ -54,72 +54,14 @@ src/
 ├── webviews/
 │   ├── migration-panel/                  # Migrations UI webview (folder structure)
 │   │   ├── index.ts                      # Webview controller and message handler
-│   │   │   ├── createOrShow()            → Static factory method
-│   │   │   ├── _loadMigrations()         → Load data from service
-│   │   │   ├── _handleWebviewMessage()   → Message dispatcher for all UI actions
-│   │   │   ├── _handleConfirmRequest()   → Confirmation dialog handler (run/rollback)
-│   │   │   ├── _runMigration()           → Single migration execution
-│   │   │   ├── _runAllMigrations()       → Batch execution
-│   │   │   ├── _rollbackMigration()      → Single migration rollback
-│   │   │   ├── _rollbackAllMigrations()  → Batch rollback with step control
-│   │   │   ├── _createMigration()        → Create new migration file
-│   │   │   ├── _openMigrationFile()      → Open migration in editor
-│   │   │   └── _getHtmlForWebview()      → Assemble and return webview HTML
-│   │   │
 │   │   ├── template.html                 # Webview UI structure (HTML)
-│   │   │   ├── Header (buttons)          → Run All, Force Run All, Rollback All, Create
-│   │   │   ├── Rollback Modal            → Dialog for step input
-│   │   │   ├── Search Bar                → Real-time migration filtering
-│   │   │   ├── Data Table                → 6 columns with sorting capability
-│   │   │   │   ├── # (index)
-│   │   │   │   ├── Migration Name
-│   │   │   │   ├── Status (Ran/Pending)
-│   │   │   │   ├── Batch Number
-│   │   │   │   ├── File (with Open button)
-│   │   │   │   └── Actions (Run/Rollback buttons)
-│   │   │   └── Error Container            → Operation error display
-│   │   │
 │   │   ├── styles.css                    # Webview styling (CSS)
-│   │   │   ├── Base styles               → Typography, colors, layout
-│   │   │   ├── Button styles             → Primary, secondary, danger buttons
-│   │   │   ├── Modal styles              → Dialog box with overlay
-│   │   │   ├── Table styles              → Responsive data table layout
-│   │   │   ├── Search styles             → Input field and results
-│   │   │   ├── Loading animation         → Spinner CSS keyframes
-│   │   │   └── VS Code theme variables   → Integration with editor theme
-│   │   │
-│   │   ├── script.js                     # Webview interactivity (JavaScript)
-│   │   │   ├── DOM element references    → Cache all DOM query selectors
-│   │   │   ├── Search functionality
-│   │   │   │   ├── searchMigrations()    → Real-time filtering
-│   │   │   │   ├── Search input listener → On keyup event
-│   │   │   │   └── Result counter update
-│   │   │   │
-│   │   │   ├── Sorting functionality
-│   │   │   │   ├── sortMigrations()      → Column sort with state tracking
-│   │   │   │   ├── Column header click   → Toggle sort direction
-│   │   │   │   └── Visual indicator (↑↓) → Show sort direction
-│   │   │   │
-│   │   │   ├── Rollback functionality
-│   │   │   │   ├── showRollbackModal()   → Display modal dialog
-│   │   │   │   ├── closeRollbackModal()  → Hide modal dialog
-│   │   │   │   ├── Rollback All button   → Click to open modal
-│   │   │   │   ├── Modal confirm button  → Send rollback-all command
-│   │   │   │   └── Individual rollback   → Send rollback-migration command
-│   │   │   │
-│   │   │   ├── Table rendering
-│   │   │   │   ├── renderTable()         → Build table from migration data
-│   │   │   │   ├── Run button per row    → Send 'request-confirm' message
-│   │   │   │   ├── Rollback button       → Enabled only for migrated migrations
-│   │   │   │   ├── File Open button      → Navigate to migration file
-│   │   │   │   └── Action buttons state  → Disable based on migration status
-│   │   │   │
-│   │   │   └── Message posting
-│   │   │       ├── vscode.postMessage()  → Send commands to extension
-│   │   │       └── Message types         → run, rollback, create, open-file
-│   │   │
-│   │   └── README.md                     # Documentation for this webview module
-│   │
+│   │   └── script.js                     # Client-side logic (JS)
+│   ├── routes-panel/                     # Routes UI webview (Phase 2)
+│   │   ├── index.ts                      # Webview controller and message handler
+│   │   ├── template.html                 # Webview UI structure (HTML)
+│   │   ├── styles.css                    # Webview styling (CSS)
+│   │   └── script.js                     # Client-side logic (JS)
 │   └── lib/
 │       └── webviewUtils.ts               # Shared webview utilities
 │           ├── WebviewUtils.generateHtmlTemplate()
@@ -132,8 +74,9 @@ src/
 │   │   ├── execSync()                    → Execute command and capture output
 │   │   ├── getOrCreateTerminal()         → Terminal lifecycle management
 │   │   ├── getMigrations()               → Get list with status (files + artisan)
-│   │   ├── getMigrationFiles()           → Read migration files from disk
+│   │   ├── getRoutes()                   → List and normalize routes (JSON or table)
 │   │   ├── parseMigrationTable()         → Parse artisan status output
+│   │   ├── parseRouteTable()             → Parse artisan route:list output
 │   │   ├── runMigration()                → Execute: php artisan migrate --path=...
 │   │   ├── runAllMigrations()            → Execute: php artisan migrate [--force]
 │   │   ├── rollbackMigration()           → Execute: php artisan migrate:rollback --path=...
@@ -199,8 +142,8 @@ laravel-hero.open-migrations
   → Effect: Open webview panel for migrations
 
 laravel-hero.open-routes
-  → Execute: Show placeholder message
-  → Effect: Ready for Phase 2 implementation
+  → Execute: RoutesPanel.createOrShow()
+  → Effect: Open webview panel for routes
 
 laravel-hero.open-packages
   → Execute: Show placeholder message
@@ -234,7 +177,7 @@ Migrations (icon: database) → open-migrations command
 
 Routes (icon: git-branch) → open-routes command
   ├─ Description: View and test API routes
-  └─ Handler: RoutesPanel.createOrShow() [Future]
+  └─ Handler: RoutesPanel.createOrShow()
 
 Packages (icon: package) → open-packages command
   ├─ Description: Manage Laravel packages
@@ -308,6 +251,8 @@ webview.postMessage({
 getMigrations()           → Combined disk + artisan data
 getMigrationFiles()       → Direct disk read
 parseMigrationTable()     → Convert text output to objects
+getRoutes()               → Load routes via route:list (JSON first, text fallback)
+parseRouteTable()         → Parse artisan route:list table output
 runMigration(name, force) → Execute single migration
 runAllMigrations(force)   → Batch execution
 createMigration(name)     → Generate new migration
@@ -351,6 +296,28 @@ Open workspace folder?
 ---
 
 ## Advanced Features Architecture
+
+### Routes Viewer (Phase 2)
+
+**Flow:**
+```
+RoutesPanel.createOrShow()
+  ├─ Loads HTML/CSS/JS from dist/webviews/routes-panel
+  ├─ Sends 'ready' message from webview
+  └─ _loadRoutes() → ArtisanService.getRoutes()
+       ├─ Tries `php artisan route:list --json`
+       ├─ Falls back to text parsing if JSON fails
+       ├─ Normalizes methods (handles GET|HEAD and concatenated tokens)
+       ├─ Derives permissions from middleware (can:, permission:, etc.)
+       └─ Builds full URL using APP_URL/.env or domain
+```
+
+**UI Behaviors:**
+- Client-side search and sort across all route fields
+- Methods rendered as `GET | HEAD` when multiple tokens exist
+- Middleware chips show class name by default; click to toggle full namespace
+- Copy URL action posts `copy-text` to extension (clipboard)
+- Responsive table wraps long middleware/URLs and allows horizontal scroll on narrow widths
 
 ### 1. Search & Filter System (Client-side)
 
