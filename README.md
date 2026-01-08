@@ -89,7 +89,7 @@ Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view
 4. Green checkmarks mean **migrated**, circles mean **pending**
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:500px;width:auto" src="media/overview/release-0.1.2.png">
+  <img style="height:500px;width:auto" src="media/overview/laravel-heo-migration.png">
 </div>
 
 ### Run a Migration
@@ -134,7 +134,7 @@ Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view
 6. Use **Copy URL** to send the route URL to your clipboard
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:500px;width:auto" src="media/overview/release-0.2.0.png">
+  <img style="height:500px;width:auto" src="media/overview/laravel-hero-routes.png">
 </div>
 ---
 
