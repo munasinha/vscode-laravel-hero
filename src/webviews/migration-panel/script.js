@@ -105,7 +105,9 @@ function sortMigrations() {
 				break;
 			case 'index':
 			default:
-				return 0; // Keep original order for index
+				// Sort by original index in migrations array
+				valueA = migrations.indexOf(a);
+				valueB = migrations.indexOf(b);
 		}
 
 		if (valueA < valueB) return currentSort.direction === 'asc' ? -1 : 1;
@@ -130,7 +132,11 @@ window.addEventListener('message', event => {
 
 	switch (message.command) {
 		case 'migrations-loaded':
-			migrations = message.data || [];
+			// Add original index to each migration
+			migrations = (message.data || []).map((m, idx) => ({
+				...m,
+				_originalIndex: idx + 1
+			}));
 			filteredMigrations = [...migrations];
 			errorContainer.innerHTML = '';
 			if (message.error) {
@@ -202,7 +208,7 @@ function renderTable(items) {
 		const isRanAttr = m.ran ? 'disabled' : '';
 		
 		tr.innerHTML = `
-			<td>${index + 1}</td>
+			<td>${m._originalIndex}</td>
 			<td><code>${m.name}</code></td>
 			<td><span class="${m.ran ? 'status-ran' : 'status-pending'}">${m.ran ? '✓ Migrated' : '○ Pending'}</span></td>
 			<td>${m.batch || '-'}</td>
