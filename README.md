@@ -22,13 +22,20 @@
 
 [Laravel Hero](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero) is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
 
-Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view all registered routes with search, sort, middleware/permission visibility, copyable full URLs, and CSV export. Packages coming next.
+Migrations, Routes, and **Packages** are available today: view installed Composer dependencies, detect upgrades/deprecations, and jump to Packagist.
 
 ---
 
 ## ✨ Key Features
 
-### 🌐 **Routes Viewer (New)**
+### 📦 **Packages Viewer (New)**
+- **List installed packages** (prod + dev) from `composer.lock`
+- **Upgrade awareness** via `composer outdated --direct --format=json` (with graceful warnings if unavailable)
+- **Deprecation warnings** with suggested replacements when present
+- **Open in Packagist** with one click
+- **Search and sort** across name, version, type, status, and description
+
+### 🌐 **Routes Viewer**
 - **List all routes** with methods, URI, name, middleware, permissions, and full URL
 - **Search and sort** across all columns
 - **Middleware chips** show class name by default; click to expand full namespace
@@ -71,19 +78,18 @@ Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view
 2. Search for **"Laravel Hero"**
 3. Click **Install**
 4. Click the Laravel Hero icon in the Activity Bar (left sidebar)
-5. Select **Migrations** or **Routes** to get started
+5. Select **Migrations**, **Routes**, or **Packages** to get started
 
 ### Requirements
 - **VS Code** 1.107.0 or later
 - **Laravel project** with `artisan` binary
 - **PHP** 7.4+ installed
-- **Composer** (usually already in Laravel projects)
+- **Composer** (for package insights)
 
 ---
 
-## 💡 How to Use
+# Migration Manager
 
-### View Your Migrations
 1. Click the **Laravel Hero icon** in the Activity Bar
 2. Select **Migrations**
 3. Your webview panel opens showing all database migrations
@@ -126,7 +132,10 @@ Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view
 - Individual migrations show **⟲ Rollback** button (enabled only for migrated ones)
 - Confirm and watch the rollback execute
 
-### View Your Routes
+---
+
+# Routes Manager
+
 1. Click the **Laravel Hero icon** in the Activity Bar
 2. Select **Routes**
 3. Browse all routes with methods, name, middleware, permissions, and full URL
@@ -138,6 +147,23 @@ Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
   <img style="height:500px;width:auto" src="media/overview/laravel-hero-routes.png">
 </div>
+
+---
+
+# Package Manager 
+
+1. Click the **Laravel Hero icon** in the Activity Bar
+2. Select **Packages**
+3. Browse all installed Composer packages (prod + dev)
+4. See **Installed vs Latest** versions, **Deprecated** badges, and **Update available** chips
+5. Search/sort by name, version, type, or description
+6. Click **View** to open the package on Packagist
+7. If `composer outdated` cannot run, a warning banner explains why (data still loads from `composer.lock`)
+
+<div align="center" style="margin-top:30px;margin-bottom:30px;">
+  <img style="height:500px;width:auto" src="media/overview/laravel-hero-packages.png">
+</div>
+
 ---
 
 ## ⚙️ Configuration
@@ -174,11 +200,10 @@ That's it! Laravel Hero will now use your custom PHP installation.
 - Export CSV of the current routes list
 - More route testing tools coming soon
 
-### Phase 3: Package Management (Planned)
-- Browse installed Composer packages
-- View package documentation
-- Update packages safely
-- Manage dependencies
+### Phase 3: Upcoming Enhancements
+- Package update helpers and bulk actions
+- Database insights and connection status
+- Artisan command runner
 
 ---
 

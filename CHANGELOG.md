@@ -8,9 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Coming Soon
-- **Packages Feature** - Manage Laravel package installations
 - **Database Info** - View database configuration and connection status
 - **Artisan Command Runner** - Execute custom artisan commands from UI
+
+---
+
+## [0.3.0] - 2026-01-09
+### New Features
+- New **Packages** panel: lists installed Composer deps (prod + dev), flags updates/deprecations, and links to Packagist
 
 ---
 

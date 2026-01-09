@@ -72,11 +72,14 @@ src/
 ├── providers/                # Data providers
 │   └── LaravelHeroSidebar.ts # Sidebar menu provider
 ├── webviews/                 # Webview panels
-│   ├── MigrationPanel.ts     # Migrations UI
+│   ├── migration-panel/      # Migrations UI
+│   ├── routes-panel/         # Routes UI
+│   └── packages-panel/       # Packages UI
 │   └── lib/
 │       └── webviewUtils.ts   # Shared utilities
 ├── services/                 # Business logic
-│   ├── ArtisanService.ts     # Artisan command execution
+│   ├── ArtisanService.ts     # Artisan command execution (migrations/routes)
+│   ├── ComposerService.ts    # Composer data (packages/outdated)
 │   ├── WorkspaceService.ts   # Workspace management
 │   └── LoggerService.ts      # Unified logging
 └── utils/                    # Utilities
@@ -170,9 +173,11 @@ src/
 ├── providers/LaravelHeroSidebar.ts
 ├── webviews/
 │   ├── migration-panel/   # HTML/CSS/JS + TS controller
-│   └── routes-panel/      # HTML/CSS/JS + TS controller
+│   ├── routes-panel/      # HTML/CSS/JS + TS controller
+│   └── packages-panel/    # HTML/CSS/JS + TS controller
 ├── services/
 │   ├── ArtisanService.ts  # migrations + routes (route:list) helpers
+│   ├── ComposerService.ts # composer.lock + composer outdated helpers
 │   ├── WorkspaceService.ts
 │   └── LoggerService.ts
 └── utils/getNonce.ts
@@ -209,6 +214,16 @@ src/webviews/routes-panel/
 - Copy full URL from the table
 - Middleware chips toggle between short class and full namespace
 - Responsive table for long strings
+
+### Recent Features (v0.2.1)
+
+#### Packages Viewer
+- Reads installed packages from `composer.lock` (prod + dev)
+- Attempts `composer outdated --direct --format=json` to flag updates (warns gracefully if it fails)
+- Flags deprecated/abandoned packages and shows replacements when provided
+- Client-side search/sort across name, version, latest, type, status, description
+- One-click Packagist link for each package
+- Responsive table tuned for long descriptions and small screens
 
 ### Recent Features (v0.1.1)
 
@@ -361,8 +376,8 @@ Before submitting any changes, test:
 Sidebar & Commands
 ☐ Sidebar loads without errors
 ☐ Migrations button shows in sidebar
-☐ Routes button shows (placeholder message)
-☐ Packages button shows (placeholder message)
+☐ Routes button shows
+☐ Packages button shows
 ☐ Click each button opens the right panel
 
 Migrations Panel
@@ -398,6 +413,21 @@ Settings
 ☐ Custom PHP path setting works
 ☐ Commands execute with custom PHP
 ☐ Settings persist across sessions
+
+Routes Panel
+☐ Routes load (or warning shown) with methods, URI, name, middleware, permissions, full URL
+☐ Search and sort work across all columns
+☐ Middleware chips toggle between short and full namespaces
+☐ Copy URL posts to clipboard
+☐ Export CSV saves the current filtered list
+
+Packages Panel
+☐ Packages load from composer.lock (prod + dev)
+☐ Warning shows if composer outdated cannot run; data still displays
+☐ Status chips show Update available / Deprecated / Up to date / dev
+☐ Search and sort work across columns
+☐ Packagist link opens in browser
+☐ Long descriptions don’t break row alignment on small screens
 ```
 
 ### Automated Testing (Future)
