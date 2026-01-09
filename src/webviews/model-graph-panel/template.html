@@ -43,12 +43,23 @@
           <div class="legend-item"><span class="swatch rel-through"></span>Through</div>
           <div class="legend-item"><span class="swatch rel-poly"></span>Polymorphic</div>
         </div>
+        <button id="toggle-overlap-btn" class="secondary-button subtle">Allow Overlap: Off</button>
       </div>
     </div>
     <div id="graph-canvas" class="graph-canvas">
-      <svg id="edge-layer" class="edge-layer"></svg>
-      <div id="label-layer" class="label-layer"></div>
-      <div id="node-layer" class="node-layer"></div>
+      <div id="graph-viewport" class="graph-viewport">
+        <svg id="edge-layer" class="edge-layer"></svg>
+        <div id="label-layer" class="label-layer"></div>
+        <div id="node-layer" class="node-layer"></div>
+      </div>
+      <div class="zoom-controls">
+        <button id="zoom-in-btn" class="icon-button" title="Zoom In">
+          <img src="{{icon-zoom-in}}" alt="Zoom In">
+        </button>
+        <button id="zoom-out-btn" class="icon-button" title="Zoom Out">
+          <img src="{{icon-zoom-out}}" alt="Zoom Out">
+        </button>
+      </div>
       <div id="empty-state" class="empty-state hidden">
         <div class="spinner"></div>
         <p>No models found. Make sure your Laravel project has classes that extend <code>Illuminate\Database\Eloquent\Model</code>.</p>

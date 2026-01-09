@@ -42,12 +42,13 @@ src/
 │       ├── laravel-hero.open-migrations
 │       ├── laravel-hero.open-routes
 │       ├── laravel-hero.open-packages
+│       ├── laravel-hero.open-model-graph
 │       └── laravel-hero.showOutput
 │
 ├── providers/
 │   └── LaravelHeroSidebar.ts             # TreeDataProvider for sidebar menu
 │       ├── SidebarItem (extends TreeItem)
-│       ├── getChildren()        → Migrations, Routes, Packages
+│       ├── getChildren()        → Migrations, Routes, Packages, Model Graph
 │       ├── getTreeItem()        → Render item with icon
 │       └── refresh()            → Refresh tree
 │
@@ -63,6 +64,11 @@ src/
 │   │   ├── styles.css                    # Webview styling (CSS)
 │   │   └── script.js                     # Client-side logic (JS)
 │   ├── packages-panel/                   # Packages UI webview
+│   │   ├── index.ts                      # Webview controller and message handler
+│   │   ├── template.html                 # Webview UI structure (HTML)
+│   │   ├── styles.css                    # Webview styling (CSS)
+│   │   └── script.js                     # Client-side logic (JS)
+│   ├── model-graph-panel/                # Model Relationship Graph webview
 │   │   ├── index.ts                      # Webview controller and message handler
 │   │   ├── template.html                 # Webview UI structure (HTML)
 │   │   ├── styles.css                    # Webview styling (CSS)
@@ -102,6 +108,12 @@ src/
 │   │   ├── getInstalledPackages()→ Read composer.lock (prod + dev)
 │   │   ├── getOutdatedPackages() → Run composer outdated --direct --format=json
 │   │   └── parseOutdatedJson()   → Normalize upgrade info
+│   ├── ModelGraphService.ts              # Model and relationship discovery
+│   │   ├── getModelGraph()       → Scan PHP files for models/relationships
+│   │   ├── collectPhpFiles()     → Workspace traversal with skips
+│   │   ├── extractModel()        → Detect classes extending Model/Authenticatable
+│   │   ├── extractRelationships()→ Map relationships to labeled edges
+│   │   └── mapRelationLabel()    → Normalize relation labels for UI
 │   │
 │   └── LoggerService.ts                  # Unified logging
 │       ├── initialize()         → Create output channel
@@ -160,6 +172,10 @@ laravel-hero.open-packages
   → Execute: PackagesPanel.createOrShow()
   → Effect: Open webview panel for packages
 
+laravel-hero.open-model-graph
+  → Execute: ModelGraphPanel.createOrShow()
+  → Effect: Open webview panel for model relationship graph
+
 laravel-hero.showOutput
   → Execute: LoggerService.show()
   → Effect: Display Laravel Hero output channel
@@ -193,6 +209,10 @@ Routes (icon: git-branch) → open-routes command
 Packages (icon: package) → open-packages command
   ├─ Description: Manage Laravel packages
   └─ Handler: PackagesPanel.createOrShow()
+
+Model Graph (icon: graph) → open-model-graph command
+  ├─ Description: Visualize model relationships
+  └─ Handler: ModelGraphPanel.createOrShow()
 ```
 
 **Extension Point:**

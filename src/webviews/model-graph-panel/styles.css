@@ -225,6 +225,12 @@ body {
 	padding: 4px 8px 8px;
 }
 
+.toolbar-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
 .graph-toolbar .legend.compact {
 	display: flex;
 	flex-wrap: wrap;
@@ -252,9 +258,50 @@ body {
 	background:
 		radial-gradient(1200px 420px at 80% -10%, rgba(120, 120, 120, 0.14), transparent 60%),
 		radial-gradient(900px 360px at 15% 10%, rgba(120, 120, 120, 0.12), transparent 65%),
-		linear-gradient(0deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02)),
-		var(--surface-2);
+	linear-gradient(0deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02)),
+	var(--surface-2);
 	overflow: hidden;
+}
+
+.zoom-controls {
+	position: absolute;
+	left: 12px;
+	bottom: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	z-index: 4;
+}
+
+.icon-button {
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	border: 1px solid var(--border-subtle);
+	background: var(--surface-2);
+	display: grid;
+	place-items: center;
+	cursor: pointer;
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+	transition: transform 0.08s ease, box-shadow 0.2s ease;
+}
+
+.icon-button:hover {
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+	transform: translateY(-1px);
+}
+
+.icon-button img {
+	width: 16px;
+	height: 16px;
+	filter: brightness(1.1);
+}
+
+.graph-viewport {
+	position: absolute;
+	inset: 0;
+	transform-origin: 0 0;
+	touch-action: none;
 }
 
 .edge-layer {

@@ -174,10 +174,12 @@ src/
 ├── webviews/
 │   ├── migration-panel/   # HTML/CSS/JS + TS controller
 │   ├── routes-panel/      # HTML/CSS/JS + TS controller
-│   └── packages-panel/    # HTML/CSS/JS + TS controller
+│   ├── packages-panel/    # HTML/CSS/JS + TS controller
+│   └── model-graph-panel/ # HTML/CSS/JS + TS controller
 ├── services/
 │   ├── ArtisanService.ts  # migrations + routes (route:list) helpers
 │   ├── ComposerService.ts # composer.lock + composer outdated helpers
+│   ├── ModelGraphService.ts # model discovery and relationships
 │   ├── WorkspaceService.ts
 │   └── LoggerService.ts
 └── utils/getNonce.ts
@@ -224,6 +226,15 @@ src/webviews/routes-panel/
 - Client-side search/sort across name, version, latest, type, status, description
 - One-click Packagist link for each package
 - Responsive table tuned for long descriptions and small screens
+
+### Recent Features (v0.4.0)
+
+#### Model Relationship Graph
+- Scans for classes extending `Illuminate\Database\Eloquent\Model` or `Authenticatable`
+- Detects relationships (one-to-one, one-to-many, many-to-many, through, polymorphic) and labels edges
+- Webview supports drag, pan, zoom (wheel + floating buttons), center/reset, and optional overlap toggle
+- Layout centers high-degree nodes and separates isolates; positions persist across sessions
+- Double-click nodes to open files; search by model name/namespace/relation type
 
 ### Recent Features (v0.1.1)
 

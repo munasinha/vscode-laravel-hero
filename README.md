@@ -22,15 +22,16 @@
 
 [Laravel Hero](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero) is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
 
-Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are available today: explore Eloquent models visually, view installed Composer dependencies, detect upgrades/deprecations, and jump to Packagist.
+Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are available today: explore Eloquent/Authenticatable models visually (zoom, pan, collision toggle), view installed Composer dependencies, detect upgrades/deprecations, and jump to Packagist.
 
 ---
 
 ## ✨ Key Features
 
 ### 🕸️ **Model Relationship Graph (New)**
-- **Visual ER-style canvas** for all model classes with labeled relationships (one-to-one, one-to-many, many-to-many, through, polymorphic)
-- **Drag & drop layout** with automatic line updates, quick center/reset controls, and instant rescans
+- **Visual ER-style canvas** for all model classes (including `Authenticatable`) with labeled relationships (one-to-one, one-to-many, many-to-many, through, polymorphic)
+- **Drag, pan, zoom** (wheel + floating zoom buttons) with center/reset controls and optional overlap toggle
+- **Smart layout** centers the most-connected models and separates isolates; lines stay labeled as you move nodes
 - **Model-aware actions** — double-click a node to open the model file; search by model name, namespace, or relationship type
 - **Native Laravel Hero styling** that matches the existing Migrations, Routes, and Packages panels
 
@@ -160,11 +161,13 @@ Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are a
 
 1. Click the **Laravel Hero icon** in the Activity Bar
 2. Select **Model Graph**
-3. A canvas opens with every detected Eloquent model
+3. A canvas opens with every detected model (classes extending `Illuminate\Database\Eloquent\Model` or `Authenticatable`)
 4. Drag nodes to reorganize the layout; edges stay connected and labeled by relationship type
 
+- Use the floating zoom buttons (or mouse wheel) and pan-drag anywhere on the canvas
 - Click **Rescan Models** to refresh after code changes
 - Use **Center Layout** or **Reset Layout** to tidy the canvas
+- Toggle **Allow Overlap** to switch between collision-free and freeform layouts
 - Double-click any node to open its PHP file in the editor
 - Search by model name, namespace, or relationship type to quickly highlight parts of the graph
 

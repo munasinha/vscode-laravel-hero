@@ -153,7 +153,9 @@ export class ModelGraphPanel {
 		}
 
 		const iconMap: Record<string, string> = {
-			'icon-refresh': 'arrow-path.svg'
+			'icon-refresh': 'arrow-path.svg',
+			'icon-zoom-in': 'magnifying-glass-plus.svg',
+			'icon-zoom-out': 'magnifying-glass-minus.svg'
 		};
 
 		for (const [token, fileName] of Object.entries(iconMap)) {
