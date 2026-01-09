@@ -104,7 +104,7 @@ Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are a
 4. Green checkmarks mean **migrated**, circles mean **pending**
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:500px;width:auto" src="media/overview/laravel-heo-migration.png">
+  <img style="height:auto;width:100%" src="media/overview/laravel-heo-migration.png">
 </div>
 
 ### Run a Migration
@@ -153,7 +153,7 @@ Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are a
 7. Click **Export CSV** to download the current route list
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:500px;width:auto" src="media/overview/laravel-hero-routes.png">
+  <img style="height:auto;width:100%" src="media/overview/laravel-hero-routes.png">
 </div>
 
 ---
@@ -174,7 +174,7 @@ Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are a
 
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:500px;width:auto" src="media/overview/laravel-hero-model-relationship-graph.png">
+  <img style="height:auto;width:100%" src="media/overview/laravel-hero-model-relationship-graph.png">
 </div>
 
 ---
@@ -190,7 +190,7 @@ Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are a
 7. If `composer outdated` cannot run, a warning banner explains why (data still loads from `composer.lock`)
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:500px;width:auto" src="media/overview/laravel-hero-packages.png">
+  <img style="height:auto;width:100%" src="media/overview/laravel-hero-packages.png">
 </div>
 
 ---
