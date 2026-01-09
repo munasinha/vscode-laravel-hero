@@ -12,6 +12,7 @@ export class RoutesPanel {
 	private readonly _panel: vscode.WebviewPanel;
 	private readonly _extensionUri: vscode.Uri;
 	private readonly _artisan: ArtisanService;
+	private _routes: any[] = [];
 	private _disposables: vscode.Disposable[] = [];
 
 	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
@@ -74,6 +75,7 @@ export class RoutesPanel {
 		try {
 			const result = await this._artisan.getRoutes();
 			LoggerService.info(`Loaded ${result.routes.length} routes`);
+			this._routes = result.routes;
 
 			this._panel.webview.postMessage({
 				command: 'routes-loaded',
@@ -101,6 +103,10 @@ export class RoutesPanel {
 				case 'copy-text':
 					await this._copyText(message.text);
 					break;
+
+				case 'export-csv':
+					await this._exportCsv();
+					break;
 			}
 		} catch (err) {
 			LoggerService.error(`Error handling webview message: ${message.command}`, err);
@@ -123,6 +129,56 @@ export class RoutesPanel {
 		} catch (err) {
 			LoggerService.error('Failed to copy to clipboard', err);
 			vscode.window.showErrorMessage('Failed to copy route URL');
+		}
+	}
+
+	private async _exportCsv(): Promise<void> {
+		if (!this._routes || this._routes.length === 0) {
+			vscode.window.showWarningMessage('No routes to export');
+			return;
+		}
+
+		const uri = await vscode.window.showSaveDialog({
+			defaultUri: vscode.Uri.file('routes.csv'),
+			filters: { CSV: ['csv'] },
+			saveLabel: 'Export Routes CSV'
+		});
+
+		if (!uri) {
+			return;
+		}
+
+		try {
+			const header = ['Method', 'URI', 'Name', 'Action', 'Middleware', 'Permissions', 'Domain', 'Full URL'];
+			const lines = [header.join(',')];
+
+			for (const route of this._routes) {
+				const row = [
+					(route.methods || []).join(' | '),
+					route.uri || '',
+					route.name || '',
+					route.action || '',
+					(route.middleware || []).join('; '),
+					(route.permissions || []).join('; '),
+					route.domain || '',
+					route.fullUrl || ''
+				].map(value => {
+					const safe = String(value ?? '');
+					if (safe.includes('"') || safe.includes(',') || safe.includes('\n')) {
+						return `"${safe.replace(/"/g, '""')}"`;
+					}
+					return safe;
+				});
+				lines.push(row.join(','));
+			}
+
+			const csvContent = lines.join('\n');
+			await fs.promises.writeFile(uri.fsPath, csvContent, 'utf8');
+			vscode.window.showInformationMessage(`Routes exported to ${uri.fsPath}`);
+		} catch (err) {
+			LoggerService.error('Failed to export routes CSV', err);
+			const msg = err instanceof Error ? err.message : String(err);
+			vscode.window.showErrorMessage(`Export failed: ${msg}`);
 		}
 	}
 

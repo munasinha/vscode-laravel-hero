@@ -66,7 +66,11 @@ body {
 	border: 1px solid var(--border-subtle);
 	border-radius: 14px;
 	background: var(--surface-2);
-	overflow: auto;
+	overflow-x: auto;
+	overflow-y: scroll;
+	height: 70vh;
+	min-height: 320px;
+	scrollbar-gutter: stable both-edges;
 	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
@@ -77,12 +81,19 @@ table {
 	table-layout: fixed;
 }
 
+thead {
+	position: sticky;
+	top: 0;
+	z-index: 3;
+}
+
 th, td {
 	text-align: left;
 	padding: 12px;
 	border-bottom: 1px solid var(--border-subtle);
 	vertical-align: top;
-	white-space: nowrap;
+	white-space: normal;
+	word-break: break-word;
 }
 
 th:nth-child(1),
@@ -97,27 +108,27 @@ td:nth-child(2) {
 
 th:nth-child(3),
 td:nth-child(3) {
-	width: 180px;
+	width: 260px;
 }
 
 th:nth-child(4),
 td:nth-child(4) {
-	width: 140px;
+	width: 240px;
 }
 
 th:nth-child(5),
 td:nth-child(5) {
-	width: 140px;
+	width: 220px;
 }
 
 th:nth-child(6),
 td:nth-child(6) {
-	width: 200px;
+	width: 240px;
 }
 
 th:nth-child(7),
 td:nth-child(7) {
-	width: 240px;
+	width: 320px;
 }
 
 th:nth-child(8),
@@ -130,7 +141,7 @@ th {
 	background-color: var(--vscode-editor-inactiveSelectionBackground);
 	position: sticky;
 	top: 0;
-	z-index: 2;
+	z-index: 3;
 }
 
 tbody tr:hover {
@@ -374,9 +385,8 @@ button:focus-visible,
 .url-cell code {
 	display: inline-block;
 	max-width: 100%;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	white-space: normal;
+	word-break: break-word;
 }
 
 .middleware-chip {
@@ -400,6 +410,11 @@ button:focus-visible,
 .middleware-cell {
 	white-space: normal;
 	word-break: break-word;
+}
+
+.mono-text {
+	font-family: var(--vscode-editor-font-family);
+	font-size: 0.95em;
 }
 
 @media (max-width: 1100px) {

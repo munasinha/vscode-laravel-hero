@@ -9,9 +9,14 @@ const errorContainer = document.getElementById('error-container');
 const searchInput = document.getElementById('search-input');
 const searchResults = document.getElementById('search-results');
 const refreshBtn = document.getElementById('refresh-btn');
+const exportBtn = document.getElementById('export-btn');
 
 refreshBtn.addEventListener('click', () => {
 	vscode.postMessage({ command: 'refresh' });
+});
+
+exportBtn.addEventListener('click', () => {
+	vscode.postMessage({ command: 'export-csv', data: filteredRoutes });
 });
 
 searchInput.addEventListener('input', (e) => {
@@ -216,11 +221,11 @@ function renderTable(items) {
 		tr.innerHTML = `
 			<td>${route._originalIndex}</td>
 			<td><span class="method-chip">${escapeHtml(methodsLabel)}</span></td>
-			<td><code>${escapeHtml(route.uri)}</code></td>
+			<td class="mono-text">${escapeHtml(route.uri)}</td>
 			<td>${escapeHtml(route.name || '—')}</td>
 			<td>${escapeHtml(permissionsLabel)}</td>
 			<td class="middleware-cell">${middlewareContent}</td>
-			<td class="url-cell"><code>${escapeHtml(safeUrl || '—')}</code></td>
+			<td class="url-cell mono-text">${escapeHtml(safeUrl || '—')}</td>
 			<td>
 				<button class="inline-button secondary" data-action="copy" data-url="${escapeHtml(safeUrl)}">Copy URL</button>
 			</td>
