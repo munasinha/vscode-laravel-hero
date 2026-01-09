@@ -14,6 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.1] - 2026-01-09
+### New Features
+- Export CSV button to save the current routes list
+### Fixed / Polished
+- Responsive table layout and fixed all the previous 
+
+---
+
 ## [0.2.0] - 2026-01-08
 
 ### Added - Phase 2: Routes Viewer

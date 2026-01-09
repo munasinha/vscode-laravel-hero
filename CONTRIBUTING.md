@@ -198,7 +198,8 @@ src/webviews/routes-panel/
 - Normalizes methods (splits GET|HEAD and concatenated tokens)
 - Middleware chips show class name; click to expand full namespace
 - Copy URL posts `copy-text` to the extension clipboard handler
-- Responsive table with horizontal scroll on narrow widths and wrapping for middleware/URLs
+- Export CSV posts `export-csv` to the extension for saving the current list
+- Responsive table with horizontal scroll on narrow widths, sticky headers, and wrapping for middleware/URLs
 
 ### Recent Features (v0.2.0)
 

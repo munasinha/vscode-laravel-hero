@@ -22,7 +22,7 @@
 
 [Laravel Hero](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero) is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
 
-Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view all registered routes with search, sort, middleware/permission visibility, and copyable full URLs. Packages coming next.
+Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view all registered routes with search, sort, middleware/permission visibility, copyable full URLs, and CSV export. Packages coming next.
 
 ---
 
@@ -33,7 +33,8 @@ Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view
 - **Search and sort** across all columns
 - **Middleware chips** show class name by default; click to expand full namespace
 - **Copy URL** quickly from the table
-- **Responsive table** with wrapping for long middleware/URLs
+- **Export CSV** for the current route list
+- **Responsive table** with wrapping for long middleware/URLs and sticky headers with scroll
 
 ### 🗄️ **Database Migrations Management**
 - **View all migrations** in a clean, organized interface
@@ -132,6 +133,7 @@ Phase 1 (Migrations) is complete and **Phase 2 (Routes)** is now available: view
 4. **Search** and **sort** any column; long middleware and URLs wrap gracefully
 5. Click a middleware chip to expand its full namespace
 6. Use **Copy URL** to send the route URL to your clipboard
+7. Click **Export CSV** to download the current route list
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
   <img style="height:500px;width:auto" src="media/overview/laravel-hero-routes.png">
@@ -168,7 +170,8 @@ That's it! Laravel Hero will now use your custom PHP installation.
 
 ### Phase 2: Routes Management (Shipped)
 - View all application routes with methods, names, middleware, permissions
-- Search/sort, responsive table, copy full URLs, and toggle middleware namespaces
+- Search/sort, responsive table with sticky headers, copy full URLs, toggle middleware namespaces
+- Export CSV of the current routes list
 - More route testing tools coming soon
 
 ### Phase 3: Package Management (Planned)

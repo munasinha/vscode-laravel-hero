@@ -310,6 +310,7 @@ RoutesPanel.createOrShow()
        ├─ Normalizes methods (handles GET|HEAD and concatenated tokens)
        ├─ Derives permissions from middleware (can:, permission:, etc.)
        └─ Builds full URL using APP_URL/.env or domain
+  └─ _exportCsv() → prompts for save location, writes routes list as CSV
 ```
 
 **UI Behaviors:**
@@ -317,7 +318,8 @@ RoutesPanel.createOrShow()
 - Methods rendered as `GET | HEAD` when multiple tokens exist
 - Middleware chips show class name by default; click to toggle full namespace
 - Copy URL action posts `copy-text` to extension (clipboard)
-- Responsive table wraps long middleware/URLs and allows horizontal scroll on narrow widths
+- Export CSV button posts `export-csv` for the current list
+- Responsive table wraps long middleware/URLs, sticky headers, always-visible scroll
 
 ### 1. Search & Filter System (Client-side)
 
