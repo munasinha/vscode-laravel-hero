@@ -13,6 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.1] - 2026-01-09
+### New 
+  - Touch pad zoom in and zoom out
+### Fixed
+  - Fixed Model Relationship Graph zooming issues
+  - Fixed Incorrect relationship label issue
+
+---
+
 ## [0.5.0] - 2026-01-09
 ### New / Improved
 - **Cardinality on edges**: single label per relationship line with inline `1 / ∞` badges indicating directionality.
