@@ -3,14 +3,21 @@ const vscode = acquireVsCodeApi();
 let graphData = { nodes: [], relationships: [], warnings: [] };
 const nodeState = new Map();
 const savedPositions = new Map();
+let visibleNodes = new Set();
+let matchedNodes = new Set();
 
 let pan = { x: 0, y: 0 };
 let scale = 1;
-let allowOverlap = false;
+const allowOverlap = false;
 
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 2.5;
 const OVERLAP_SPACING = 28;
+const LARGE_GRAPH_THRESHOLD = 150;
+const NODE_SPACING = 220;
+const GRID_MARGIN = 120;
+let layoutWidth = 0;
+let layoutHeight = 0;
 const isPanBlockedTarget = (target) => {
 	return Boolean(
 		target.closest('.model-node') ||
@@ -28,7 +35,6 @@ const resetBtn = document.getElementById('reset-layout-btn');
 const centerBtn = document.getElementById('center-btn');
 const zoomInBtn = document.getElementById('zoom-in-btn');
 const zoomOutBtn = document.getElementById('zoom-out-btn');
-const toggleOverlapBtn = document.getElementById('toggle-overlap-btn');
 const canvas = document.getElementById('graph-canvas');
 const viewport = document.getElementById('graph-viewport');
 const edgeLayer = document.getElementById('edge-layer');
@@ -53,7 +59,6 @@ resetBtn.addEventListener('click', () => resetLayout());
 centerBtn.addEventListener('click', () => centerLayout(true));
 zoomInBtn.addEventListener('click', () => zoomBy(0.15));
 zoomOutBtn.addEventListener('click', () => zoomBy(-0.15));
-toggleOverlapBtn.addEventListener('click', toggleOverlap);
 searchInput.addEventListener('input', (e) => applySearch(e.target.value));
 
 canvas.addEventListener('wheel', (e) => {
@@ -127,10 +132,6 @@ window.addEventListener('message', event => {
 	if (state.scale) {
 		scale = state.scale;
 	}
-	if (typeof state.allowOverlap === 'boolean') {
-		allowOverlap = state.allowOverlap;
-	}
-	updateOverlapToggle();
 	applyTransform();
 	vscode.postMessage({ command: 'ready' });
 })();
@@ -177,6 +178,7 @@ function renderGraph(payload) {
 	graphData.nodes.forEach(node => createNode(node));
 
 	layoutNodes(false);
+	visibleNodes = new Set(graphData.nodes.map(n => n.id));
 	drawEdges();
 	applySearch(searchInput.value);
 }
@@ -220,53 +222,85 @@ function layoutNodes(reset) {
 	const connected = graphData.nodes.filter(n => (degreeMap.get(n.id) || 0) > 0);
 	const isolated = graphData.nodes.filter(n => (degreeMap.get(n.id) || 0) === 0);
 
-	const sorted = [...connected].sort((a, b) => (degreeMap.get(b.id) || 0) - (degreeMap.get(a.id) || 0));
-	const center = { x: viewWidth / 2, y: viewHeight / 2 };
-	const clusterRadius = Math.max(180, Math.min(viewWidth, viewHeight) / 2.4);
+	// For very large graphs, use a grid layout and expand the viewport.
+	if (graphData.nodes.length > LARGE_GRAPH_THRESHOLD) {
+		const cols = Math.ceil(Math.sqrt(graphData.nodes.length));
+		const rows = Math.ceil(graphData.nodes.length / cols);
+		layoutWidth = cols * NODE_SPACING + GRID_MARGIN * 2;
+		layoutHeight = rows * NODE_SPACING + GRID_MARGIN * 2;
+		viewport.style.width = `${layoutWidth}px`;
+		viewport.style.height = `${layoutHeight}px`;
 
-	// Place connected nodes
-	sorted.forEach((node, index) => {
-		const state = nodeState.get(node.id);
-		if (!state) return;
+		graphData.nodes.forEach((node, index) => {
+			const state = nodeState.get(node.id);
+			if (!state) return;
 
-		const saved = savedPositions.get(node.id);
-		if (!reset && saved) {
-			setNodePosition(node.id, saved.x, saved.y, { skipPersist: true });
-			return;
-		}
+			const saved = savedPositions.get(node.id);
+			if (!reset && saved) {
+				setNodePosition(node.id, saved.x, saved.y, { skipPersist: true });
+				return;
+			}
 
-		if (index === 0) {
-			setNodePosition(node.id, center.x - 100, center.y - 50, { skipPersist: true });
-			return;
-		}
+			const col = index % cols;
+			const row = Math.floor(index / cols);
+			const x = GRID_MARGIN + col * NODE_SPACING;
+			const y = GRID_MARGIN + row * NODE_SPACING;
+			setNodePosition(node.id, x, y, { skipPersist: true });
+		});
+	} else {
+		layoutWidth = viewWidth;
+		layoutHeight = viewHeight;
+		viewport.style.width = `${layoutWidth}px`;
+		viewport.style.height = `${layoutHeight}px`;
 
-		const angle = (index / Math.max(1, sorted.length - 1)) * Math.PI * 2;
-		const x = center.x + clusterRadius * Math.cos(angle) - 100;
-		const y = center.y + clusterRadius * Math.sin(angle) - 50;
-		setNodePosition(node.id, x, y, { skipPersist: true });
-	});
+		const sorted = [...connected].sort((a, b) => (degreeMap.get(b.id) || 0) - (degreeMap.get(a.id) || 0));
+		const center = { x: viewWidth / 2, y: viewHeight / 2 };
+		const clusterRadius = Math.max(180, Math.min(viewWidth, viewHeight) / 2.4);
 
-	// Place isolated nodes along the bottom edge to visually separate them
-	const isoCols = Math.max(1, Math.floor(viewWidth / 220));
-	const isoStartX = 20;
-	const isoStartY = viewHeight - 140;
+		// Place connected nodes
+		sorted.forEach((node, index) => {
+			const state = nodeState.get(node.id);
+			if (!state) return;
 
-	isolated.forEach((node, index) => {
-		const state = nodeState.get(node.id);
-		if (!state) return;
+			const saved = savedPositions.get(node.id);
+			if (!reset && saved) {
+				setNodePosition(node.id, saved.x, saved.y, { skipPersist: true });
+				return;
+			}
 
-		const saved = savedPositions.get(node.id);
-		if (!reset && saved) {
-			setNodePosition(node.id, saved.x, saved.y, { skipPersist: true });
-			return;
-		}
+			if (index === 0) {
+				setNodePosition(node.id, center.x - 100, center.y - 50, { skipPersist: true });
+				return;
+			}
 
-		const col = index % isoCols;
-		const row = Math.floor(index / isoCols);
-		const x = isoStartX + col * 220;
-		const y = isoStartY - row * 130;
-		setNodePosition(node.id, x, y, { skipPersist: true });
-	});
+			const angle = (index / Math.max(1, sorted.length - 1)) * Math.PI * 2;
+			const x = center.x + clusterRadius * Math.cos(angle) - 100;
+			const y = center.y + clusterRadius * Math.sin(angle) - 50;
+			setNodePosition(node.id, x, y, { skipPersist: true });
+		});
+
+		// Place isolated nodes along the bottom edge to visually separate them
+		const isoCols = Math.max(1, Math.floor(viewWidth / 220));
+		const isoStartX = 20;
+		const isoStartY = viewHeight - 140;
+
+		isolated.forEach((node, index) => {
+			const state = nodeState.get(node.id);
+			if (!state) return;
+
+			const saved = savedPositions.get(node.id);
+			if (!reset && saved) {
+				setNodePosition(node.id, saved.x, saved.y, { skipPersist: true });
+				return;
+			}
+
+			const col = index % isoCols;
+			const row = Math.floor(index / isoCols);
+			const x = isoStartX + col * 220;
+			const y = isoStartY - row * 130;
+			setNodePosition(node.id, x, y, { skipPersist: true });
+		});
+	}
 
 	if (!allowOverlap) {
 		resolveCollisions();
@@ -303,9 +337,8 @@ function buildDegreeMap() {
 }
 
 function drawEdges() {
-	const rect = canvas.getBoundingClientRect();
-	const baseWidth = rect.width / scale;
-	const baseHeight = rect.height / scale;
+	const baseWidth = layoutWidth || canvas.getBoundingClientRect().width / scale;
+	const baseHeight = layoutHeight || canvas.getBoundingClientRect().height / scale;
 	edgeLayer.setAttribute('width', `${baseWidth}`);
 	edgeLayer.setAttribute('height', `${baseHeight}`);
 	edgeLayer.setAttribute('viewBox', `0 0 ${baseWidth} ${baseHeight}`);
@@ -313,7 +346,19 @@ function drawEdges() {
 	edgeLayer.innerHTML = '';
 	labelLayer.innerHTML = '';
 
+	const seen = new Set();
+
 	graphData.relationships.forEach(rel => {
+		if (visibleNodes.size && (!visibleNodes.has(rel.source) || !visibleNodes.has(rel.target))) {
+			return;
+		}
+
+		const undirectedKey = `${[rel.source, rel.target].sort().join('|')}`;
+		if (seen.has(undirectedKey)) {
+			return;
+		}
+		seen.add(undirectedKey);
+
 		const from = nodeState.get(rel.source);
 		const to = nodeState.get(rel.target);
 
@@ -323,6 +368,12 @@ function drawEdges() {
 
 		const fromCenter = getNodeCenter(from);
 		const toCenter = getNodeCenter(to);
+		const dx = toCenter.x - fromCenter.x;
+		const dy = toCenter.y - fromCenter.y;
+		const dist = Math.hypot(dx, dy) || 1;
+		const ux = dx / dist;
+		const uy = dy / dist;
+		const offset = 18;
 
 		const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 		line.setAttribute('x1', `${fromCenter.x}`);
@@ -340,14 +391,34 @@ function drawEdges() {
 			x: (fromCenter.x + toCenter.x) / 2,
 			y: (fromCenter.y + toCenter.y) / 2
 		};
+		const normal = { x: -uy, y: ux };
+		const labelOffset = 0;
 
 		const label = document.createElement('div');
 		label.className = `edge-label relation-${normalizeRelation(rel.type)}`;
 		label.textContent = rel.type;
-		label.style.left = `${midPoint.x}px`;
-		label.style.top = `${midPoint.y}px`;
+		label.style.left = `${midPoint.x + normal.x * labelOffset}px`;
+		label.style.top = `${midPoint.y + normal.y * labelOffset}px`;
 		label.title = `${rel.method} (${rel.relation})`;
 		labelLayer.appendChild(label);
+
+		// Cardinalities placed on the line near the label (1 --- label --- ∞).
+		const badgeOffset = 60;
+		const fromBadge = document.createElement('div');
+		fromBadge.className = `edge-endpoint cardinality-${rel.sourceCardinality || 'one'}`;
+		fromBadge.textContent = rel.sourceCardinality === 'many' ? '∞' : '1';
+		fromBadge.style.left = `${midPoint.x - ux * badgeOffset}px`;
+		fromBadge.style.top = `${midPoint.y - uy * badgeOffset}px`;
+		fromBadge.style.transform = 'translate(-50%, -50%)';
+		labelLayer.appendChild(fromBadge);
+
+		const toBadge = document.createElement('div');
+		toBadge.className = `edge-endpoint cardinality-${rel.targetCardinality || 'one'}`;
+		toBadge.textContent = rel.targetCardinality === 'many' ? '∞' : '1';
+		toBadge.style.left = `${midPoint.x + ux * badgeOffset}px`;
+		toBadge.style.top = `${midPoint.y + uy * badgeOffset}px`;
+		toBadge.style.transform = 'translate(-50%, -50%)';
+		labelLayer.appendChild(toBadge);
 	});
 }
 
@@ -396,12 +467,14 @@ function setNodePosition(id, x, y, options = {}) {
 	const state = nodeState.get(id);
 	if (!state) return;
 
-	const canvasRect = canvas.getBoundingClientRect();
 	const nodeWidth = state.element.offsetWidth;
 	const nodeHeight = state.element.offsetHeight;
 
-	const maxX = Math.max(0, canvasRect.width / scale - nodeWidth);
-	const maxY = Math.max(0, canvasRect.height / scale - nodeHeight);
+	const extentWidth = layoutWidth || canvas.getBoundingClientRect().width / scale;
+	const extentHeight = layoutHeight || canvas.getBoundingClientRect().height / scale;
+
+	const maxX = Math.max(0, extentWidth - nodeWidth);
+	const maxY = Math.max(0, extentHeight - nodeHeight);
 
 	const clampedX = clamp(x, 0, maxX);
 	const clampedY = clamp(y, 0, maxY);
@@ -428,22 +501,54 @@ function applySearch(term) {
 	const query = (term || '').toLowerCase();
 	let visibleCount = 0;
 
+	if (!query) {
+		visibleNodes = new Set(graphData.nodes.map(n => n.id));
+		matchedNodes = new Set();
+	} else {
+		const matched = new Set(
+			graphData.nodes
+				.filter(node =>
+					node.name.toLowerCase().includes(query) ||
+					(node.namespace || '').toLowerCase().includes(query) ||
+					graphData.relationships.some(rel =>
+						(rel.source === node.id || rel.target === node.id) &&
+						(rel.type || '').toLowerCase().includes(query)
+					)
+				)
+				.map(node => node.id)
+		);
+		matchedNodes = matched;
+
+		const neighbors = new Set();
+		graphData.relationships.forEach(rel => {
+			if (matched.has(rel.source)) {
+				neighbors.add(rel.target);
+			}
+			if (matched.has(rel.target)) {
+				neighbors.add(rel.source);
+			}
+		});
+
+		// Show only direct matches and their first-degree relationships.
+		visibleNodes = new Set([...matched, ...neighbors]);
+	}
+
 	graphData.nodes.forEach(node => {
 		const state = nodeState.get(node.id);
 		if (!state) return;
-		const matches = !query ||
-			node.name.toLowerCase().includes(query) ||
-			(node.namespace || '').toLowerCase().includes(query) ||
-			graphData.relationships.some(rel =>
-				(rel.source === node.id || rel.target === node.id) &&
-				(rel.type || '').toLowerCase().includes(query)
-			);
+		const isVisible = visibleNodes.has(node.id);
+		state.element.style.display = isVisible ? 'block' : 'none';
 
-		state.element.style.opacity = matches ? '1' : '0.25';
-		if (matches) visibleCount += 1;
+		// If this node is a direct search match, treat it as a first-class model for display.
+		const chips = state.element.querySelectorAll('.node-chip');
+		if (chips.length > 0) {
+			chips[0].textContent = matchedNodes.has(node.id) ? 'Model' : (state.data?.isExternal ? 'Referenced' : 'Model');
+		}
+
+		if (isVisible) visibleCount += 1;
 	});
 
-	searchResults.textContent = query ? `${visibleCount} of ${graphData.nodes.length} matching` : '';
+	searchResults.textContent = query ? `${visibleCount} of ${graphData.nodes.length} matching (showing matches + related)` : '';
 	drawEdges();
 }
 
@@ -479,7 +584,7 @@ function toGraphCoords(clientX, clientY, customScale) {
 
 function resolveCollisions() {
 	const nodes = Array.from(nodeState.values());
-	const iterations = 120;
+	const iterations = graphData.nodes.length > LARGE_GRAPH_THRESHOLD ? 20 : 120;
 
 	for (let i = 0; i < iterations; i++) {
 		let moved = false;
@@ -522,19 +627,9 @@ function resolveCollisions() {
 }
 
 function toggleOverlap() {
-	allowOverlap = !allowOverlap;
-	updateOverlapToggle();
-	if (!allowOverlap) {
-		resolveCollisions();
-		drawEdges();
-		persistState();
-	} else {
-		persistState();
-	}
-}
-
-function updateOverlapToggle() {
-	toggleOverlapBtn.textContent = `Allow Overlap: ${allowOverlap ? 'On' : 'Off'}`;
+	resolveCollisions();
+	drawEdges();
+	persistState();
 }
 
 function persistState() {
@@ -545,8 +640,7 @@ function persistState() {
 	vscode.setState({
 		positions,
 		pan,
-		scale,
-		allowOverlap
+		scale
 	});
 }
 

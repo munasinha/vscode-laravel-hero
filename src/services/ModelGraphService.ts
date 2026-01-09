@@ -19,6 +19,8 @@ export interface ModelRelationship {
 	relation: string;
 	method: string;
 	filePath: string;
+	sourceCardinality?: 'one' | 'many';
+	targetCardinality?: 'one' | 'many';
 }
 
 export interface ModelGraphResult {
@@ -55,9 +57,12 @@ export class ModelGraphService {
 						continue;
 					}
 
-					if (!nodes.has(model.id)) {
-						nodes.set(model.id, model);
-					}
+					const existing = nodes.get(model.id);
+					nodes.set(model.id, {
+						...(existing || {}),
+						...model,
+						isExternal: false // ensure real models replace placeholders
+					});
 
 					const modelRelationships = this.extractRelationships(model, content, useMap);
 					for (const rel of modelRelationships) {
@@ -188,7 +193,8 @@ export class ModelGraphService {
 		const classStart = content.indexOf(model.name);
 		const classBody = classStart >= 0 ? content.slice(classStart) : content;
 
-		const methodRegex = /function\s+(\w+)\s*\([^)]*\)\s*{([\s\S]*?)}/g;
+		// Support return type hints between ) and { e.g., function org(): BelongsTo { ... }
+		const methodRegex = /function\s+(\w+)\s*\([^)]*\)\s*(?::[^{]+)?\s*{([\s\S]*?)}/g;
 		let methodMatch: RegExpExecArray | null;
 
 		while ((methodMatch = methodRegex.exec(classBody)) !== null) {
@@ -208,13 +214,17 @@ export class ModelGraphService {
 				continue;
 			}
 
+			const info = this.mapRelationInfo(relationType);
+
 			relationships.push({
 				source: model.id,
 				target,
-				type: this.mapRelationLabel(relationType),
+				type: info.label,
 				relation: relationType,
 				method: methodName,
-				filePath: model.filePath
+				filePath: model.filePath,
+				sourceCardinality: info.sourceCardinality,
+				targetCardinality: info.targetCardinality
 			});
 		}
 
@@ -224,30 +234,29 @@ export class ModelGraphService {
 	/**
 	 * Map relation helper to a human-readable label shown in the webview.
 	 */
-	private mapRelationLabel(relation: string): string {
+	private mapRelationInfo(relation: string): {
+		label: string;
+		sourceCardinality: 'one' | 'many';
+		targetCardinality: 'one' | 'many';
+	} {
 		switch (relation) {
 			case 'hasOne':
-			case 'belongsTo':
-				return 'One To One';
-			case 'hasMany':
-				return 'One To Many';
-			case 'belongsToMany':
-				return 'Many To Many';
-			case 'hasOneThrough':
-				return 'Has One Through';
-			case 'hasManyThrough':
-				return 'Has Many Through';
 			case 'morphOne':
-				return 'One To One (Polymorphic)';
+			case 'hasOneThrough':
+				return { label: 'One To One', sourceCardinality: 'one', targetCardinality: 'one' };
+			case 'belongsTo':
+			case 'morphTo':
+				return { label: 'One To One', sourceCardinality: 'many', targetCardinality: 'one' };
+			case 'hasMany':
 			case 'morphMany':
-				return 'One To Many (Polymorphic)';
+			case 'hasManyThrough':
+				return { label: 'One To Many', sourceCardinality: 'one', targetCardinality: 'many' };
+			case 'belongsToMany':
 			case 'morphToMany':
 			case 'morphedByMany':
-				return 'Many To Many (Polymorphic)';
-			case 'morphTo':
-				return 'Polymorphic';
+				return { label: 'Many To Many', sourceCardinality: 'many', targetCardinality: 'many' };
 			default:
-				return relation;
+				return { label: relation, sourceCardinality: 'one', targetCardinality: 'one' };
 		}
 	}
 
@@ -341,6 +350,11 @@ export class ModelGraphService {
 		]);
 
 		if (allowedParents.has(resolved) || allowedParents.has(baseName) || allowedParents.has(normalized)) {
+			return true;
+		}
+
+		// Heuristic: treat any parent ending with "Model" as an Eloquent-like base (covers custom base models).
+		if (baseName.toLowerCase().endsWith('model')) {
 			return true;
 		}
 

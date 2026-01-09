@@ -72,7 +72,7 @@ src/
 │   │   ├── index.ts                      # Webview controller and message handler
 │   │   ├── template.html                 # Webview UI structure (HTML)
 │   │   ├── styles.css                    # Webview styling (CSS)
-│   │   └── script.js                     # Client-side logic (JS)
+│   │   └── script.js                     # Client-side logic (JS) with pan/zoom, collision-free layout, single edge labels + endpoint cardinalities
 │   └── lib/
 │       └── webviewUtils.ts               # Shared webview utilities
 │           ├── WebviewUtils.generateHtmlTemplate()
@@ -112,8 +112,8 @@ src/
 │   │   ├── getModelGraph()       → Scan PHP files for models/relationships
 │   │   ├── collectPhpFiles()     → Workspace traversal with skips
 │   │   ├── extractModel()        → Detect classes extending Model/Authenticatable
-│   │   ├── extractRelationships()→ Map relationships to labeled edges
-│   │   └── mapRelationLabel()    → Normalize relation labels for UI
+│   │   ├── extractRelationships()→ Map relationships to labeled edges with cardinalities
+│   │   └── mapRelationInfo()     → Normalize relation labels + one/many per endpoint
 │   │
 │   └── LoggerService.ts                  # Unified logging
 │       ├── initialize()         → Create output channel

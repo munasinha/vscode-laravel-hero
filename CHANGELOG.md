@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.0] - 2026-01-09
+### New / Improved
+- **Cardinality on edges**: single label per relationship line with inline `1 / ∞` badges indicating directionality.
+- **Always tidy layouts**: overlap toggle removed; collision avoidance is always on, with better large-graph grid sizing and zoom/pan controls on-canvas.
+- **Search clarity**: matches stay as full models (not referenced), and filtering keeps first-degree neighbors/edges only.
+
+---
+
 ## [0.4.1] - 2026-01-09
 ### New Features
 - **Layout controls**: floating zoom buttons, pan-by-drag, center/reset actions, collision toggle for overlap vs tidy layouts, and degree-aware placement (most-connected models in the center, isolates separated).

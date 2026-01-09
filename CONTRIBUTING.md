@@ -236,6 +236,14 @@ src/webviews/routes-panel/
 - Layout centers high-degree nodes and separates isolates; positions persist across sessions
 - Double-click nodes to open files; search by model name/namespace/relation type
 
+### Recent Features (v0.5.0)
+
+#### Model Relationship Graph Polish
+- Single label per relationship line with inline cardinality badges (`1` / `∞`) indicating direction
+- Collision avoidance always on; overlap toggle removed
+- Large-graph grid sizing with pan/zoom controls living on the canvas
+- Search keeps matched models as primary (not referenced) and shows only first-degree neighbors/edges
+
 ### Recent Features (v0.1.1)
 
 #### Search Implementation

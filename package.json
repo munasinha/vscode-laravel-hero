@@ -4,7 +4,7 @@
 	"displayName": "Laravel Hero",
 	"publisher": "navod-rashmika",
 	"description": "Laravel Hero is a VS Code extension that brings powerful Laravel development tools directly into your editor. Manage database migrations with advanced search, sorting, and rollback capabilities. All without leaving VS Code.",
-	"version": "0.4.1",
+	"version": "0.5.0",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
