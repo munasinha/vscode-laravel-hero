@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.0] - 2026-01-09
+### New Features
+- **Model Relationship Graph**: new Activity Bar entry that opens a draggable canvas showing all Eloquent models and their relationships (one-to-one, one-to-many, many-to-many, through, polymorphic). Lines are labeled by relationship type, nodes can be repositioned, and double-click opens the model file.
+
+---
+
 ## [0.3.0] - 2026-01-09
 ### New Features
 - New **Packages** panel: lists installed Composer deps (prod + dev), flags updates/deprecations, and links to Packagist

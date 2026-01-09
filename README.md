@@ -22,11 +22,17 @@
 
 [Laravel Hero](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero) is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
 
-Migrations, Routes, and **Packages** are available today: view installed Composer dependencies, detect upgrades/deprecations, and jump to Packagist.
+Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are available today: explore Eloquent models visually, view installed Composer dependencies, detect upgrades/deprecations, and jump to Packagist.
 
 ---
 
 ## ✨ Key Features
+
+### 🕸️ **Model Relationship Graph (New)**
+- **Visual ER-style canvas** for all model classes with labeled relationships (one-to-one, one-to-many, many-to-many, through, polymorphic)
+- **Drag & drop layout** with automatic line updates, quick center/reset controls, and instant rescans
+- **Model-aware actions** — double-click a node to open the model file; search by model name, namespace, or relationship type
+- **Native Laravel Hero styling** that matches the existing Migrations, Routes, and Packages panels
 
 ### 📦 **Packages Viewer (New)**
 - **List installed packages** (prod + dev) from `composer.lock`
@@ -146,6 +152,25 @@ Migrations, Routes, and **Packages** are available today: view installed Compose
 
 <div align="center" style="margin-top:30px;margin-bottom:30px;">
   <img style="height:500px;width:auto" src="media/overview/laravel-hero-routes.png">
+</div>
+
+---
+
+# Model Relationship Graph
+
+1. Click the **Laravel Hero icon** in the Activity Bar
+2. Select **Model Graph**
+3. A canvas opens with every detected Eloquent model
+4. Drag nodes to reorganize the layout; edges stay connected and labeled by relationship type
+
+- Click **Rescan Models** to refresh after code changes
+- Use **Center Layout** or **Reset Layout** to tidy the canvas
+- Double-click any node to open its PHP file in the editor
+- Search by model name, namespace, or relationship type to quickly highlight parts of the graph
+
+
+<div align="center" style="margin-top:30px;margin-bottom:30px;">
+  <img style="height:500px;width:auto" src="media/overview/laravel-hero-model-relationship-graph.png">
 </div>
 
 ---
