@@ -61,11 +61,14 @@ zoomInBtn.addEventListener('click', () => zoomBy(0.15));
 zoomOutBtn.addEventListener('click', () => zoomBy(-0.15));
 searchInput.addEventListener('input', (e) => applySearch(e.target.value));
 
-canvas.addEventListener('wheel', (e) => {
+const wheelHandler = (e) => {
 	e.preventDefault();
-	const delta = e.deltaY > 0 ? -0.1 : 0.1;
+	const step = e.ctrlKey ? 0.06 : 0.1; // ctrlKey covers pinch-zoom on many touchpads
+	const delta = e.deltaY > 0 ? -step : step;
 	zoomBy(delta, { anchor: { x: e.clientX, y: e.clientY } });
-});
+};
+
+canvas.addEventListener('wheel', wheelHandler, { passive: false });
 
 let panning = false;
 let panPointerId = null;
@@ -346,21 +349,38 @@ function drawEdges() {
 	edgeLayer.innerHTML = '';
 	labelLayer.innerHTML = '';
 
-	const seen = new Set();
+	const edgeMap = new Map();
 
 	graphData.relationships.forEach(rel => {
 		if (visibleNodes.size && (!visibleNodes.has(rel.source) || !visibleNodes.has(rel.target))) {
 			return;
 		}
 
-		const undirectedKey = `${[rel.source, rel.target].sort().join('|')}`;
-		if (seen.has(undirectedKey)) {
-			return;
-		}
-		seen.add(undirectedKey);
+		const sorted = [rel.source, rel.target].sort();
+		const undirectedKey = `${sorted[0]}|${sorted[1]}`;
+		const needSwap = rel.source !== sorted[0];
+		const srcCard = needSwap ? rel.targetCardinality : rel.sourceCardinality;
+		const tgtCard = needSwap ? rel.sourceCardinality : rel.targetCardinality;
 
-		const from = nodeState.get(rel.source);
-		const to = nodeState.get(rel.target);
+		const existing = edgeMap.get(undirectedKey);
+		const mergedSrc = pickCardinality(existing?.sourceCardinality, srcCard);
+		const mergedTgt = pickCardinality(existing?.targetCardinality, tgtCard);
+		const normalizedLabel = relationLabelFromCardinality(mergedSrc, mergedTgt);
+
+		edgeMap.set(undirectedKey, {
+			fromId: sorted[0],
+			toId: sorted[1],
+			label: normalizedLabel,
+			method: existing?.method || rel.method,
+			relation: existing?.relation || rel.relation,
+			sourceCardinality: mergedSrc,
+			targetCardinality: mergedTgt
+		});
+	});
+
+	edgeMap.forEach(edge => {
+		const from = nodeState.get(edge.fromId);
+		const to = nodeState.get(edge.toId);
 
 		if (!from || !to) {
 			return;
@@ -380,9 +400,9 @@ function drawEdges() {
 		line.setAttribute('y1', `${fromCenter.y}`);
 		line.setAttribute('x2', `${toCenter.x}`);
 		line.setAttribute('y2', `${toCenter.y}`);
-		line.setAttribute('class', `edge-line ${normalizeRelation(rel.type)}`);
-		line.setAttribute('data-method', rel.method);
-		line.setAttribute('data-relation', rel.relation);
+		line.setAttribute('class', `edge-line ${normalizeRelation(edge.label)}`);
+		line.setAttribute('data-method', edge.method);
+		line.setAttribute('data-relation', edge.relation);
 		line.setAttribute('stroke-linecap', 'round');
 		line.setAttribute('opacity', '0.9');
 		edgeLayer.appendChild(line);
@@ -395,26 +415,26 @@ function drawEdges() {
 		const labelOffset = 0;
 
 		const label = document.createElement('div');
-		label.className = `edge-label relation-${normalizeRelation(rel.type)}`;
-		label.textContent = rel.type;
+		label.className = `edge-label relation-${normalizeRelation(edge.label)}`;
+		label.textContent = edge.label;
 		label.style.left = `${midPoint.x + normal.x * labelOffset}px`;
 		label.style.top = `${midPoint.y + normal.y * labelOffset}px`;
-		label.title = `${rel.method} (${rel.relation})`;
+		label.title = `${edge.method} (${edge.relation})`;
 		labelLayer.appendChild(label);
 
 		// Cardinalities placed on the line near the label (1 --- label --- ∞).
 		const badgeOffset = 60;
 		const fromBadge = document.createElement('div');
-		fromBadge.className = `edge-endpoint cardinality-${rel.sourceCardinality || 'one'}`;
-		fromBadge.textContent = rel.sourceCardinality === 'many' ? '∞' : '1';
+		fromBadge.className = `edge-endpoint cardinality-${edge.sourceCardinality || 'one'}`;
+		fromBadge.textContent = edge.sourceCardinality === 'many' ? '∞' : '1';
 		fromBadge.style.left = `${midPoint.x - ux * badgeOffset}px`;
 		fromBadge.style.top = `${midPoint.y - uy * badgeOffset}px`;
 		fromBadge.style.transform = 'translate(-50%, -50%)';
 		labelLayer.appendChild(fromBadge);
 
 		const toBadge = document.createElement('div');
-		toBadge.className = `edge-endpoint cardinality-${rel.targetCardinality || 'one'}`;
-		toBadge.textContent = rel.targetCardinality === 'many' ? '∞' : '1';
+		toBadge.className = `edge-endpoint cardinality-${edge.targetCardinality || 'one'}`;
+		toBadge.textContent = edge.targetCardinality === 'many' ? '∞' : '1';
 		toBadge.style.left = `${midPoint.x + ux * badgeOffset}px`;
 		toBadge.style.top = `${midPoint.y + uy * badgeOffset}px`;
 		toBadge.style.transform = 'translate(-50%, -50%)';
@@ -424,6 +444,25 @@ function drawEdges() {
 
 function normalizeRelation(label) {
 	return (relationColors[label] || 'default').replace(/\s+/g, '-');
+}
+
+function pickCardinality(existing, incoming) {
+	if (existing === 'many' || incoming === 'many') {
+		return 'many';
+	}
+	return existing || incoming || 'one';
+}
+
+function relationLabelFromCardinality(sourceCardinality, targetCardinality) {
+	const src = sourceCardinality || 'one';
+	const tgt = targetCardinality || 'one';
+	if (src === 'many' && tgt === 'many') {
+		return 'Many To Many';
+	}
+	if (src === 'many' || tgt === 'many') {
+		return 'One To Many';
+	}
+	return 'One To One';
 }
 
 function makeDraggable(el, id) {
