@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { MigrationPanel } from '../webviews/migration-panel';
 import { RoutesPanel } from '../webviews/routes-panel';
+import { PackagesPanel } from '../webviews/packages-panel';
 import { LoggerService } from '../services/LoggerService';
 
 /**
@@ -37,7 +38,7 @@ export function registerCommands(context: vscode.ExtensionContext): void {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('laravel-hero.open-packages', () => {
 			LoggerService.info('open-packages command triggered');
-			vscode.window.showInformationMessage('Packages feature coming soon in Phase 2');
+			PackagesPanel.createOrShow(context.extensionUri);
 		})
 	);
 

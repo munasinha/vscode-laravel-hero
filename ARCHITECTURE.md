@@ -57,7 +57,12 @@ src/
 │   │   ├── template.html                 # Webview UI structure (HTML)
 │   │   ├── styles.css                    # Webview styling (CSS)
 │   │   └── script.js                     # Client-side logic (JS)
-│   ├── routes-panel/                     # Routes UI webview (Phase 2)
+│   ├── routes-panel/                     # Routes UI webview
+│   │   ├── index.ts                      # Webview controller and message handler
+│   │   ├── template.html                 # Webview UI structure (HTML)
+│   │   ├── styles.css                    # Webview styling (CSS)
+│   │   └── script.js                     # Client-side logic (JS)
+│   ├── packages-panel/                   # Packages UI webview
 │   │   ├── index.ts                      # Webview controller and message handler
 │   │   ├── template.html                 # Webview UI structure (HTML)
 │   │   ├── styles.css                    # Webview styling (CSS)
@@ -91,6 +96,12 @@ src/
 │   │   ├── isPhpAvailable()     → Verify PHP exists
 │   │   ├── getMigrationsDir()   → Get migrations folder path
 │   │   └── hasMigrationsDir()   → Check if migrations exist
+│   │
+│   ├── ComposerService.ts                # Composer data (packages/outdated)
+│   │   ├── getPackages()         → Merge composer.lock with `composer outdated`
+│   │   ├── getInstalledPackages()→ Read composer.lock (prod + dev)
+│   │   ├── getOutdatedPackages() → Run composer outdated --direct --format=json
+│   │   └── parseOutdatedJson()   → Normalize upgrade info
 │   │
 │   └── LoggerService.ts                  # Unified logging
 │       ├── initialize()         → Create output channel
@@ -146,8 +157,8 @@ laravel-hero.open-routes
   → Effect: Open webview panel for routes
 
 laravel-hero.open-packages
-  → Execute: Show placeholder message
-  → Effect: Ready for Phase 2 implementation
+  → Execute: PackagesPanel.createOrShow()
+  → Effect: Open webview panel for packages
 
 laravel-hero.showOutput
   → Execute: LoggerService.show()
@@ -181,7 +192,7 @@ Routes (icon: git-branch) → open-routes command
 
 Packages (icon: package) → open-packages command
   ├─ Description: Manage Laravel packages
-  └─ Handler: PackagesPanel.createOrShow() [Future]
+  └─ Handler: PackagesPanel.createOrShow()
 ```
 
 **Extension Point:**
@@ -297,7 +308,7 @@ Open workspace folder?
 
 ## Advanced Features Architecture
 
-### Routes Viewer (Phase 2)
+### Routes Viewer
 
 **Flow:**
 ```
@@ -320,6 +331,26 @@ RoutesPanel.createOrShow()
 - Copy URL action posts `copy-text` to extension (clipboard)
 - Export CSV button posts `export-csv` for the current list
 - Responsive table wraps long middleware/URLs, sticky headers, always-visible scroll
+
+### Packages Viewer
+
+**Flow:**
+```
+PackagesPanel.createOrShow()
+  ├─ Loads HTML/CSS/JS from dist/webviews/packages-panel
+  ├─ Sends 'ready' message from webview
+  └─ _loadPackages() → ComposerService.getPackages()
+       ├─ Reads composer.lock (prod + dev)
+       ├─ Attempts `composer outdated --direct --format=json`
+       ├─ Merges latest/deprecation info into package list
+       └─ Returns warnings instead of failing when composer/Internet unavailable
+```
+
+**UI Behaviors:**
+- Client-side search/sort by name, installed version, latest version, status, type, and description
+- Status chips for **Update available**, **Deprecated** (with replacement), **Up to date**, and **dev**
+- Packagist action posts `open-packagist` to open the package in browser
+- Responsive table that wraps long descriptions; sticky headers; consistent row heights on small screens
 
 ### 1. Search & Filter System (Client-side)
 
