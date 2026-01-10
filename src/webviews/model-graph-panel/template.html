@@ -1,68 +1,75 @@
 <main class="page">
-  <div class="header-card">
-    <div class="header-container">
-      <div class="title">
-        <h1>Model Relationship Graph</h1>
-        <p>Explore your Eloquent models as a canvas. Drag nodes to rearrange, and read relationship labels along each edge.</p>
-      </div>
-      <div class="actions">
-        <button id="refresh-btn" class="primary-button migration-header-button">
-          <img src="{{icon-refresh}}" alt="Refresh">
-          Rescan Models
-        </button>
-        <button id="center-btn" class="secondary-button migration-header-button">Center Layout</button>
-        <button id="reset-layout-btn" class="secondary-button migration-header-button">Reset Layout</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="error-container" class="alert-stack"></div>
-
-  <div class="controls-card">
-    <div class="search-container">
-      <input
-        id="search-input"
-        type="text"
-        class="search-input"
-        placeholder="🔍 Search models or relationship types..."
-      />
-      <span id="search-results" class="search-results"></span>
-    </div>
-  </div>
-
-  <div class="graph-card">
-    <div class="graph-toolbar">
-      <div class="toolbar-left">
-        <div class="hint">Drag nodes to rearrange. Double-click a node to open the model file. Edges are labeled with the relationship type.</div>
-      </div>
-      <div class="toolbar-actions">
-        <div class="legend compact">
-          <div class="legend-item"><span class="swatch rel-one-one"></span>One To One</div>
-          <div class="legend-item"><span class="swatch rel-one-many"></span>One To Many</div>
-          <div class="legend-item"><span class="swatch rel-many-many"></span>Many To Many</div>
-          <div class="legend-item"><span class="swatch rel-through"></span>Through</div>
-          <div class="legend-item"><span class="swatch rel-poly"></span>Polymorphic</div>
+    <div class="header-card">
+        <div class="header-container">
+            <div class="title">
+                <h1>Model Relationship Graph</h1>
+                <p>
+                    Explore your Eloquent models as a canvas. 
+                    Drag nodes to rearrange, and read relationship labels along each edge.
+                </p>
+            </div>
+            <div class="actions">
+                <button id="refresh-btn" class="primary-button migration-header-button">
+                    <img src="{{icon-refresh}}" alt="Refresh">
+                    Rescan Models
+                </button>
+                <button id="center-btn" class="secondary-button migration-header-button">
+                    Center Layout
+                </button>
+                <button id="reset-layout-btn" class="secondary-button migration-header-button">
+                    Reset Layout
+                </button>
+            </div>
         </div>
-      </div>
     </div>
-    <div id="graph-canvas" class="graph-canvas">
-      <div id="graph-viewport" class="graph-viewport">
-        <svg id="edge-layer" class="edge-layer"></svg>
-        <div id="label-layer" class="label-layer"></div>
-        <div id="node-layer" class="node-layer"></div>
-      </div>
-      <div class="zoom-controls">
-        <button id="zoom-in-btn" class="icon-button" title="Zoom In">
-          <img src="{{icon-zoom-in}}" alt="Zoom In">
-        </button>
-        <button id="zoom-out-btn" class="icon-button" title="Zoom Out">
-          <img src="{{icon-zoom-out}}" alt="Zoom Out">
-        </button>
-      </div>
-      <div id="empty-state" class="empty-state hidden">
-        <div class="spinner"></div>
-        <p>No models found. Make sure your Laravel project has classes that extend <code>Illuminate\Database\Eloquent\Model</code>.</p>
-      </div>
+
+    <div id="error-container" class="alert-stack"></div>
+
+    <div class="controls-card">
+        <div class="search-container">
+            <input id="search-input" type="text" class="search-input" placeholder="🔍 Search models or relationship types..." />
+            <span id="search-results" class="search-results"></span>
+        </div>
     </div>
-  </div>
+
+    <div class="graph-card">
+        <div class="graph-toolbar">
+            <div class="toolbar-left">
+                <div class="hint">
+                    Drag nodes to rearrange. Double-click a node to open the model file. 
+                    Edges are labeled with the relationship type.
+                </div>
+            </div>
+            <div class="toolbar-actions">
+                <div class="legend compact">
+                    <div class="legend-item"><span class="swatch rel-one-one"></span>One To One</div>
+                    <div class="legend-item"><span class="swatch rel-one-many"></span>One To Many</div>
+                    <div class="legend-item"><span class="swatch rel-many-many"></span>Many To Many</div>
+                    <div class="legend-item"><span class="swatch rel-through"></span>Through</div>
+                    <div class="legend-item"><span class="swatch rel-poly"></span>Polymorphic</div>
+                </div>
+            </div>
+        </div>
+        <div id="graph-canvas" class="graph-canvas">
+            <div id="graph-viewport" class="graph-viewport">
+                <svg id="edge-layer" class="edge-layer"></svg>
+                <div id="label-layer" class="label-layer"></div>
+                <div id="node-layer" class="node-layer"></div>
+            </div>
+            <div class="zoom-controls">
+                <button id="zoom-in-btn" class="icon-button" title="Zoom In">
+                    <img src="{{icon-zoom-in}}" alt="Zoom In">
+                </button>
+                <button id="zoom-out-btn" class="icon-button" title="Zoom Out">
+                    <img src="{{icon-zoom-out}}" alt="Zoom Out">
+                </button>
+            </div>
+            <div id="empty-state" class="empty-state hidden">
+                <div class="spinner"></div>
+                <p>No models found. Make sure your Laravel project has classes that extend
+                    <code>Illuminate\Database\Eloquent\Model</code>.
+                </p>
+            </div>
+        </div>
+    </div>
 </main>
