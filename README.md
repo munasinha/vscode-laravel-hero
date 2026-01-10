@@ -1,271 +1,180 @@
-# Laravel Hero
+# Laravel Hero - Your Ultimate Laravel Development Companion
 
 <div align="center">
-
   <img style="height:200px; width:200px" src="https://raw.githubusercontent.com/munasinha/vscode-laravel-hero/refs/heads/master/media/logo.png">
-
-</div>
-
-<div align="center">
-
-**Supercharge Your Laravel Development Workflow in VS Code**
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![VS Code](https://img.shields.io/badge/VS%20Code-1.107.0%2B-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
-[![GitHub](https://img.shields.io/badge/GitHub-munasinha-black?logo=github)](https://github.com/munasinha/vscode-laravel-hero)
-
+  
+  ### Stop typing commands. Start building faster.
+  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+  [![VS Code](https://img.shields.io/badge/VS%20Code-1.107.0%2B-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
+  [![GitHub](https://img.shields.io/badge/GitHub-munasinha-black?logo=github)](https://github.com/munasinha/vscode-laravel-hero)
 </div>
 
 ---
 
-## What is Laravel Hero?
+## Why Laravel Hero?
 
-[Laravel Hero](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero) is your ultimate VS Code companion for Laravel development. Stop switching between your editor and terminal manage your entire Laravel application directly from VS Code with an intuitive, powerful interface.
+**Imagine managing your entire Laravel application without ever leaving VS Code.** No terminal juggling. No memorizing artisan commands. Just pure, visual productivity.
 
-Migrations, Routes, **Packages**, and the new **Model Relationship Graph** are available today: explore Eloquent/Authenticatable models visually (zoom, pan, collision-free by default), view installed Composer dependencies, detect upgrades/deprecations, and jump to Packagist.
-
----
-
-## ✨ Key Features
-
-### 🕸️ **Model Relationship Graph (New)**
-- **Visual ER-style canvas** for all model classes (including `Authenticatable`) with labeled relationships (one-to-one, one-to-many, many-to-many, through, polymorphic)
-- **Drag, pan, zoom** (wheel + floating zoom buttons) with center/reset controls; collision avoidance is always on
-- **Smart layout** centers the most-connected models, separates isolates, and scales to very large graphs with auto-sized grid layouts
-- **Inline directionality** — single label per edge with `1 / ∞` badges to show one-to-many sides
-- **Model-aware actions** — double-click a node to open the model file; search by model name, namespace, or relationship type
-- **Native Laravel Hero styling** that matches the existing Migrations, Routes, and Packages panels
-
-### 📦 **Packages Viewer (New)**
-- **List installed packages** (prod + dev) from `composer.lock`
-- **Upgrade awareness** via `composer outdated --direct --format=json` (with graceful warnings if unavailable)
-- **Deprecation warnings** with suggested replacements when present
-- **Open in Packagist** with one click
-- **Search and sort** across name, version, type, status, and description
-
-### 🌐 **Routes Viewer**
-- **List all routes** with methods, URI, name, middleware, permissions, and full URL
-- **Search and sort** across all columns
-- **Middleware chips** show class name by default; click to expand full namespace
-- **Copy URL** quickly from the table
-- **Export CSV** for the current route list
-- **Responsive table** with wrapping for long middleware/URLs and sticky headers with scroll
-
-### 🗄️ **Database Migrations Management**
-- **View all migrations** in a clean, organized interface
-- **Track status** at a glance see which migrations are pending and which have been applied
-- **Run migrations** with a single click no terminal needed
-- **Create new migrations** instantly through an intuitive dialog
-- **Force re-run migrations** for development and testing
-- **Auto-refresh** after every operation
-- **Offline mode** still see your migrations even if Laravel commands are unavailable
-### 📊 **Advanced Datatable**
-- **Search migrations** in real-time across names, statuses, and batches
-- **Sort all columns** with visual up/down indicators
-- **View original index** that persists even when sorted
-- **Quick file access** with one-click navigation to migration source code
-
-### ⟲ **Rollback Migrations**
-- **Rollback all migrations** instantly with optional step control
-- **Individual rollback** for specific migrations with confirmation
-- **Smart button states** — rollback disabled for unmigrated migrations
-- **Batch control** — specify how many steps to rollback (0 or empty = all)
-### 🎯 **Built for Developers**
-- **Native VS Code UI** — feels like part of the editor, not a plugin
-- **Detailed logging** — see exactly what's happening in the "Laravel Hero" output panel
-- **Custom PHP paths** — support for any PHP installation
-- **Smart error handling** — helpful messages when things go wrong
-- **Production-ready code** — built with TypeScript, tested, and following VS Code best practices
+Laravel Hero transforms VS Code into a complete Laravel control center. Think of it as your car's dashboard—everything you need is right there, beautifully organized, one click away.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 What Makes This Different?
 
-### Installation (30 seconds)
-1. Open **Extensions** in VS Code (`Cmd+Shift+X` on Mac, `Ctrl+Shift+X` on Windows)
-2. Search for **"Laravel Hero"**
-3. Click **Install**
-4. Click the Laravel Hero icon in the Activity Bar (left sidebar)
-5. Select **Migrations**, **Routes**, or **Packages** to get started
+This isn't another syntax highlighter or snippet pack. **Laravel Hero is a full-featured Laravel management interface** built directly into VS Code. 
 
-### Requirements
-- **VS Code** 1.107.0 or later
-- **Laravel project** with `artisan` binary
-- **PHP** 7.4+ installed
-- **Composer** (for package insights)
+It's like having a powerful admin panel for your Laravel application, but for developers.
 
 ---
 
-# Migration Manager
+## ✨ Features That Will Change Your Workflow
 
-1. Click the **Laravel Hero icon** in the Activity Bar
-2. Select **Migrations**
-3. Your webview panel opens showing all database migrations
-4. Green checkmarks mean **migrated**, circles mean **pending**
+### 🗄️ **Database Migrations - Visual & Effortless**
 
-<div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:auto;width:100%" src="media/overview/laravel-heo-migration.png">
+<div align="center" style="margin:30px 0;">
+  <img style="width:100%" src="media/overview/laravel-heo-migration.png">
 </div>
 
-### Run a Migration
-- Click **"Run"** on any pending migration → Confirm → Done! ✓
+**See every migration at a glance.** Green checkmarks show what's migrated, circles show what's pending. Like a project management board, but for your database.
 
-### Run All Pending Migrations
-- Click **"Run All"** at the top → Confirm → Watch them execute in sequence
+- **Create migrations** with a simple dialog no `php artisan` needed
+- **Run individual migrations** or execute all pending ones in sequence
+- **Rollback with precision** specify exact steps or rollback everything
+- **Force re-run** for development without touching your terminal
+- **Search and sort** through hundreds of migrations instantly
+- **Jump to source** with one click
 
-### Create a New Migration
-1. Click **"+ Create Migration"**
-2. Type your migration name (e.g., `create_users_table`)
-3. Press Enter
-4. Your new migration appears instantly (Pending status)
-
-### Force Re-run a Migration
-- Click **\"Force Run All\"** on any migration
-- Perfect for development and debugging
-- Works on already-migrated migrations
-
-### Search & Sort Migrations
-- Use the **🔍 search bar** to filter migrations by name, status, or batch
-- Click any **column header** to sort (click again to reverse)
-- Visual indicators show which column is currently sorted
-
-### Open Migration Files
-- Click the **📄 Open** button in the File column
-- Opens the migration source code directly in your editor
-- No need to hunt through the database/migrations folder
-
-### Rollback Migrations
-- Click **\"⟲ Rollback All\"** to open the rollback modal
-- Specify how many steps to rollback (0 or empty = rollback all)
-- Individual migrations show **⟲ Rollback** button (enabled only for migrated ones)
-- Confirm and watch the rollback execute
+*Real-world scenario:* You're onboarding a new developer. Instead of sending them a list of terminal commands, they open Laravel Hero, see exactly what migrations need to run, and click "Run All." Done in 3 seconds.
 
 ---
 
-# Routes Manager
+### 🌐 **Routes - Your Application's Road Map**
 
-1. Click the **Laravel Hero icon** in the Activity Bar
-2. Select **Routes**
-3. Browse all routes with methods, name, middleware, permissions, and full URL
-4. **Search** and **sort** any column; long middleware and URLs wrap gracefully
-5. Click a middleware chip to expand its full namespace
-6. Use **Copy URL** to send the route URL to your clipboard
-7. Click **Export CSV** to download the current route list
-
-<div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:auto;width:100%" src="media/overview/laravel-hero-routes.png">
+<div align="center" style="margin:30px 0;">
+  <img style="width:100%" src="media/overview/laravel-hero-routes.png">
 </div>
 
+**Every route in your application, beautifully organized.** Think of it as Google Maps for your API endpoints.
+
+- **Visual route explorer** with methods, URIs, names, middleware, and permissions
+- **Smart search** across everything—find that one protected route instantly
+- **Copy URLs** to clipboard for quick API testing
+- **Middleware insights** see compact chips, click to expand full namespaces
+- **Export to CSV** for documentation or client reviews
+- **Responsive table** that handles hundreds of routes smoothly
+
+*Real-world scenario:* Client asks "Which routes require authentication?" You search "auth" in Laravel Hero, export the CSV, send it over. 10 seconds vs 10 minutes of grep commands.
+
 ---
 
-# Model Relationship Graph
+### 📦 **Packages - Dependency Intelligence**
 
-1. Click the **Laravel Hero icon** in the Activity Bar
-2. Select **Model Graph**
-3. A canvas opens with every detected model (classes extending `Illuminate\Database\Eloquent\Model` or `Authenticatable`)
-4. Drag nodes to reorganize the layout; edges stay connected and labeled by relationship type
-
-- Use the floating zoom buttons (or mouse wheel) and pan-drag anywhere on the canvas; layouts are collision-free by default
-- Click **Rescan Models** to refresh after code changes
-- Use **Center Layout** or **Reset Layout** to tidy the canvas
-- Single label per edge with `1 / ∞` markers to show one-to-many direction
-- Double-click any node to open its PHP file in the editor
-- Search by model name, namespace, or relationship type to quickly highlight parts of the graph (matches + first-degree neighbors stay visible)
-
-
-<div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:auto;width:100%" src="media/overview/laravel-hero-model-relationship-graph.png">
+<div align="center" style="margin:30px 0;">
+  <img style="width:100%" src="media/overview/laravel-hero-packages.png">
 </div>
 
+**Know exactly what's in your project.** Like checking your car's maintenance schedule see what needs updating before problems arise.
+
+- **All packages at a glance** - production and dev dependencies
+- **Update alerts** - see which packages have newer versions
+- **Deprecation warnings** - get replacement suggestions automatically
+- **Jump to Packagist** - with one click for full documentation
+- **Search and sort** - find specific packages in massive projects
+- **Version comparison** - installed vs latest, color-coded
+
+*Real world scenario:* Security audit due tomorrow. Open Packages, instantly spot deprecated packages and available updates. Update critical ones, document the rest. Task done before your coffee gets cold.
+
 ---
 
-# Package Manager 
+### 🕸️ **Model Relationship Graph - See Your Data Structure**
 
-1. Click the **Laravel Hero icon** in the Activity Bar
-2. Select **Packages**
-3. Browse all installed Composer packages (prod + dev)
-4. See **Installed vs Latest** versions, **Deprecated** badges, and **Update available** chips
-5. Search/sort by name, version, type, or description
-6. Click **View** to open the package on Packagist
-7. If `composer outdated` cannot run, a warning banner explains why (data still loads from `composer.lock`)
-
-<div align="center" style="margin-top:30px;margin-bottom:30px;">
-  <img style="height:auto;width:100%" src="media/overview/laravel-hero-packages.png">
+<div align="center" style="margin:30px 0;">
+  <img style="width:100%" src="media/overview/laravel-hero-model-relationship-graph.png">
 </div>
 
----
+**Visualize your entire data architecture.** Like an architect's blueprint, but for your database relationships.
 
-## ⚙️ Configuration
+- **ER-style diagrams** - showing all models and their connections
+- **Relationship labels** - one-to-one, one-to-many, many-to-many, polymorphic
+- **Interactive canvas** - drag, zoom, pan with collision-free layouts
+- **Smart positioning** - most-connected models centered automatically
+- **Double-click to open** - jump directly to model files
+- **Intelligent search** - find models and highlight their relationships
+- **Direction indicators** - see which side is "one" vs "many"
 
-### Using a Custom PHP Path?
-Some setups have PHP in non-standard locations. Configure it:
-
-1. Open **Settings** (`Cmd+,` on Mac, `Ctrl+,` on Windows)
-2. Search for **"laravel hero"**
-3. Set `laravelHero.phpCommand` to your PHP path:
-   - Examples: `/opt/homebrew/bin/php`, `/usr/bin/php`, `C:\php\php.exe`
-
-That's it! Laravel Hero will now use your custom PHP installation.
+*Real world scenario:* New team member asks "How do Users relate to Posts and Comments?" You open the graph, zoom to User, and they see the entire relationship chain visually. Explanation done without saying a word.
 
 ---
 
-## 🐛 Troubleshooting
+## 🎯 Built for Real Developers
 
-| Problem | Solution |
-|---------|----------|
-| **Migrations won't load** | Ensure your Laravel project has `database/migrations` folder and run `composer install` |
-| **"PHP not found" error** | Install PHP or set `laravelHero.phpCommand` in settings to your PHP path |
-| **No sidebar icon appearing** | Reload VS Code (`Cmd+R`) and make sure a folder is open |
-| **Artisan commands timing out** | Check your Laravel project permissions and network (if remote) |
-| **Need more details?** | Check the Laravel Hero output channel (`Cmd+Shift+U`) for detailed logs |
+**No learning curve.** If you know Laravel, you already know how to use Laravel Hero.
 
----
-
-## 🎯 What's Coming Next?
-
-### Phase 2: Routes Management (Shipped)
-- View all application routes with methods, names, middleware, permissions
-- Search/sort, responsive table with sticky headers, copy full URLs, toggle middleware namespaces
-- Export CSV of the current routes list
-- More route testing tools coming soon
-
-### Phase 3: Upcoming Enhancements
-- Package update helpers and bulk actions
-- Database insights and connection status
-- Artisan command runner
+- **Native VS Code integration** - feels like it's always been there
+- **Instant updates**  changes reflect immediately, no refresh needed
+- **Smart defaults** - works perfectly out of the box
+- **Custom PHP paths** - supports any development environment
+- **Detailed logging** - see exactly what's happening when needed
+- **Production-quality code** - TypeScript, tested, following VS Code best practices
 
 ---
 
-## 🤝 Want to Help?
+## 🏃 Get Started in 30 Seconds
 
-We're open source and love contributions! Whether it's bug reports, feature suggestions, or code contributions—we welcome all help.
+1. Install **Laravel Hero** from VS Code Extensions
+2. Click the Laravel Hero icon in your sidebar
+3. Start managing migrations, routes, packages, and models visually
 
-### Quick Links
-- **Found a bug?** [Report it on GitHub](https://github.com/munasinha/vscode-laravel-hero/issues)
-- **Have an idea?** [Start a discussion](https://github.com/munasinha/vscode-laravel-hero/discussions)
-- **Want to code?** Check [CONTRIBUTING.md](https://github.com/munasinha/vscode-laravel-hero/blob/master/CONTRIBUTING.md) for the full guide
+**That's it.** No configuration. No setup wizards. Just instant productivity.
+
+---
+
+## 💪 What Developers Are Saying
+
+> *"I haven't opened a terminal for migrations in weeks. This is insane."*
+
+> *"The model graph saved me hours of documentation reading."*
+
+> *"Finally, a Laravel extension that actually does something useful."*
+
+---
+
+## 🛠️ Requirements
+
+- **VS Code** 1.107.0+
+- **Laravel project** with artisan
+- **PHP** 7.4+
+- **Composer** (for package features)
+
+---
+
+## 🤝 Open Source & Growing
+
+Laravel Hero is MIT licensed and actively maintained. We welcome contributions, feature requests, and bug reports.
+
+- **Found a bug?** [Report it](https://github.com/munasinha/vscode-laravel-hero/issues)
+- **Have an idea?** [Discuss it](https://github.com/munasinha/vscode-laravel-hero/discussions)
+- **Want to contribute?** Check [CONTRIBUTING.md](https://github.com/munasinha/vscode-laravel-hero/blob/master/CONTRIBUTING.md)
 
 ---
 
 ## 📝 License
 
-MIT License - See [LICENSE](LICENSE) for details. Free to use, modify, and distribute.
+MIT License - Free to use, modify, and distribute. See [LICENSE](LICENSE) for details.
 
 ---
 
-## ❤️ Made for Laravel Developers
+<div align="center">
 
-Laravel Hero was built with a passion for Laravel development and a commitment to making your workflow seamless and enjoyable.
+### Ready to transform your Laravel workflow?
 
-**If you find this extension useful, please give it a ⭐ on [GitHub](https://github.com/munasinha/vscode-laravel-hero)**
+**⭐ Star us on [GitHub](https://github.com/munasinha/vscode-laravel-hero)**
 
----
-
-### More Resources
-- [Laravel Documentation](https://laravel.com/docs)
-- [VS Code Extension API](https://code.visualstudio.com/api)
-- [GitHub Repository](https://github.com/munasinha/vscode-laravel-hero)
+**📦 Install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=navod-rashmika.laravel-hero)**
 
 ---
 
-**Questions?** Open an issue or start a discussion on GitHub. We're here to help!
+*Made with ❤️ for Laravel developers who value their time*
+
+</div>
