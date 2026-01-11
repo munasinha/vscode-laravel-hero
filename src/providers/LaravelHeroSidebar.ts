@@ -19,6 +19,7 @@ export class SidebarItem extends vscode.TreeItem {
 
 	private getIcon(): vscode.ThemeIcon {
 		const icons: { [key: string]: string } = {
+			'laravel-hero.open-overview': 'home',
 			'laravel-hero.open-migrations': 'database',
 			'laravel-hero.open-routes': 'git-branch',
 			'laravel-hero.open-packages': 'package',
@@ -49,6 +50,7 @@ export class LaravelHeroSidebar implements vscode.TreeDataProvider<SidebarItem> 
 	getChildren(_element?: SidebarItem): Thenable<SidebarItem[]> {
 		// Root level items - these are the main features
 		const items = [
+			new SidebarItem('Overview', 'laravel-hero.open-overview', 'Project overview dashboard'),
 			new SidebarItem('Migrations', 'laravel-hero.open-migrations', 'Manage database migrations'),
 			new SidebarItem('Routes', 'laravel-hero.open-routes', 'View and test API routes'),
 			new SidebarItem('Packages', 'laravel-hero.open-packages', 'Manage Laravel packages'),

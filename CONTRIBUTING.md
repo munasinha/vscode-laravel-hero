@@ -72,14 +72,17 @@ src/
 ├── providers/                # Data providers
 │   └── LaravelHeroSidebar.ts # Sidebar menu provider
 ├── webviews/                 # Webview panels
+│   ├── overview-panel/       # Project overview dashboard
 │   ├── migration-panel/      # Migrations UI
 │   ├── routes-panel/         # Routes UI
-│   └── packages-panel/       # Packages UI
+│   ├── packages-panel/       # Packages UI
+│   └── model-graph-panel/    # Model relationship UI
 │   └── lib/
 │       └── webviewUtils.ts   # Shared utilities
 ├── services/                 # Business logic
 │   ├── ArtisanService.ts     # Artisan command execution (migrations/routes)
 │   ├── ComposerService.ts    # Composer data (packages/outdated)
+│   ├── OverviewService.ts    # Project health + maintenance shortcuts
 │   ├── WorkspaceService.ts   # Workspace management
 │   └── LoggerService.ts      # Unified logging
 └── utils/                    # Utilities
@@ -172,6 +175,7 @@ src/
 ├── commands/registerCommands.ts
 ├── providers/LaravelHeroSidebar.ts
 ├── webviews/
+│   ├── overview-panel/  # HTML/CSS/JS + TS controller
 │   ├── migration-panel/   # HTML/CSS/JS + TS controller
 │   ├── routes-panel/      # HTML/CSS/JS + TS controller
 │   ├── packages-panel/    # HTML/CSS/JS + TS controller
@@ -180,6 +184,7 @@ src/
 │   ├── ArtisanService.ts  # migrations + routes (route:list) helpers
 │   ├── ComposerService.ts # composer.lock + composer outdated helpers
 │   ├── ModelGraphService.ts # model discovery and relationships
+│   ├── OverviewService.ts # environment snapshot + maintenance commands
 │   ├── WorkspaceService.ts
 │   └── LoggerService.ts
 └── utils/getNonce.ts
@@ -199,6 +204,13 @@ src/webviews/routes-panel/
 ├── styles.css    # VS Code-themed, responsive wrapping
 └── script.js     # Search, sort, middleware toggle, copy URL
 ```
+
+### Overview Dashboard (v0.6.0)
+
+- Dashboard-style webview showing project name, environment, Laravel + PHP versions
+- Database and cache connection checks performed via safe PHP snippets (bootstrap + DB/cache ping)
+- Curated maintenance commands (config cache/clear, optimize, cache/route/view clear) with disabled buttons + spinner while running
+- Reuses shared alert banners for warnings/errors and mirrors the card/button styling of other panels
 
 **Routes behaviors**
 - Loads routes via `ArtisanService.getRoutes()` (JSON first, table fallback)

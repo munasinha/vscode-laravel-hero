@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { OverviewPanel } from '../webviews/overview-panel';
 import { MigrationPanel } from '../webviews/migration-panel';
 import { RoutesPanel } from '../webviews/routes-panel';
 import { PackagesPanel } from '../webviews/packages-panel';
@@ -16,6 +17,14 @@ export function registerCommands(context: vscode.ExtensionContext): void {
 		vscode.commands.registerCommand('laravel-hero.openView', async () => {
 			LoggerService.info('openView command triggered');
 			await vscode.commands.executeCommand('workbench.view.extension.laravelHeroContainer');
+		})
+	);
+
+	// Open overview panel
+	context.subscriptions.push(
+		vscode.commands.registerCommand('laravel-hero.open-overview', () => {
+			LoggerService.info('open-overview command triggered');
+			OverviewPanel.createOrShow(context.extensionUri);
 		})
 	);
 

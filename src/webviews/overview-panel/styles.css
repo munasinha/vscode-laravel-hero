@@ -1,0 +1,303 @@
+:root {
+	--surface-1: var(--vscode-editor-background);
+	--surface-2: var(--vscode-sideBar-background, var(--vscode-editor-background));
+	--border-subtle: var(--vscode-editorGroup-border);
+	--text-muted: var(--vscode-descriptionForeground);
+	--accent: var(--vscode-button-background);
+	--accent-hover: var(--vscode-button-hoverBackground);
+	--focus-ring: var(--vscode-focusBorder);
+	--danger: var(--vscode-errorForeground);
+	--success: var(--vscode-testing-iconPassed);
+	--warning: var(--vscode-testing-iconQueued);
+}
+
+body {
+	margin: 0;
+	color: var(--vscode-editor-foreground);
+	font-family: "IBM Plex Sans", "Space Grotesk", "Segoe UI", sans-serif;
+	background:
+		radial-gradient(900px 320px at 95% -10%, rgba(120, 120, 120, 0.12), transparent 60%),
+		radial-gradient(700px 300px at 15% 0%, rgba(80, 80, 80, 0.14), transparent 55%),
+		var(--surface-1);
+}
+
+.page {
+	padding: 24px 20px 28px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.header-card {
+	border: 1px solid var(--border-subtle);
+	border-radius: 14px;
+	padding: 18px 20px;
+	background:
+		linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+		var(--surface-2);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.header-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 16px;
+}
+
+.title h1 {
+	margin: 0 0 6px 0;
+	font-size: 22px;
+	letter-spacing: 0.2px;
+	font-weight: 600;
+}
+
+.title p {
+	margin: 0;
+	color: var(--text-muted);
+	font-size: 13px;
+}
+
+.actions {
+	display: flex;
+	gap: 10px;
+}
+
+.primary-button {
+	background: var(--accent);
+	color: var(--vscode-button-foreground);
+	border: 1px solid transparent;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	transition: background 120ms ease, transform 120ms ease;
+}
+
+.primary-button img {
+	width: 14px;
+	height: 14px;
+}
+
+.primary-button:hover {
+	background: var(--accent-hover);
+}
+
+.primary-button:focus-visible {
+	outline: 2px solid var(--focus-ring);
+	outline-offset: 2px;
+}
+
+.alert-stack {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.grid {
+	display: grid;
+	gap: 14px;
+}
+
+.two-col {
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.info-card {
+	border: 1px solid var(--border-subtle);
+	border-radius: 14px;
+	background: var(--surface-2);
+	padding: 16px 18px 18px;
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-bottom: 12px;
+}
+
+.card-header h2 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.eyebrow {
+	margin: 0;
+	text-transform: uppercase;
+	letter-spacing: 0.6px;
+	font-size: 11px;
+	color: var(--text-muted);
+}
+
+.stat-list {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.stat-row {
+	display: grid;
+	grid-template-columns: 140px 1fr;
+	gap: 10px;
+	align-items: center;
+	padding: 8px 10px;
+	border: 1px solid var(--border-subtle);
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.stat-row dt {
+	margin: 0;
+	color: var(--text-muted);
+	font-weight: 600;
+	font-size: 12px;
+}
+
+.stat-row dd {
+	margin: 0;
+	font-weight: 600;
+}
+
+.connection-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 12px;
+}
+
+.connection-card {
+	border: 1px solid var(--border-subtle);
+	border-radius: 10px;
+	padding: 12px;
+	background: rgba(255, 255, 255, 0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.connection-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.status-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	border: 1px solid var(--border-subtle);
+	font-weight: 700;
+	font-size: 11px;
+	text-transform: uppercase;
+}
+
+.status-pill.success {
+	color: var(--success);
+	border-color: var(--success);
+	background: rgba(0, 255, 0, 0.05);
+}
+
+.status-pill.danger {
+	color: var(--danger);
+	border-color: var(--danger);
+	background: rgba(255, 0, 0, 0.05);
+}
+
+.status-pill.warn {
+	color: var(--warning);
+	border-color: var(--warning);
+	background: rgba(255, 200, 0, 0.07);
+}
+
+.muted {
+	color: var(--text-muted);
+}
+
+.small {
+	font-size: 12px;
+	margin: 0;
+}
+
+.commands-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 10px;
+}
+
+.command-card {
+	border: 1px solid var(--border-subtle);
+	border-radius: 10px;
+	padding: 10px 12px;
+	background: rgba(255, 255, 255, 0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.command-title {
+	margin: 0;
+	font-weight: 700;
+}
+
+.command-description {
+	margin: 0;
+	color: var(--text-muted);
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+.command-button {
+	align-self: center;
+	background: transparent;
+	color: var(--vscode-foreground);
+	border: 1px solid var(--border-subtle);
+	padding: 6px;
+	min-width: 34px;
+	height: 34px;
+	border-radius: 9px;
+	cursor: pointer;
+	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	transition: background 120ms ease, transform 120ms ease, border-color 120ms ease;
+}
+
+.command-button img {
+	width: 14px;
+	height: 14px;
+}
+
+.command-button:hover {
+	background: rgba(255, 255, 255, 0.04);
+	border-color: var(--focus-ring);
+}
+
+.command-button:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.spinner {
+	width: 12px;
+	height: 12px;
+	border: 2px solid var(--vscode-foreground);
+	border-top-color: transparent;
+	border-radius: 50%;
+	animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}

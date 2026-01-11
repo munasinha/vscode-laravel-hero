@@ -30,6 +30,23 @@ It's like having a powerful admin panel for your Laravel application, but for de
 
 ## ✨ Features That Will Change Your Workflow
 
+### 📊 **Overview Dashboard - Instant Project Health**
+
+<div align="center" style="margin:30px 0;">
+  <img style="width:100%" src="media/overview/laravel-hero-overview.png">
+</div>
+
+**Your Laravel cockpit.** See the essentials before you touch a line of code.
+
+- **Project snapshot** project name, environment, Laravel and PHP versions
+- **Connection health** database driver + live connection check, cache driver status
+- **One-click maintenance** run config cache, config clear, optimize, cache clear, route clear, and view clear right from VS Code
+- **VS Code-native** same styling, buttons, and alerts as every other panel
+
+*Real-world scenario:* You open a legacy project and need to confirm it's wired correctly. One glance shows PHP version, Laravel version, DB connection health, and cache driver. Two clicks cache and config refresh—no terminal hopping.
+
+---
+
 ### 🗄️ **Database Migrations - Visual & Effortless**
 
 <div align="center" style="margin:30px 0;">
@@ -124,7 +141,7 @@ It's like having a powerful admin panel for your Laravel application, but for de
 
 1. Install **Laravel Hero** from VS Code Extensions
 2. Click the Laravel Hero icon in your sidebar
-3. Start managing migrations, routes, packages, and models visually
+3. Start with the **Overview** panel to validate environment, then manage migrations, routes, packages, and models visually
 
 **That's it.** No configuration. No setup wizards. Just instant productivity.
 
