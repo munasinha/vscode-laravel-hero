@@ -72,7 +72,7 @@ src/
 ├── providers/                # Data providers
 │   └── LaravelHeroSidebar.ts # Sidebar menu provider
 ├── webviews/                 # Webview panels
-│   ├── overview-panel/       # Project overview dashboard
+│   ├── overview-panel/       # Project overview UI
 │   ├── migration-panel/      # Migrations UI
 │   ├── routes-panel/         # Routes UI
 │   ├── packages-panel/       # Packages UI
@@ -84,6 +84,7 @@ src/
 │   ├── ComposerService.ts    # Composer data (packages/outdated)
 │   ├── OverviewService.ts    # Project health + maintenance shortcuts
 │   ├── WorkspaceService.ts   # Workspace management
+│   ├── ModelGraphService.ts  # Eloquent model discovery and relationships
 │   └── LoggerService.ts      # Unified logging
 └── utils/                    # Utilities
     └── getNonce.ts           # Security utilities
@@ -675,7 +676,7 @@ If applicable, add screenshots showing the issue.
 
 ## Maintainers
 
-- **Primary**: [Your Name] (@github-handle)
+- **Primary**: [Navod Rashmika](@munasinha)
 - **Contributors**: All amazing people in CONTRIBUTORS.md
 
 Thank you for contributing to Laravel Hero! 🚀
