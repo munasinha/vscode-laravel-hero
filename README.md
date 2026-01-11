@@ -16,13 +16,13 @@
 
 **Imagine managing your entire Laravel application without ever leaving VS Code.** No terminal juggling. No memorizing artisan commands. Just pure, visual productivity.
 
-Laravel Hero transforms VS Code into a complete Laravel control center. Think of it as your car's dashboard—everything you need is right there, beautifully organized, one click away.
+Laravel Hero transforms VS Code into a complete Laravel control center. Think of it as your car's dashboard everything you need is right there, beautifully organized, one click away.
 
 ---
 
 ## 🚀 What Makes This Different?
 
-This isn't another syntax highlighter or snippet pack. **Laravel Hero is a full-featured Laravel management interface** built directly into VS Code. 
+This isn't another syntax highlighter or snippet pack. **Laravel Hero is a full featured Laravel management interface** built directly into VS Code. 
 
 It's like having a powerful admin panel for your Laravel application, but for developers.
 
@@ -40,10 +40,10 @@ It's like having a powerful admin panel for your Laravel application, but for de
 
 - **Project snapshot** project name, environment, Laravel and PHP versions
 - **Connection health** database driver + live connection check, cache driver status
-- **One-click maintenance** run config cache, config clear, optimize, cache clear, route clear, and view clear right from VS Code
-- **VS Code-native** same styling, buttons, and alerts as every other panel
+- **One click maintenance** run config cache, config clear, optimize, cache clear, route clear, and view clear right from VS Code
+- **VS Code native** same styling, buttons, and alerts as every other panel
 
-*Real-world scenario:* You open a legacy project and need to confirm it's wired correctly. One glance shows PHP version, Laravel version, DB connection health, and cache driver. Two clicks cache and config refresh—no terminal hopping.
+*Real world scenario:* You open a legacy project and need to confirm it's wired correctly. One glance shows PHP version, Laravel version, DB connection health, and cache driver. Two clicks cache and config refresh, no terminal hopping.
 
 ---
 
@@ -53,16 +53,16 @@ It's like having a powerful admin panel for your Laravel application, but for de
   <img style="width:100%" src="media/overview/laravel-heo-migration.png">
 </div>
 
-**See every migration at a glance.** Green checkmarks show what's migrated, circles show what's pending. Like a project management board, but for your database.
+**See every migration at a glance.** Green check marks show what's migrated, circles show what's pending. Like a project management board, but for your database.
 
 - **Create migrations** with a simple dialog no `php artisan` needed
 - **Run individual migrations** or execute all pending ones in sequence
 - **Rollback with precision** specify exact steps or rollback everything
-- **Force re-run** for development without touching your terminal
+- **Force re run** for development without touching your terminal
 - **Search and sort** through hundreds of migrations instantly
 - **Jump to source** with one click
 
-*Real-world scenario:* You're onboarding a new developer. Instead of sending them a list of terminal commands, they open Laravel Hero, see exactly what migrations need to run, and click "Run All." Done in 3 seconds.
+*Real world scenario:* You're onboarding a new developer. Instead of sending them a list of terminal commands, they open Laravel Hero, see exactly what migrations need to run, and click "Run All." Done in 3 seconds.
 
 ---
 
@@ -81,7 +81,7 @@ It's like having a powerful admin panel for your Laravel application, but for de
 - **Export to CSV** for documentation or client reviews
 - **Responsive table** that handles hundreds of routes smoothly
 
-*Real-world scenario:* Client asks "Which routes require authentication?" You search "auth" in Laravel Hero, export the CSV, send it over. 10 seconds vs 10 minutes of grep commands.
+*Real world scenario:* Client asks "Which routes require authentication?" You search "auth" in Laravel Hero, export the CSV, send it over. 10 seconds vs 10 minutes of grep commands.
 
 ---
 
@@ -98,7 +98,7 @@ It's like having a powerful admin panel for your Laravel application, but for de
 - **Deprecation warnings** - get replacement suggestions automatically
 - **Jump to Packagist** - with one click for full documentation
 - **Search and sort** - find specific packages in massive projects
-- **Version comparison** - installed vs latest, color-coded
+- **Version comparison** - installed vs latest, color coded
 
 *Real world scenario:* Security audit due tomorrow. Open Packages, instantly spot deprecated packages and available updates. Update critical ones, document the rest. Task done before your coffee gets cold.
 
@@ -112,11 +112,11 @@ It's like having a powerful admin panel for your Laravel application, but for de
 
 **Visualize your entire data architecture.** Like an architect's blueprint, but for your database relationships.
 
-- **ER-style diagrams** - showing all models and their connections
+- **ER style diagrams** - showing all models and their connections
 - **Relationship labels** - one-to-one, one-to-many, many-to-many, polymorphic
-- **Interactive canvas** - drag, zoom, pan with collision-free layouts
-- **Smart positioning** - most-connected models centered automatically
-- **Double-click to open** - jump directly to model files
+- **Interactive canvas** - drag, zoom, pan with collision free layouts
+- **Smart positioning** - most connected models centered automatically
+- **Double click to open** - jump directly to model files
 - **Intelligent search** - find models and highlight their relationships
 - **Direction indicators** - see which side is "one" vs "many"
 
@@ -133,7 +133,7 @@ It's like having a powerful admin panel for your Laravel application, but for de
 - **Smart defaults** - works perfectly out of the box
 - **Custom PHP paths** - supports any development environment
 - **Detailed logging** - see exactly what's happening when needed
-- **Production-quality code** - TypeScript, tested, following VS Code best practices
+- **Production quality code** - TypeScript, tested, following VS Code best practices
 
 ---
 
