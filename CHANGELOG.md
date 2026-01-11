@@ -8,8 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Coming Soon
-- **Database Info** - View database configuration and connection status
-- **Artisan Command Runner** - Execute custom artisan commands from UI
+- **Custom Artisan Commands** - User-defined shortcuts with saved presets
+- **More Diagnostics** - Queue/cache/job visibility in the overview dashboard
+
+---
+
+## [0.6.0] - 2026-01-11
+### New
+- **Overview Dashboard**: new primary sidebar entry showing project name, environment, Laravel + PHP versions.
+- **Connection Health**: DB and cache driver cards with live connectivity checks and inline warnings.
+- **Quick Artisan Actions**: buttons for config cache/clear, optimize, cache clear, route clear, and view clear (runs in-background with status banners).
 
 ---
 

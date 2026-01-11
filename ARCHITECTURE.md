@@ -17,7 +17,7 @@ This document describes the technical architecture, design patterns, and impleme
 
 ## Overview
 
-Laravel Hero is a VS Code extension that provides Laravel developers with an integrated IDE interface for managing migrations, routes, and packages.
+Laravel Hero is a VS Code extension that provides Laravel developers with an integrated IDE interface for project health (overview), migrations, routes, packages, and model relationships.
 
 ### Key Design Principles
 
@@ -39,6 +39,7 @@ src/
 ├── commands/
 │   └── registerCommands.ts               # All extension commands registration
 │       ├── laravel-hero.openView
+│       ├── laravel-hero.open-overview
 │       ├── laravel-hero.open-migrations
 │       ├── laravel-hero.open-routes
 │       ├── laravel-hero.open-packages
@@ -53,6 +54,11 @@ src/
 │       └── refresh()            → Refresh tree
 │
 ├── webviews/
+│   ├── overview-panel/                   # Overview dashboard webview
+│   │   ├── index.ts                      # Webview controller and message handler
+│   │   ├── template.html                 # Overview dashboard layout
+│   │   ├── styles.css                    # Dashboard styling
+│   │   └── script.js                     # Client-side logic (status + commands)
 │   ├── migration-panel/                  # Migrations UI webview (folder structure)
 │   │   ├── index.ts                      # Webview controller and message handler
 │   │   ├── template.html                 # Webview UI structure (HTML)
@@ -115,6 +121,11 @@ src/
 │   │   ├── extractRelationships()→ Map relationships to labeled edges with cardinalities
 │   │   └── mapRelationInfo()     → Normalize relation labels + one/many per endpoint
 │   │
+│   ├── OverviewService.ts                # Project health + maintenance shortcuts
+│   │   ├── getOverview()         → Project/env summary + DB/cache checks
+│   │   ├── runArtisanCommand()   → Execute curated maintenance commands
+│   │   └── runPhpScript()        → Safe PHP snippets (bootstrap + connection tests)
+│   │
 │   └── LoggerService.ts                  # Unified logging
 │       ├── initialize()         → Create output channel
 │       ├── info()               → Log info level
@@ -160,6 +171,10 @@ laravel-hero.openView
   → Execute: vscode.commands.executeCommand('workbench.view.extension.laravelHeroContainer')
   → Effect: Focus sidebar panel
 
+laravel-hero.open-overview
+  → Execute: OverviewPanel.createOrShow()
+  → Effect: Open overview dashboard with project health
+
 laravel-hero.open-migrations
   → Execute: MigrationPanel.createOrShow()
   → Effect: Open webview panel for migrations
@@ -198,6 +213,10 @@ laravel-hero.showOutput
 
 **Current Items:**
 ```
+Overview (icon: home) → open-overview command
+  ├─ Description: Project snapshot and quick actions
+  └─ Handler: OverviewPanel.createOrShow()
+
 Migrations (icon: database) → open-migrations command
   ├─ Description: Manage database migrations
   └─ Handler: MigrationPanel.createOrShow()
@@ -327,6 +346,28 @@ Open workspace folder?
 ---
 
 ## Advanced Features Architecture
+
+### Overview Dashboard
+
+**Flow:**
+```
+OverviewPanel.createOrShow()
+  ├─ Loads HTML/CSS/JS from dist/webviews/overview-panel
+  ├─ Sends 'ready' from webview
+  └─ _loadOverview() → OverviewService.getOverview()
+       ├─ Reads composer/.env for project + driver info
+       ├─ Boots Laravel via php -r for DB/cache connectivity checks
+       ├─ Resolves Laravel/PHP versions (artisan + composer.lock fallback)
+       └─ Returns warnings instead of failing when checks cannot run
+  └─ _runArtisanCommand() → OverviewService.runArtisanCommand(id)
+       └─ Executes curated maintenance commands (config cache/clear, optimize, cache/route/view clear)
+```
+
+**UI Behaviors:**
+- Connection pills show **Connected/Disconnected/Unknown** with driver names and inline errors
+- Warnings render in the shared alert stack; command results add info/error banners
+- Command buttons disable with a spinner while running to prevent duplicate execution
+- Uses shared typography, card layout, and button styles used across other panels
 
 ### Routes Viewer
 

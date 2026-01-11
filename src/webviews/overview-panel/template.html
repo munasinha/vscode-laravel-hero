@@ -1,0 +1,84 @@
+<main class="page">
+	<div class="header-card">
+		<div class="header-container">
+			<div class="title">
+				<h1>Laravel Overview</h1>
+				<p>High-level health snapshot of your Laravel project.</p>
+			</div>
+			<div class="actions">
+				<button id="refresh-btn" class="primary-button">
+					<img src="{{icon-refresh}}" alt="Refresh">
+					Refresh
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="alert-container" class="alert-stack"></div>
+
+	<section class="grid two-col">
+		<div class="info-card">
+			<div class="card-header">
+				<p class="eyebrow">Project</p>
+				<h2>Project Snapshot</h2>
+			</div>
+			<dl class="stat-list">
+				<div class="stat-row">
+					<dt>Project</dt>
+					<dd id="project-name">—</dd>
+				</div>
+				<div class="stat-row">
+					<dt>Environment</dt>
+					<dd id="environment">—</dd>
+				</div>
+				<div class="stat-row">
+					<dt>Laravel</dt>
+					<dd id="laravel-version">—</dd>
+				</div>
+				<div class="stat-row">
+					<dt>PHP</dt>
+					<dd id="php-version">—</dd>
+				</div>
+			</dl>
+		</div>
+
+		<div class="info-card">
+			<div class="card-header">
+				<p class="eyebrow">Runtime</p>
+				<h2>Connections</h2>
+			</div>
+			<div class="connection-grid">
+				<div class="connection-card">
+					<div class="connection-header">
+						<div>
+							<p class="eyebrow">Database</p>
+							<strong id="db-driver">—</strong>
+						</div>
+						<span id="db-status" class="status-pill">Unknown</span>
+					</div>
+					<p id="db-error" class="muted small"></p>
+				</div>
+				<div class="connection-card">
+					<div class="connection-header">
+						<div>
+							<p class="eyebrow">Cache</p>
+							<strong id="cache-driver">—</strong>
+						</div>
+						<span id="cache-status" class="status-pill">Unknown</span>
+					</div>
+					<p id="cache-error" class="muted small"></p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="info-card">
+		<div class="card-header">
+			<p class="eyebrow">Artisan</p>
+			<h2>Quick Commands</h2>
+		</div>
+		<div id="commands-list" class="commands-list" data-play-icon="{{icon-play}}">
+			<p class="muted">Loading commands...</p>
+		</div>
+	</section>
+</main>
